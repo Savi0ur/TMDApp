@@ -1,8 +1,9 @@
-package com.haraev.tmdapp
+package com.haraev.tmdapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
+import com.haraev.tmdapp.R
 
 class MainActivity : AppCompatActivity() {
 
