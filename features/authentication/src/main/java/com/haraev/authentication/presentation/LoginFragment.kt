@@ -1,9 +1,11 @@
 package com.haraev.authentication.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
@@ -19,10 +21,14 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     private val viewModel by lazy { viewModelFactory.get() }
 
+    override fun onAttach(context: Context) {
+        LoginComponent.Builder.build().inject(this)
+
+        super.onAttach(context)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        LoginComponent.Builder.build().inject(this)
 
         observeViewModel()
         initView()
