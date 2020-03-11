@@ -34,38 +34,52 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.uiState.observe(viewLifecycleOwner, Observer {
-            setEnterButtonEnabled(it.enableLoginButton)
-        })
+        viewModel.uiState.observe(
+            viewLifecycleOwner,
+            Observer {
+                setEnterButtonEnabled(it.enableLoginButton)
+            })
     }
 
     private fun initView() {
-        setupLoginEdt()
-        setupPasswordEdt()
-        setupEnterBtn()
+        setupLoginTextInputEditText()
+        setupPasswordTextInputEditText()
+        setupEnterButton()
     }
 
-    private fun setupEnterBtn() {
-        btn_enter.setOnClickListener {
-            viewModel.login(edt_login.text.toString(), edt_pass.text.toString())
+    private fun setupEnterButton() {
+        login_enter_button.setOnClickListener {
+            viewModel.enterButtonClicked(
+                login_login_text_input_edit_text.text.toString(),
+                login_password_text_input_edit_text.text.toString()
+            )
             hideKeyboard()
         }
     }
 
-    private fun setupLoginEdt() {
-        edt_login.doAfterTextChanged {
-            viewModel.loginDataChanged(it.toString(), edt_pass.text.toString())
+    private fun setupLoginTextInputEditText() {
+        login_login_text_input_edit_text.doAfterTextChanged {
+            viewModel.loginDataChanged(
+                it.toString(),
+                login_password_text_input_edit_text.text.toString()
+            )
         }
     }
 
-    private fun setupPasswordEdt() {
-        edt_pass.apply {
+    private fun setupPasswordTextInputEditText() {
+        login_password_text_input_edit_text.apply {
             doAfterTextChanged {
-                viewModel.loginDataChanged(edt_login.text.toString(), it.toString())
+                viewModel.loginDataChanged(
+                    login_login_text_input_edit_text.text.toString(),
+                    it.toString()
+                )
             }
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    viewModel.login(edt_login.text.toString(), edt_pass.text.toString())
+                    viewModel.enterButtonClicked(
+                        login_login_text_input_edit_text.text.toString(),
+                        login_password_text_input_edit_text.text.toString()
+                    )
                     hideKeyboard()
                 }
                 false
@@ -74,6 +88,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun setEnterButtonEnabled(boolean: Boolean) {
-        btn_enter.isEnabled = boolean
+        login_enter_button.isEnabled = boolean
     }
 }

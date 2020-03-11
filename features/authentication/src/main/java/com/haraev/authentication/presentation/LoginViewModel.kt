@@ -8,11 +8,9 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
 
-    private val _uiState = MutableLiveData<LoginViewState>()
-    val uiState: LiveData<LoginViewState>
-        get() = _uiState
+    val uiState = MutableLiveData<LoginViewState>()
 
-    fun login(login: String, password: String) {
+    fun enterButtonClicked(login: String, password: String) {
         loginUseCase.login(login, password)
     }
 
@@ -30,6 +28,6 @@ class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase)
 
     private fun emitUiState(enableLoginButton: Boolean = false) {
         val uiModel = LoginViewState(enableLoginButton)
-        _uiState.value = uiModel
+        uiState.value = uiModel
     }
 }

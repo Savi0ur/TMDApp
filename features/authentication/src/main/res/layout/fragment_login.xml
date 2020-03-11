@@ -13,14 +13,14 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/txt_welcome"
+            android:id="@+id/login_welcome_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
             android:textColor="@color/colorLightGrey"
             android:textSize="32sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txt_info"
+            app:layout_constraintBottom_toTopOf="@+id/login_welcome_message_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,20 +28,20 @@
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/txt_info"
+            android:id="@+id/login_welcome_message_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/login_info"
             android:textColor="@color/colorLightGrey"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/til_login"
+            app:layout_constraintBottom_toTopOf="@+id/login_login_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_welcome" />
+            app:layout_constraintTop_toBottomOf="@+id/login_welcome_text_view" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_login"
+            android:id="@+id/login_login_text_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,13 +50,13 @@
             app:boxStrokeColor="@color/login_text_input_box_stroke"
             app:boxStrokeWidth="2dp"
             app:hintTextColor="@color/colorDarkGrey"
-            app:layout_constraintBottom_toTopOf="@+id/til_pass"
+            app:layout_constraintBottom_toTopOf="@+id/login_password_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_info">
+            app:layout_constraintTop_toBottomOf="@+id/login_welcome_message_text_view">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_login"
+                android:id="@+id/login_login_text_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_login"
@@ -66,7 +66,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_pass"
+            android:id="@+id/login_password_text_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,15 +76,15 @@
             app:boxStrokeColor="@color/login_text_input_box_stroke"
             app:boxStrokeWidth="2dp"
             app:hintTextColor="@color/colorDarkGrey"
-            app:layout_constraintBottom_toTopOf="@+id/txt_error"
+            app:layout_constraintBottom_toTopOf="@+id/login_error_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_login"
+            app:layout_constraintTop_toBottomOf="@+id/login_login_text_input_layout"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorDarkGrey">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_pass"
+                android:id="@+id/login_password_text_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
@@ -94,7 +94,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/txt_error"
+            android:id="@+id/login_error_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -102,14 +102,14 @@
             android:lineSpacingExtra="1sp"
             android:textColor="@color/colorRed"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/btn_enter"
+            app:layout_constraintBottom_toTopOf="@id/login_enter_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_pass"
+            app:layout_constraintTop_toBottomOf="@id/login_password_text_input_layout"
             tools:text="Что-то пошло не так, попробуйте войти позже" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_enter"
+            android:id="@+id/login_enter_button"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="60dp"
