@@ -5,21 +5,20 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
 import com.haraev.core.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
-import javax.inject.Provider
 
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     @Inject
-    lateinit var viewModelFactory: Provider<LoginViewModel>
+    lateinit var viewModelFactory: LoginViewModelFactory
 
-    private val viewModel by lazy { viewModelFactory.get() }
+    private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
         LoginComponent.Builder.build().inject(this)
