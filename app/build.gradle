@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: rootProject.file('dependencies.gradle')
+
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion "29.0.2"
@@ -38,27 +40,15 @@ android {
 dependencies {
     implementation project(":features:authentication")
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
-    implementation "androidx.appcompat:appcompat:${versions.appcompat}"
-    implementation "androidx.core:core-ktx:${versions.coreKtx}"
-    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
-    testImplementation "junit:junit:${versions.junit}"
-    androidTestImplementation "androidx.test.ext:junit:${versions.extJunit}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.expresso}"
+    implementation deps.stdlib
+    implementation deps.core_ktx
 
-    // Material component
-    implementation "com.google.android.material:material:${versions.material}"
+    testImplementation deps.junit
+    androidTestImplementation deps.ext_junit
+    androidTestImplementation deps.espresso
 
-    // Navigation component
-    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
-    implementation "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
+    // Navigation components
+    implementation deps.navigation_fragment
+    implementation deps.navigation_ui
 
-    // Dagger 2
-    implementation "com.google.dagger:dagger:${versions.dagger}"
-    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
-
-    // RxJava 2 RxAndroid 2
-    implementation "io.reactivex.rxjava2:rxjava:${versions.rxJava}"
-    implementation "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"
 }
