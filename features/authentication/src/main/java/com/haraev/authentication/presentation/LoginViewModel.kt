@@ -1,6 +1,5 @@
 package com.haraev.authentication.presentation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haraev.authentication.domain.usecase.LoginUseCase
