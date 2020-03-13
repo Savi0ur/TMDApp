@@ -1,0 +1,43 @@
+def deps_versions = [:]
+
+deps_versions.coreKtx = "1.2.0"
+deps_versions.constraintLayout = "1.1.3"
+
+deps_versions.material = "1.1.0"
+deps_versions.navigation = "2.2.1"
+
+deps_versions.extJunit = "1.1.1"
+deps_versions.espresso = "3.2.0"
+deps_versions.junit = "4.12"
+
+deps_versions.dagger = "2.25.4"
+
+deps_versions.rxJava = "2.2.18"
+deps_versions.rxAndroid = "2.1.1"
+
+ext.deps = [:]
+
+deps.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+
+deps.core_ktx = "androidx.core:core-ktx:${deps_versions.coreKtx}"
+
+deps.constraint_layout = "androidx.constraintlayout:constraintlayout:${deps_versions.constraintLayout}"
+
+deps.junit =  "junit:junit:${deps_versions.junit}"
+deps.ext_junit = "androidx.test.ext:junit:${deps_versions.extJunit}"
+deps.espresso = "androidx.test.espresso:espresso-core:${deps_versions.espresso}"
+
+// Material Components
+deps.material_material = "com.google.android.material:material:${deps_versions.material}"
+
+// Navigation Components
+deps.navigation_fragment = "androidx.navigation:navigation-fragment-ktx:${deps_versions.navigation}"
+deps.navigation_ui = "androidx.navigation:navigation-ui-ktx:${deps_versions.navigation}"
+
+// Dagger 2
+deps.dagger_dagger = "com.google.dagger:dagger:${deps_versions.dagger}"
+deps.dagger_compiler = "com.google.dagger:dagger-compiler:${deps_versions.dagger}"
+
+// RxJava 2 RxAndroid 2
+deps.rxjava2_rxjava = "io.reactivex.rxjava2:rxjava:${deps_versions.rxJava}"
+deps.rxjava2_rxandroid = "io.reactivex.rxjava2:rxandroid:${deps_versions.rxAndroid}"

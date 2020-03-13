@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -10,13 +10,13 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId names.applicationId
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -38,8 +38,6 @@ android {
 }
 
 dependencies {
-    implementation project(":features:authentication")
-
     implementation deps.stdlib
     implementation deps.core_ktx
 
@@ -47,8 +45,6 @@ dependencies {
     androidTestImplementation deps.ext_junit
     androidTestImplementation deps.espresso
 
-    // Navigation components
-    implementation deps.navigation_fragment
-    implementation deps.navigation_ui
-
+    // Material component
+    implementation deps.material_material
 }
