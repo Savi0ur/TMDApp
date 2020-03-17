@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
     implementation project(":features:authentication")
 
     implementation deps.stdlib
@@ -47,8 +48,14 @@ dependencies {
     androidTestImplementation deps.ext_junit
     androidTestImplementation deps.espresso
 
+    // Dagger 2
+    implementation deps.dagger_dagger
+    kapt deps.dagger_compiler
+
     // Navigation components
     implementation deps.navigation_fragment
     implementation deps.navigation_ui
 
+    // Timber
+    implementation deps.timber
 }
