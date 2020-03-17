@@ -1,4 +1,4 @@
-package com.haraev.core.di.model
+package com.haraev.core.di.module
 
 import android.content.Context
 import android.content.SharedPreferences

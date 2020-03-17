@@ -3,8 +3,9 @@ package com.haraev.core.di.component
 import android.content.Context
 import android.content.SharedPreferences
 import com.haraev.core.data.SessionLocalDataSource
-import com.haraev.core.di.model.CoreNetworkModule
-import com.haraev.core.di.model.SharedPreferencesModule
+import com.haraev.core.data.api.TokenService
+import com.haraev.core.di.module.CoreNetworkModule
+import com.haraev.core.di.module.SharedPreferencesModule
 import dagger.BindsInstance
 import dagger.Component
 import okhttp3.OkHttpClient
@@ -43,6 +44,8 @@ interface CoreComponent {
 
     @Named("ClientWithOutAuthenticator")
     fun provideOkHttpClient(): OkHttpClient
+
+    fun provideTokenService(): TokenService
 
     fun provideSessionLocalDataSource(): SessionLocalDataSource
 
