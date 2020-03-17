@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
+import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -21,7 +22,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
-        LoginComponent.Builder.build().inject(this)
+        LoginComponent.Builder.build((requireActivity().application as CoreComponentProvider).getCoreComponent())
+            .inject(this)
 
         super.onAttach(context)
     }
@@ -34,11 +36,27 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.uiState.observe(
+        viewModel.uiCommand.observe(
             viewLifecycleOwner,
-            Observer {
-                setEnterButtonEnabled(it.enableLoginButton)
-            })
+            Observer { loginViewCommand ->
+                when (loginViewCommand) {
+                    is LoginViewCommand.ChangeProgressBarVisibility -> {
+                        login_progress_bar.visibility =
+                            if (loginViewCommand.visible) View.VISIBLE else View.INVISIBLE
+                    }
+                    is LoginViewCommand.ChangeEnterButtonEnable -> {
+                        login_enter_button.isEnabled = loginViewCommand.enabled
+                    }
+                    is LoginViewCommand.ChangeLoginPasswordFieldsEnable -> {
+                        login_login_text_input_edit_text.isEnabled = loginViewCommand.enabled
+                        login_password_text_input_edit_text.isEnabled = loginViewCommand.enabled
+                    }
+                    is LoginViewCommand.ShowErrorMessage -> {
+                        login_error_text_view.setText(loginViewCommand.resId)
+                    }
+                }
+            }
+        )
     }
 
     private fun initView() {
@@ -85,9 +103,5 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 false
             }
         }
-    }
-
-    private fun setEnterButtonEnabled(boolean: Boolean) {
-        login_enter_button.isEnabled = boolean
     }
 }
