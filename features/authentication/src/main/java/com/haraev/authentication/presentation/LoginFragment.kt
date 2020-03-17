@@ -54,6 +54,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     is LoginViewCommand.ShowErrorMessage -> {
                         login_error_text_view.setText(loginViewCommand.resId)
                     }
+                    is LoginViewCommand.NavigateToNextScreen -> {
+                        /**
+                         * Заглушка
+                         * TODO Переход на основной экран приложения после успешного логина
+                         */
+                        requireActivity().finish()
+                    }
                 }
             }
         )

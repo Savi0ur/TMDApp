@@ -8,4 +8,6 @@ sealed class LoginViewCommand {
     data class ChangeLoginPasswordFieldsEnable(val enabled: Boolean) : LoginViewCommand()
 
     data class ShowErrorMessage(val resId: Int) : LoginViewCommand()
+
+    object NavigateToNextScreen : LoginViewCommand()
 }

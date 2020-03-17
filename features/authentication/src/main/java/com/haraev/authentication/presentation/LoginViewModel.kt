@@ -34,6 +34,7 @@ class LoginViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 showUiStopLoading()
+                navigateToNextScreen()
             }, { throwable ->
                 Timber.tag(TAG).e(throwable)
                 showUiStopLoading()
@@ -56,6 +57,10 @@ class LoginViewModel @Inject constructor(
         progressBarVisibility(false)
         loginPasswordEnable(true)
         enterButtonEnable(true)
+    }
+
+    private fun navigateToNextScreen() {
+        uiCommand.value = LoginViewCommand.NavigateToNextScreen
     }
 
     private fun showErrorMessage(messageResId: Int) {
