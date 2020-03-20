@@ -1,12 +1,14 @@
 package com.haraev.core.di.module
 
 import android.content.SharedPreferences
+import android.util.Log
+import com.haraev.core.TMDB_API_KEY
 import com.haraev.core.TMDB_BASE_URL
 import com.haraev.core.data.SessionLocalDataSource
-import com.haraev.core.data.api.interceptors.ApiKeyInterceptor
 import com.haraev.core.data.api.SessionAuthenticator
-import com.haraev.core.data.api.interceptors.TmdApiLoggingInterceptor
 import com.haraev.core.data.api.TokenService
+import com.ihsanbal.logging.Level
+import com.ihsanbal.logging.LoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -16,6 +18,15 @@ import javax.inject.Named
 
 @Module
 class CoreNetworkModule {
+
+    @Provides
+    fun provideLoggingInterceptor(): LoggingInterceptor {
+        return LoggingInterceptor.Builder()
+            .setLevel(Level.BASIC)
+            .log(Log.VERBOSE)
+            .addQueryParam(API_KEY_QUERY_PARAMETER, TMDB_API_KEY)
+            .build()
+    }
 
     @Provides
     fun provideTokenService(
@@ -31,14 +42,6 @@ class CoreNetworkModule {
     }
 
     @Provides
-    fun provideApiKeyInterceptor(): ApiKeyInterceptor =
-        ApiKeyInterceptor()
-
-    @Provides
-    fun provideTmdApiLoggingInterceptor(): TmdApiLoggingInterceptor =
-        TmdApiLoggingInterceptor()
-
-    @Provides
     fun provideSessionAuthenticator(
         sessionLocalDataSource: SessionLocalDataSource,
         tokenService: TokenService
@@ -52,12 +55,10 @@ class CoreNetworkModule {
     @Named("ClientWithOutAuthenticator")
     @Provides
     fun provideOkHttpClient(
-        apiKeyInterceptor: ApiKeyInterceptor,
-        tmdApiLoggingInterceptor: TmdApiLoggingInterceptor
+        loggingInterceptor: LoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(apiKeyInterceptor)
-            .addInterceptor(tmdApiLoggingInterceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 
@@ -65,19 +66,16 @@ class CoreNetworkModule {
     @Named("ClientWithAuthenticator")
     @Provides
     fun provideOkHttpClientWithAuthenticator(
-        apiKeyInterceptor: ApiKeyInterceptor,
-        tmdApiLoggingInterceptor: TmdApiLoggingInterceptor,
-        authenticator: SessionAuthenticator
+        authenticator: SessionAuthenticator,
+        loggingInterceptor: LoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .authenticator(authenticator)
-            .addInterceptor(apiKeyInterceptor)
-            .addInterceptor(tmdApiLoggingInterceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 
-    @Provides
-    fun provideSessionLocalDataSource(
-        sharedPreferences: SharedPreferences
-    ): SessionLocalDataSource = SessionLocalDataSource(sharedPreferences)
+    companion object {
+        private const val API_KEY_QUERY_PARAMETER = "api_key"
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.TokenService
+import com.haraev.core.di.module.CoreDataModule
 import com.haraev.core.di.module.CoreNetworkModule
 import com.haraev.core.di.module.SharedPreferencesModule
 import dagger.BindsInstance
@@ -13,7 +14,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [CoreNetworkModule::class, SharedPreferencesModule::class])
+@Component(modules = [CoreNetworkModule::class, SharedPreferencesModule::class, CoreDataModule::class])
 interface CoreComponent {
 
     @Component.Builder
