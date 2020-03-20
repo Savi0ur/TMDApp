@@ -4,10 +4,10 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SessionResponse(
-    @Json(name = "success")
-    val isSuccess: Boolean,
+data class ErrorResponse(
+    @Json(name = "status_code")
+    val statusCode: Int,
 
-    @Json(name = "session_id")
-    val sessionId: String
+    @Json(name = "status_message")
+    val statusMessage: String
 )

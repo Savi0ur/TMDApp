@@ -6,7 +6,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
 import com.haraev.core.di.provider.CoreComponentProvider
@@ -36,34 +36,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.uiCommand.observe(
-            viewLifecycleOwner,
-            Observer { loginViewCommand ->
-                when (loginViewCommand) {
-                    is LoginViewCommand.ChangeProgressBarVisibility -> {
-                        login_progress_bar.visibility =
-                            if (loginViewCommand.visible) View.VISIBLE else View.INVISIBLE
-                    }
-                    is LoginViewCommand.ChangeEnterButtonEnable -> {
-                        login_enter_button.isEnabled = loginViewCommand.enabled
-                    }
-                    is LoginViewCommand.ChangeLoginPasswordFieldsEnable -> {
-                        login_login_text_input_edit_text.isEnabled = loginViewCommand.enabled
-                        login_password_text_input_edit_text.isEnabled = loginViewCommand.enabled
-                    }
-                    is LoginViewCommand.ShowErrorMessage -> {
-                        login_error_text_view.setText(loginViewCommand.resId)
-                    }
-                    is LoginViewCommand.NavigateToNextScreen -> {
-                        /**
-                         * Заглушка
-                         * TODO Переход на основной экран приложения после успешного логина
-                         */
-                        requireActivity().finish()
-                    }
-                }
-            }
-        )
+        viewModel.uiCommand.observe(viewLifecycleOwner, ::handleViewCommand)
     }
 
     private fun initView() {
@@ -108,6 +81,32 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     hideKeyboard()
                 }
                 false
+            }
+        }
+    }
+
+    private fun handleViewCommand(viewCommand: LoginViewCommand) {
+        when (viewCommand) {
+            is LoginViewCommand.ChangeProgressBarVisibility -> {
+                login_progress_bar.visibility =
+                    if (viewCommand.visible) View.VISIBLE else View.INVISIBLE
+            }
+            is LoginViewCommand.ChangeEnterButtonEnable -> {
+                login_enter_button.isEnabled = viewCommand.enabled
+            }
+            is LoginViewCommand.ChangeLoginPasswordFieldsEnable -> {
+                login_login_text_input_layout.isEnabled = viewCommand.enabled
+                login_password_text_input_layout.isEnabled = viewCommand.enabled
+            }
+            is LoginViewCommand.ShowErrorMessage -> {
+                login_error_text_view.setText(viewCommand.resId)
+            }
+            is LoginViewCommand.NavigateToNextScreen -> {
+                /**
+                 * Заглушка
+                 * TODO Переход на основной экран приложения после успешного логина
+                 */
+                requireActivity().finish()
             }
         }
     }

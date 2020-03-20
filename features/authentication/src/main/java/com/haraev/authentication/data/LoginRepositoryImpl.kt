@@ -1,11 +1,11 @@
 package com.haraev.authentication.data
 
 import android.accounts.NetworkErrorException
-import com.haraev.authentication.data.api.LoginService
 import com.haraev.core.data.model.request.SessionBody
 import com.haraev.core.data.model.request.ValidateWithLoginBody
 import com.haraev.authentication.domain.repository.LoginRepository
 import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.api.LoginService
 import io.reactivex.Completable
 
 class LoginRepositoryImpl(

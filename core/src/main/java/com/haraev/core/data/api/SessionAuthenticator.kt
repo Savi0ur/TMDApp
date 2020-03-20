@@ -10,7 +10,7 @@ import okhttp3.Route
 
 class SessionAuthenticator(
     private val sessionLocalDataSource: SessionLocalDataSource,
-    private val tokenService: TokenService
+    private val loginService: LoginService
 
 ) : Authenticator {
 
@@ -25,14 +25,11 @@ class SessionAuthenticator(
         val requestSessionId: String? =
             response.request.url.queryParameter(SESSION_ID_QUERY_PARAMETER_KEY)
 
-        if (currentSessionToken == requestSessionId) {
-            val newSessionId = refreshToken() ?: return null
-            return buildRequestWithNewAccessToken(response, newSessionId)
+        return if (currentSessionToken == requestSessionId) {
+            refreshToken()?.let { buildRequestWithNewAccessToken(response, it) }
         } else {
             buildRequestWithNewAccessToken(response, currentSessionToken)
         }
-
-        return null
     }
 
     private fun buildRequestWithNewAccessToken(
@@ -57,54 +54,29 @@ class SessionAuthenticator(
         val userLogin: String = sessionLocalDataSource.userLogin ?: return null
         val userPassword: String = sessionLocalDataSource.userPassword ?: return null
 
-        getNewToken()?.let { requestToken ->
-            validateLogin(userLogin, userPassword, requestToken)?.let {
-                return getNewSessionId(requestToken)
+        return loginService.getNewToken()
+            .flatMap { response ->
+                response.body()?.requestToken?.let {
+                    loginService.validateWithLogin(
+                        ValidateWithLoginBody(
+                            userLogin,
+                            userPassword,
+                            it
+                        )
+                    )
+                }
             }
-        }
-
-        return null
-    }
-
-    private fun getNewToken(): String? {
-        tokenService.getNewToken()
-            .execute()
+            .flatMap { response ->
+                response.body()?.requestToken?.let {
+                    loginService.getNewSession(SessionBody(it))
+                }
+            }
+            .blockingGet()
             .body()
-            ?.requestToken
-            ?.let { requestToken ->
-                return requestToken
-            }
-        return null
-    }
-
-    private fun validateLogin(
-        userLogin: String,
-        userPassword: String,
-        requestToken: String
-    ): String? {
-        tokenService.validateWithLogin(
-            ValidateWithLoginBody(
-                userLogin,
-                userPassword,
-                requestToken
-            )
-        ).execute()
-            .body()
-            ?.requestToken
-            ?.let {
-                return it
-            }
-        return null
-    }
-
-    private fun getNewSessionId(requestToken: String): String? {
-        tokenService.getNewSession(SessionBody(requestToken))
-            .execute().body()
             ?.sessionId
-            ?.let { sessionId ->
+            ?.also { sessionId ->
                 sessionLocalDataSource.sessionId = sessionId
                 return sessionId
             }
-        return null
     }
 }

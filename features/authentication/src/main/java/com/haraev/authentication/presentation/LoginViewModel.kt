@@ -3,6 +3,8 @@ package com.haraev.authentication.presentation
 import androidx.lifecycle.MutableLiveData
 import com.haraev.authentication.R
 import com.haraev.authentication.domain.usecase.LoginUseCase
+import com.haraev.core.data.exception.NetworkException
+import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.core.ui.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -36,9 +38,15 @@ class LoginViewModel @Inject constructor(
                 showUiStopLoading()
                 navigateToNextScreen()
             }, { throwable ->
-                Timber.tag(TAG).e(throwable)
                 showUiStopLoading()
-                showErrorMessage(R.string.login_unknown_error_message)
+
+                if (throwable is NetworkException) {
+                    handleNetworkException(throwable)
+                } else {
+                    showErrorMessage(R.string.login_unknown_error_message)
+                    Timber.tag(TAG).e(throwable)
+                }
+
             })
             .autoDispose()
     }
@@ -77,5 +85,13 @@ class LoginViewModel @Inject constructor(
 
     private fun enterButtonEnable(enabled: Boolean) {
         uiCommand.value = LoginViewCommand.ChangeEnterButtonEnable(enabled)
+    }
+
+    private fun handleNetworkException(networkException: NetworkException) {
+        when (networkException.statusCode) {
+            NetworkExceptionType.EMAIL_NOT_VERIFIED.code -> showErrorMessage(R.string.wrong_login_or_password)
+            NetworkExceptionType.INVALID_LOGIN_CREDENTIALS.code -> showErrorMessage(R.string.wrong_login_or_password)
+            else -> showErrorMessage(R.string.login_unknown_error_message)
+        }
     }
 }

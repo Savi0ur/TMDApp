@@ -1,4 +1,4 @@
-package com.haraev.authentication.data.api
+package com.haraev.core.data.api
 
 import com.haraev.core.data.model.request.SessionBody
 import com.haraev.core.data.model.request.ValidateWithLoginBody

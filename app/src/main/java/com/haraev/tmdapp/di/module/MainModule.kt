@@ -9,8 +9,7 @@ class MainModule {
 
     fun provideLoginViewModelFactory(
         sessionLocalDataSource: SessionLocalDataSource
-    ): MainViewModelFactory {
-        return MainViewModelFactory(sessionLocalDataSource)
-    }
+    ): MainViewModelFactory =
+        MainViewModelFactory(sessionLocalDataSource)
 
 }
