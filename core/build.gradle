@@ -17,23 +17,23 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        def tmdbApiKey = properties.getProperty("tmdb_api_key", null)
+
+        if (tmdbApiKey == null) {
+            throw new InvalidUserCodeException('API key not found in local.properties file')
+        }
+
+        buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
+        resValue 'string', "api_key", tmdbApiKey
+
     }
 
     buildTypes {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def tmdbApiKey = properties.getProperty("tmdb_api_key", "")
-
-        debug {
-            buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
-            resValue 'string', "api_key", tmdbApiKey
-
-        }
 
         release {
-            buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
-            resValue 'string', "api_key", tmdbApiKey
-
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -83,4 +83,9 @@ dependencies {
 
     // Timber
     implementation deps.timber
+
+    // LoggingInterceptor
+    implementation (deps.logging_interceptor) {
+        exclude group: 'org.json', module: 'json'
+    }
 }

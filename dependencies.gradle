@@ -23,6 +23,8 @@ deps_versions.retrofit = "2.7.1"
 
 deps_versions.timber = "4.7.1"
 
+deps_versions.logginInterceptor = "3.1.0-rc5"
+
 ext.deps = [:]
 
 deps.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
@@ -64,3 +66,6 @@ deps.retrofit_adapter_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:${deps_v
 
 // Timber
 deps.timber = "com.jakewharton.timber:timber:${deps_versions.timber}"
+
+// LoggingInterceptor
+deps.logging_interceptor = "com.github.ihsanbal:LoggingInterceptor:${deps_versions.logginInterceptor}"
