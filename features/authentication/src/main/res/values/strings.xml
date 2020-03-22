@@ -6,4 +6,7 @@
     <string name="hint_login">Логин</string>
     <string name="hint_password">Пароль</string>
     <string name="button_login_enter">Войти</string>
+
+    <string name="login_unknown_error_message">Что-то пошло не так, попробуйте войти позже</string>
+    <string name="wrong_login_or_password">Неверный логин или пароль</string>
 </resources>

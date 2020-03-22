@@ -17,9 +17,22 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        def tmdbApiKey = properties.getProperty("tmdb_api_key", null)
+
+        if (tmdbApiKey == null) {
+            throw new InvalidUserCodeException('API key not found in local.properties file')
+        }
+
+        buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
+        resValue 'string', "api_key", tmdbApiKey
+
     }
 
     buildTypes {
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -47,4 +60,32 @@ dependencies {
 
     // Material component
     implementation deps.material_material
+
+    // Dagger 2
+    implementation deps.dagger_dagger
+    kapt deps.dagger_compiler
+
+    // RxJava 2
+    implementation deps.rxjava2_rxjava
+    implementation deps.rxjava2_rxandroid
+
+    // Moshi
+    implementation deps.moshi_kotlin
+    kapt deps.moshi_codegen
+
+    // OkHttp 3
+    implementation deps.okhttp
+
+    // Retrofit 2
+    implementation deps.retrofit_retrofit
+    implementation deps.retrofit_converter_moshi
+    implementation deps.retrofit_adapter_rxjava2
+
+    // Timber
+    implementation deps.timber
+
+    // LoggingInterceptor
+    implementation (deps.logging_interceptor) {
+        exclude group: 'org.json', module: 'json'
+    }
 }

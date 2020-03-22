@@ -12,6 +12,17 @@
         android:background="@color/colorBackgroundBlack"
         android:padding="16dp">
 
+        <ProgressBar
+            android:id="@+id/login_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <TextView
             android:id="@+id/login_welcome_text_view"
             android:layout_width="match_parent"
@@ -23,7 +34,7 @@
             app:layout_constraintBottom_toTopOf="@+id/login_welcome_message_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_progress_bar"
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintVertical_chainStyle="packed" />
 

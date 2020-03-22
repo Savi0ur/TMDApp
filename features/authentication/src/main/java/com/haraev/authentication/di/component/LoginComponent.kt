@@ -2,9 +2,12 @@ package com.haraev.authentication.di.component
 
 import com.haraev.authentication.di.module.LoginModule
 import com.haraev.authentication.presentation.LoginFragment
+import com.haraev.core.di.component.CoreComponent
+import com.haraev.core.di.scope.FeatureModuleScope
 import dagger.Component
 
-@Component(modules = [LoginModule::class])
+@FeatureModuleScope
+@Component(modules = [LoginModule::class], dependencies = [CoreComponent::class])
 interface LoginComponent {
 
     fun inject(target: LoginFragment)
@@ -13,8 +16,9 @@ interface LoginComponent {
 
         companion object {
 
-            fun build(): LoginComponent {
+            fun build(coreComponent: CoreComponent): LoginComponent {
                 return DaggerLoginComponent.builder()
+                    .coreComponent(coreComponent)
                     .build()
             }
         }

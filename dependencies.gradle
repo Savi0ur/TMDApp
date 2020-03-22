@@ -15,6 +15,16 @@ deps_versions.dagger = "2.25.4"
 deps_versions.rxJava = "2.2.18"
 deps_versions.rxAndroid = "2.1.1"
 
+deps_versions.moshi = "1.9.2"
+
+deps_versions.okhttp = "4.4.0"
+
+deps_versions.retrofit = "2.7.1"
+
+deps_versions.timber = "4.7.1"
+
+deps_versions.logginInterceptor = "3.1.0-rc5"
+
 ext.deps = [:]
 
 deps.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
@@ -41,3 +51,21 @@ deps.dagger_compiler = "com.google.dagger:dagger-compiler:${deps_versions.dagger
 // RxJava 2 RxAndroid 2
 deps.rxjava2_rxjava = "io.reactivex.rxjava2:rxjava:${deps_versions.rxJava}"
 deps.rxjava2_rxandroid = "io.reactivex.rxjava2:rxandroid:${deps_versions.rxAndroid}"
+
+// Moshi
+deps.moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${deps_versions.moshi}"
+deps.moshi_codegen = "com.squareup.moshi:moshi-kotlin-codegen:${deps_versions.moshi}"
+
+// OkHttp 3
+deps.okhttp = "com.squareup.okhttp3:okhttp:${deps_versions.okhttp}"
+
+// Retrofit 2
+deps.retrofit_retrofit = "com.squareup.retrofit2:retrofit:${deps_versions.retrofit}"
+deps.retrofit_converter_moshi = "com.squareup.retrofit2:converter-moshi:${deps_versions.retrofit}"
+deps.retrofit_adapter_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:${deps_versions.retrofit}"
+
+// Timber
+deps.timber = "com.jakewharton.timber:timber:${deps_versions.timber}"
+
+// LoggingInterceptor
+deps.logging_interceptor = "com.github.ihsanbal:LoggingInterceptor:${deps_versions.logginInterceptor}"

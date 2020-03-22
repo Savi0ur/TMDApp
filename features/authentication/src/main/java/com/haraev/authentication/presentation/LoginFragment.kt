@@ -6,9 +6,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
+import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -21,7 +22,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
-        LoginComponent.Builder.build().inject(this)
+        LoginComponent.Builder.build((requireActivity().application as CoreComponentProvider).getCoreComponent())
+            .inject(this)
 
         super.onAttach(context)
     }
@@ -34,11 +36,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.uiState.observe(
-            viewLifecycleOwner,
-            Observer {
-                setEnterButtonEnabled(it.enableLoginButton)
-            })
+        viewModel.uiCommand.observe(viewLifecycleOwner, ::handleViewCommand)
     }
 
     private fun initView() {
@@ -87,7 +85,29 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         }
     }
 
-    private fun setEnterButtonEnabled(boolean: Boolean) {
-        login_enter_button.isEnabled = boolean
+    private fun handleViewCommand(viewCommand: LoginViewCommand) {
+        when (viewCommand) {
+            is LoginViewCommand.ChangeProgressBarVisibility -> {
+                login_progress_bar.visibility =
+                    if (viewCommand.visible) View.VISIBLE else View.INVISIBLE
+            }
+            is LoginViewCommand.ChangeEnterButtonEnable -> {
+                login_enter_button.isEnabled = viewCommand.enabled
+            }
+            is LoginViewCommand.ChangeLoginPasswordFieldsEnable -> {
+                login_login_text_input_layout.isEnabled = viewCommand.enabled
+                login_password_text_input_layout.isEnabled = viewCommand.enabled
+            }
+            is LoginViewCommand.ShowErrorMessage -> {
+                login_error_text_view.setText(viewCommand.resId)
+            }
+            is LoginViewCommand.NavigateToNextScreen -> {
+                /**
+                 * Заглушка
+                 * TODO Переход на основной экран приложения после успешного логина
+                 */
+                requireActivity().finish()
+            }
+        }
     }
 }

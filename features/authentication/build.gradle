@@ -57,4 +57,23 @@ dependencies {
     // Dagger 2
     implementation deps.dagger_dagger
     kapt deps.dagger_compiler
+
+    // RxJava 2
+    implementation deps.rxjava2_rxjava
+    implementation deps.rxjava2_rxandroid
+
+    // Moshi
+    implementation deps.moshi_kotlin
+    kapt deps.moshi_codegen
+
+    // OkHttp 3
+    implementation deps.okhttp
+
+    // Retrofit 2
+    implementation deps.retrofit_retrofit
+    implementation deps.retrofit_converter_moshi
+    implementation deps.retrofit_adapter_rxjava2
+
+    // Timber
+    implementation deps.timber
 }
