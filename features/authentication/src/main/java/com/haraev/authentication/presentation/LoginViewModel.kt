@@ -3,6 +3,8 @@ package com.haraev.authentication.presentation
 import androidx.lifecycle.MutableLiveData
 import com.haraev.authentication.R
 import com.haraev.authentication.domain.usecase.LoginUseCase
+import com.haraev.core.common.ThreadScheduler
+import com.haraev.core.common.scheduleIoToUi
 import com.haraev.core.data.exception.NetworkException
 import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.core.ui.BaseViewModel
@@ -12,7 +14,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val scheduler: ThreadScheduler
 ) : BaseViewModel() {
 
     companion object {
@@ -21,19 +24,21 @@ class LoginViewModel @Inject constructor(
 
     val uiCommand = MutableLiveData<LoginViewCommand>()
 
+    val uiState = MutableLiveData<LoginViewState>()
+
     fun loginDataChanged(login: String, password: String) {
         enterButtonEnable(isLoginValid(login, password))
     }
 
     fun enterButtonClicked(login: String, password: String) {
+        clearErrorMessage()
         showUiStartLoading()
         startLoginProcess(login, password)
     }
 
     private fun startLoginProcess(login: String, password: String) {
         loginUseCase.login(login, password)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .scheduleIoToUi(scheduler)
             .subscribe({
                 showUiStopLoading()
                 navigateToNextScreen()
@@ -67,31 +72,44 @@ class LoginViewModel @Inject constructor(
         enterButtonEnable(true)
     }
 
-    private fun navigateToNextScreen() {
-        uiCommand.value = LoginViewCommand.NavigateToNextScreen
-    }
-
-    private fun showErrorMessage(messageResId: Int) {
-        uiCommand.value = LoginViewCommand.ShowErrorMessage(messageResId)
-    }
-
-    private fun progressBarVisibility(visible: Boolean) {
-        uiCommand.value = LoginViewCommand.ChangeProgressBarVisibility(visible)
-    }
-
-    private fun loginPasswordEnable(enabled: Boolean) {
-        uiCommand.value = LoginViewCommand.ChangeLoginPasswordFieldsEnable(enabled)
-    }
-
-    private fun enterButtonEnable(enabled: Boolean) {
-        uiCommand.value = LoginViewCommand.ChangeEnterButtonEnable(enabled)
-    }
-
     private fun handleNetworkException(networkException: NetworkException) {
         when (networkException.statusCode) {
             NetworkExceptionType.EMAIL_NOT_VERIFIED.code -> showErrorMessage(R.string.wrong_login_or_password)
             NetworkExceptionType.INVALID_LOGIN_CREDENTIALS.code -> showErrorMessage(R.string.wrong_login_or_password)
             else -> showErrorMessage(R.string.login_unknown_error_message)
+        }
+    }
+
+    private fun navigateToNextScreen() {
+        uiCommand.value = LoginViewCommand.NavigateToNextScreen
+    }
+
+    private fun showErrorMessage(messageResId: Int) {
+        uiState.value = getCurrentViewState().copy(errorMessage = messageResId)
+    }
+
+    private fun clearErrorMessage() {
+        uiState.value = getCurrentViewState().copy(errorMessage = null)
+    }
+
+    private fun progressBarVisibility(visible: Boolean) {
+        uiState.value = getCurrentViewState().copy(progressBarVisibility = visible)
+    }
+
+    private fun loginPasswordEnable(enabled: Boolean) {
+        uiState.value = getCurrentViewState().copy(loginAndPasswordFieldsEnable = enabled)
+    }
+
+    private fun enterButtonEnable(enabled: Boolean) {
+        uiState.value = getCurrentViewState().copy(enterButtonEnable = enabled)
+    }
+
+    private fun getCurrentViewState(): LoginViewState {
+        val loginViewState = uiState.value
+        if (loginViewState != null) {
+            return loginViewState
+        } else {
+            return LoginViewState()
         }
     }
 }

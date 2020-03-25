@@ -37,6 +37,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     private fun observeViewModel() {
         viewModel.uiCommand.observe(viewLifecycleOwner, ::handleViewCommand)
+        viewModel.uiState.observe(viewLifecycleOwner, ::handleViewState)
     }
 
     private fun initView() {
@@ -87,20 +88,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     private fun handleViewCommand(viewCommand: LoginViewCommand) {
         when (viewCommand) {
-            is LoginViewCommand.ChangeProgressBarVisibility -> {
-                login_progress_bar.visibility =
-                    if (viewCommand.visible) View.VISIBLE else View.INVISIBLE
-            }
-            is LoginViewCommand.ChangeEnterButtonEnable -> {
-                login_enter_button.isEnabled = viewCommand.enabled
-            }
-            is LoginViewCommand.ChangeLoginPasswordFieldsEnable -> {
-                login_login_text_input_layout.isEnabled = viewCommand.enabled
-                login_password_text_input_layout.isEnabled = viewCommand.enabled
-            }
-            is LoginViewCommand.ShowErrorMessage -> {
-                login_error_text_view.setText(viewCommand.resId)
-            }
             is LoginViewCommand.NavigateToNextScreen -> {
                 /**
                  * Заглушка
@@ -108,6 +95,24 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                  */
                 requireActivity().finish()
             }
+        }
+    }
+
+    private fun handleViewState(viewState: LoginViewState) {
+        when (viewState.progressBarVisibility) {
+            true -> login_progress_bar.visibility = View.VISIBLE
+            false -> login_progress_bar.visibility = View.GONE
+        }
+
+        login_enter_button.isEnabled = viewState.enterButtonEnable
+
+        login_login_text_input_layout.isEnabled = viewState.loginAndPasswordFieldsEnable
+        login_password_text_input_layout.isEnabled = viewState.loginAndPasswordFieldsEnable
+
+        if (viewState.errorMessage != null) {
+            login_error_text_view.setText(viewState.errorMessage)
+        } else {
+            login_error_text_view.text = null
         }
     }
 }

@@ -1,4 +1,6 @@
-package com.haraev.core
+package com.haraev.core.common
+
+import com.haraev.core.BuildConfig
 
 /**
  * API ключ для запросов к https://api.themoviedb.org/

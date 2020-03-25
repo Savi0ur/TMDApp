@@ -2,6 +2,7 @@ package com.haraev.core.di.component
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.di.module.CoreDataModule
@@ -53,4 +54,6 @@ interface CoreComponent {
     fun provideSessionLocalDataSource(): SessionLocalDataSource
 
     fun provideSharedPreferences(): SharedPreferences
+
+    fun provideThreadScheduler(): ThreadScheduler
 }
