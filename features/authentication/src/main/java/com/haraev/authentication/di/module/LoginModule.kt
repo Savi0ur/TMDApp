@@ -29,7 +29,8 @@ class LoginModule {
     @Provides
     fun provideLoginViewModelFactory(
         loginUseCase: LoginUseCase,
-        threadScheduler: ThreadScheduler): LoginViewModelFactory {
+        threadScheduler: ThreadScheduler
+    ): LoginViewModelFactory {
         return LoginViewModelFactory(loginUseCase, threadScheduler)
     }
 }
