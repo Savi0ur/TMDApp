@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
 
 apply from: rootProject.file('dependencies.gradle')
 
@@ -16,6 +17,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -35,6 +37,22 @@ android {
         jvmTarget = "1.8"
     }
 
+    sourceSets.each {
+        it.java.srcDirs += "src/$it.name/kotlin"
+    }
+
+    testOptions {
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek2'
+                }
+            }
+        }
+        unitTests.all {
+            testLogging.events = ["passed", "skipped", "failed"]
+        }
+    }
 }
 
 dependencies {
@@ -43,9 +61,6 @@ dependencies {
     implementation deps.stdlib
     implementation deps.core_ktx
     implementation deps.constraint_layout
-    testImplementation deps.junit
-    androidTestImplementation deps.ext_junit
-    androidTestImplementation deps.espresso
 
     // Material components
     implementation deps.material_material
@@ -76,4 +91,30 @@ dependencies {
 
     // Timber
     implementation deps.timber
+
+    // LoggingInterceptor
+    implementation (deps.logging_interceptor) {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    // Spek 2
+    testImplementation deps.spek2_jvm
+    testImplementation deps.spek2_junit5
+
+    // Kotlin reflect for Spek 2
+    testImplementation deps.kotlin_reflect
+
+    // Junit 5
+    androidTestImplementation deps.android_test_runner
+    androidTestImplementation deps.junit5_core
+    androidTestRuntimeOnly deps.junit5_runner
+
+    // AssertJ
+    testImplementation deps.assertJ
+
+    // MockitoKotlin
+    testImplementation deps.mockitoKotlin
+
+    // MockWebServer
+    testImplementation deps.mockWebServer
 }
