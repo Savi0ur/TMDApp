@@ -1,5 +1,6 @@
 package com.haraev.tmdapp.ui
 
+import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode
 import com.nhaarman.mockitokotlin2.doReturn
@@ -20,22 +21,24 @@ object MainViewModelTest : Spek({
     }
     //endregion
 
-    Feature("navigation commands") {
+    Feature("mainViewModel") {
 
         Scenario("launch while session id is null") {
 
-            lateinit var mainViewModel : MainViewModel
+            //region Fields
+            lateinit var mainViewModel: MainViewModel
+
+            lateinit var sessionLocalDataSource: SessionLocalDataSource
+            //endregion
 
             Given("session local data source with session id null") {
-                mainViewModel = MainViewModel(
-                    sessionLocalDataSource =  mock {
-                        on { sessionId } doReturn(null)
-                    }
-                )
+                sessionLocalDataSource = mock {
+                    on { sessionId } doReturn (null)
+                }
             }
 
-            When("get navigation state") {
-                mainViewModel.getNavigationState()
+            When("init MainViewModel") {
+                mainViewModel = MainViewModel(sessionLocalDataSource)
             }
 
             Then("ui command should be OpenLoginScreen") {
@@ -50,19 +53,21 @@ object MainViewModelTest : Spek({
 
         Scenario("launch while session id is not null") {
 
-            lateinit var mainViewModel : MainViewModel
+            //region Fields
+            lateinit var mainViewModel: MainViewModel
+
+            lateinit var sessionLocalDataSource: SessionLocalDataSource
+            //endregion
 
             Given("session local data source with session id not null") {
                 val sId = "17d3a37a679d07ecf27ce31f6a1eab75fd638cf5"
-                mainViewModel = MainViewModel(
-                    sessionLocalDataSource =  mock {
-                        on { sessionId } doReturn(sId)
-                    }
-                )
+                sessionLocalDataSource = mock {
+                    on { sessionId } doReturn (sId)
+                }
             }
 
-            When("get navigation state") {
-                mainViewModel.getNavigationState()
+            When("init MainViewModel") {
+                mainViewModel = MainViewModel(sessionLocalDataSource)
             }
 
             Then("ui command should be OpenSearchScreen") {

@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         observeViewModel()
-
-        viewModel.getNavigationState()
     }
 
     private fun observeViewModel() {

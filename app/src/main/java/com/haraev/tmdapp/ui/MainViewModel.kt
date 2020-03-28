@@ -11,7 +11,7 @@ class MainViewModel @Inject constructor(
 
     val uiCommand = MutableLiveData<MainViewCommand>()
 
-    fun getNavigationState() {
+    init {
         if (isSessionIdExist()) {
             navigateToSearchScreen()
         } else {
