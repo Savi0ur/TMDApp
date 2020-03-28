@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply from: rootProject.file('dependencies.gradle')
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation project(":core")
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.3.3'
+
+
+    implementation deps.stdlib
+    implementation deps.core_ktx
+
+    // Navigation components
+    implementation deps.navigation_fragment
+    implementation deps.navigation_ui
+
+    // RxJava 2
+    implementation deps.rxjava2_rxjava
+    implementation deps.rxjava2_rxandroid
+
+    // Moshi
+    implementation deps.moshi_kotlin
+    kapt deps.moshi_codegen
+
+    // OkHttp 3
+    implementation deps.okhttp
+
+    // Retrofit 2
+    implementation deps.retrofit_retrofit
+    implementation deps.retrofit_converter_moshi
+    implementation deps.retrofit_adapter_rxjava2
+}

@@ -1,21 +1,19 @@
 package com.haraev.authentication.presentation
 
-import com.haraev.authentication.R
-import com.haraev.authentication.TestThreadScheduler
+import com.haraev.test.rxjava.TestThreadScheduler
 import com.haraev.authentication.data.LoginRepositoryImpl
-import com.haraev.authentication.disableTestMode
 import com.haraev.authentication.domain.repository.LoginRepository
 import com.haraev.authentication.domain.usecase.LoginUseCase
-import com.haraev.authentication.enableTestMode
-import com.haraev.core.data.api.ErrorHandlingInterceptor
 import com.haraev.core.data.api.LoginService
+import com.haraev.core.data.exception.NetworkException
+import com.haraev.test.aac.disableTestMode
+import com.haraev.test.aac.enableTestMode
+import com.haraev.test.okhttp.getTestRetrofit
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
-import com.squareup.moshi.Moshi
 import io.reactivex.Completable
 import io.reactivex.schedulers.TestScheduler
-import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -23,9 +21,6 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.net.HttpURLConnection
 
 object LoginViewModelTest : Spek({
@@ -41,10 +36,12 @@ object LoginViewModelTest : Spek({
 
         val testScheduler = TestScheduler()
 
-        val loginViewModel = LoginViewModel(
-            loginUseCase,
-            TestThreadScheduler(testScheduler)
-        )
+        val loginViewModel by memoized {
+            LoginViewModel(
+                loginUseCase,
+                TestThreadScheduler(testScheduler)
+            )
+        }
 
         beforeEachScenario {
             enableTestMode()
@@ -74,9 +71,9 @@ object LoginViewModelTest : Spek({
             Then("ui state enter button should be true") {
                 val uiState = loginViewModel.uiState.value
 
-                val exceptedState = LoginViewState(enterButtonEnable = true)
+                val expectedState = LoginViewState(enterButtonEnable = true)
 
-                assertThat(uiState).isEqualTo(exceptedState)
+                assertThat(uiState).isEqualTo(expectedState)
             }
         }
 
@@ -99,9 +96,9 @@ object LoginViewModelTest : Spek({
             Then("ui state enter button should be false") {
                 val uiState = loginViewModel.uiState.value
 
-                val exceptedState = LoginViewState(enterButtonEnable = false)
+                val expectedState = LoginViewState(enterButtonEnable = false)
 
-                assertThat(uiState).isEqualTo(exceptedState)
+                assertThat(uiState).isEqualTo(expectedState)
             }
         }
 
@@ -124,9 +121,9 @@ object LoginViewModelTest : Spek({
             Then("ui state enter button should be false") {
                 val uiState = loginViewModel.uiState.value
 
-                val exceptedState = LoginViewState(enterButtonEnable = false)
+                val expectedState = LoginViewState(enterButtonEnable = false)
 
-                assertThat(uiState).isEqualTo(exceptedState)
+                assertThat(uiState).isEqualTo(expectedState)
             }
         }
 
@@ -153,13 +150,13 @@ object LoginViewModelTest : Spek({
             Then("show progress bar, disable enter button, disable login and password fields") {
                 val uiState = loginViewModel.uiState.value
 
-                val exceptedState = LoginViewState(
+                val expectedState = LoginViewState(
                     progressBarVisibility = true,
                     enterButtonEnable = false,
                     loginAndPasswordFieldsEnable = false
                 )
 
-                assertThat(uiState).isEqualTo(exceptedState)
+                assertThat(uiState).isEqualTo(expectedState)
             }
 
         }
@@ -171,11 +168,7 @@ object LoginViewModelTest : Spek({
         //region Fields and functions
         lateinit var mockServer: MockWebServer
 
-        lateinit var loginService: LoginService
-
         lateinit var loginRepository: LoginRepository
-
-        lateinit var loginViewModel: LoginViewModel
 
         beforeEachScenario {
             enableTestMode()
@@ -185,32 +178,14 @@ object LoginViewModelTest : Spek({
                     start()
                 }
 
-            val moshi = Moshi.Builder().build()
+            val baseUrl = mockServer.url("/")
 
-            val errorInterceptor = ErrorHandlingInterceptor(moshi)
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(errorInterceptor)
-                .build()
-
-            loginService = Retrofit.Builder()
-                .baseUrl(mockServer.url("/"))
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
+            val loginService = getTestRetrofit(baseUrl)
                 .create(LoginService::class.java)
 
             loginRepository = LoginRepositoryImpl(
                 loginService,
                 mock()
-            )
-
-            loginViewModel = LoginViewModel(
-                loginUseCase = LoginUseCase(
-                    loginRepository
-                ),
-                scheduler = TestThreadScheduler()
             )
         }
 
@@ -221,7 +196,7 @@ object LoginViewModelTest : Spek({
         }
         //endregion
 
-        Scenario("enterButtonClicked with wrong login data") {
+        Scenario("login with wrong login data") {
 
             //region Fields
             val login = "bob123"
@@ -243,7 +218,9 @@ object LoginViewModelTest : Spek({
              "status_message": "Invalid username and/or password: You did not provide a valid login."
            }
             """.trimIndent()
+            lateinit var loginResult: Completable
             //endregion
+
 
             Given("wrong login and password, 401 response") {
 
@@ -266,21 +243,21 @@ object LoginViewModelTest : Spek({
 
             }
 
-            When("click enter button") {
-                loginViewModel.enterButtonClicked(login, password)
+            When("complete login process") {
+                loginResult = loginRepository.login(login, password)
             }
 
-            Then("ui state should show wrong_login_or_password error message") {
-                val uiState = loginViewModel.uiState.value
+            Then("result should be error with status and message") {
 
-                val exceptedState = LoginViewState(
-                    progressBarVisibility = false,
-                    enterButtonEnable = true,
-                    loginAndPasswordFieldsEnable = true,
-                    errorMessage = R.string.wrong_login_or_password
+                val expectedResult = NetworkException(
+                    30,
+                    "Invalid username and/or password: You did not provide a valid login."
                 )
 
-                assertThat(uiState).isEqualTo(exceptedState)
+                val actualResult = loginResult
+                    .blockingGet()
+
+                assertThat(expectedResult).isEqualTo(actualResult)
             }
 
         }
@@ -316,6 +293,8 @@ object LoginViewModelTest : Spek({
                  "session_id": "17d3a37a679d07ecf27ce31f6a1eab75fd638cf5"
                }
             """.trimIndent()
+
+            lateinit var loginResult: Completable
             //endregion
 
             Given("correct login and password, 200 response") {
@@ -343,26 +322,15 @@ object LoginViewModelTest : Spek({
             }
 
             When("click enter button") {
-                loginViewModel.enterButtonClicked(login, password)
+                loginResult = loginRepository.login(login, password)
             }
 
             Then("ui state should show default state with enabled enter button") {
-                val uiState = loginViewModel.uiState.value
+                val actualResult = loginResult.blockingGet()
 
-                val exceptedState = LoginViewState(enterButtonEnable = true)
-
-                assertThat(uiState).isEqualTo(exceptedState)
-            }
-
-            And("ui command should be NavigateToNextScreen") {
-                val uiCommand = loginViewModel.uiCommand.value
-
-                val exceptedCommand = LoginViewCommand.NavigateToNextScreen
-
-                assertThat(uiCommand).isEqualTo(exceptedCommand)
+                assertThat(actualResult).isNull()
             }
 
         }
-
     }
 })

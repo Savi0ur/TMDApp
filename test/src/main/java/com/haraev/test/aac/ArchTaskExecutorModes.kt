@@ -1,8 +1,10 @@
-package com.haraev.authentication
+package com.haraev.test.aac
 
+import android.annotation.SuppressLint
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.arch.core.executor.TaskExecutor
 
+@SuppressLint("RestrictedApi")
 fun enableTestMode() {
     ArchTaskExecutor.getInstance()
         .setDelegate(object : TaskExecutor() {
@@ -20,6 +22,7 @@ fun enableTestMode() {
         })
 }
 
+@SuppressLint("RestrictedApi")
 fun disableTestMode() {
     ArchTaskExecutor.getInstance().setDelegate(null)
 }

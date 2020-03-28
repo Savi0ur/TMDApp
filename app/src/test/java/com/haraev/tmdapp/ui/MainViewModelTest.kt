@@ -1,25 +1,26 @@
 package com.haraev.tmdapp.ui
 
-import com.haraev.tmdapp.disableTestMode
-import com.haraev.tmdapp.enableTestMode
+import com.haraev.test.aac.disableTestMode
+import com.haraev.test.aac.enableTestMode
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import org.assertj.core.api.Assertions.*
 
-object MainViewModeTest : Spek({
+object MainViewModelTest : Spek({
+
+    //region Fields and functions
+    beforeEachGroup {
+        enableTestMode()
+    }
+
+    afterEachGroup {
+        disableTestMode()
+    }
+    //endregion
+
     Feature("navigation commands") {
-
-        //region Fields and functions
-        beforeEachScenario {
-            enableTestMode()
-        }
-
-        afterEachScenario {
-            disableTestMode()
-        }
-        //endregion
 
         Scenario("launch while session id is null") {
 
@@ -40,9 +41,9 @@ object MainViewModeTest : Spek({
             Then("ui command should be OpenLoginScreen") {
                 val uiCommand = mainViewModel.uiCommand.value
 
-                val exceptedState = MainViewCommand.OpenLoginScreen
+                val expectedState = MainViewCommand.OpenLoginScreen
 
-                assertThat(uiCommand).isEqualTo(exceptedState)
+                assertThat(uiCommand).isEqualTo(expectedState)
             }
 
         }
@@ -67,9 +68,9 @@ object MainViewModeTest : Spek({
             Then("ui command should be OpenSearchScreen") {
                 val uiCommand = mainViewModel.uiCommand.value
 
-                val exceptedState = MainViewCommand.OpenSearchScreen
+                val expectedState = MainViewCommand.OpenSearchScreen
 
-                assertThat(uiCommand).isEqualTo(exceptedState)
+                assertThat(uiCommand).isEqualTo(expectedState)
             }
 
         }

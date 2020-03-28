@@ -58,6 +58,7 @@ android {
 dependencies {
     implementation project(":core")
     implementation project(":features:authentication")
+    testImplementation project(":test")
 
     implementation deps.stdlib
     implementation deps.core_ktx

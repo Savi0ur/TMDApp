@@ -1,4 +1,4 @@
-package com.haraev.authentication
+package com.haraev.test.rxjava
 
 import com.haraev.core.common.ThreadScheduler
 import io.reactivex.Scheduler
