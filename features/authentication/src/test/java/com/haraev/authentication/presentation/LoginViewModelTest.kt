@@ -15,6 +15,16 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 object LoginViewModelTest : Spek({
 
+    //region Fields and functions
+    beforeEachGroup {
+        enableTestMode()
+    }
+
+    afterEachGroup {
+        disableTestMode()
+    }
+    //endregion
+
     Feature("loginViewModel") {
 
         //region Fields and functions
@@ -29,14 +39,6 @@ object LoginViewModelTest : Spek({
                 loginUseCase,
                 TestThreadScheduler(testScheduler)
             )
-        }
-
-        beforeEachScenario {
-            enableTestMode()
-        }
-
-        afterEachScenario {
-            disableTestMode()
         }
         //endregion
 

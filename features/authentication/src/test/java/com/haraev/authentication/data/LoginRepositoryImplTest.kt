@@ -3,7 +3,7 @@ package com.haraev.authentication.data
 import com.haraev.authentication.domain.repository.LoginRepository
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.data.exception.NetworkException
-import com.haraev.test.okhttp.getTestRetrofit
+import com.haraev.test.retofit.getTestRetrofit
 import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Completable
 import okhttp3.mockwebserver.Dispatcher
@@ -105,8 +105,7 @@ object LoginRepositoryImplTest : Spek({
                     "Invalid username and/or password: You did not provide a valid login."
                 )
 
-                val actualResult = loginResult
-                    .blockingGet()
+                val actualResult = loginResult.blockingGet()
 
                 Assertions.assertThat(expectedResult).isEqualTo(actualResult)
             }
@@ -172,11 +171,11 @@ object LoginRepositoryImplTest : Spek({
 
             }
 
-            When("click enter button") {
+            When("complete login process") {
                 loginResult = loginRepository.login(login, password)
             }
 
-            Then("ui state should show default state with enabled enter button") {
+            Then("result shoult be null") {
                 val actualResult = loginResult.blockingGet()
 
                 Assertions.assertThat(actualResult).isNull()

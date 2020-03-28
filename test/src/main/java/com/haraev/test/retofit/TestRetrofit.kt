@@ -1,4 +1,4 @@
-package com.haraev.test.okhttp
+package com.haraev.test.retofit
 
 import com.haraev.core.data.api.ErrorHandlingInterceptor
 import com.squareup.moshi.Moshi
