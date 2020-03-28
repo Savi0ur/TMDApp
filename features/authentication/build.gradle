@@ -1,59 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: "de.mannodermaus.android-junit5"
-
-apply from: rootProject.file('dependencies.gradle')
-
-android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion "29.0.2"
-
-    defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
-        consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    sourceSets.each {
-        it.java.srcDirs += "src/$it.name/kotlin"
-    }
-
-    testOptions {
-        junitPlatform {
-            filters {
-                engines {
-                    include 'spek2'
-                }
-            }
-        }
-        unitTests.all {
-            testLogging.events = ["passed", "skipped", "failed"]
-        }
-    }
-}
+apply from: rootProject.file('base.gradle')
 
 dependencies {
     implementation project(":core")
@@ -97,25 +43,4 @@ dependencies {
     implementation (deps.logging_interceptor) {
         exclude group: 'org.json', module: 'json'
     }
-
-    // Spek 2
-    testImplementation deps.spek2_jvm
-    testImplementation deps.spek2_junit5
-
-    // Kotlin reflect for Spek 2
-    testImplementation deps.kotlin_reflect
-
-    // Junit 5
-    androidTestImplementation deps.android_test_runner
-    androidTestImplementation deps.junit5_core
-    androidTestRuntimeOnly deps.junit5_runner
-
-    // AssertJ
-    testImplementation deps.assertJ
-
-    // MockitoKotlin
-    testImplementation deps.mockitoKotlin
-
-    // MockWebServer
-    testImplementation deps.mockWebServer
 }

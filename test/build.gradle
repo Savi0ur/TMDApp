@@ -1,39 +1,8 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-
-apply from: rootProject.file('dependencies.gradle')
-
-android {
-    compileSdkVersion versions.compileSdk
-    buildToolsVersion "29.0.2"
-
-    defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-}
+apply from: rootProject.file('base.gradle')
 
 dependencies {
     implementation project(":core")
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.3.3'
-
 
     implementation deps.stdlib
     implementation deps.core_ktx
