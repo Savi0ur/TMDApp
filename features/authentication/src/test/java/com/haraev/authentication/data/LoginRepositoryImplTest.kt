@@ -10,7 +10,7 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.net.HttpURLConnection
@@ -107,7 +107,7 @@ object LoginRepositoryImplTest : Spek({
 
                 val actualResult = loginResult.blockingGet()
 
-                Assertions.assertThat(expectedResult).isEqualTo(actualResult)
+                assertThat(expectedResult).isEqualTo(actualResult)
             }
 
         }
@@ -178,7 +178,7 @@ object LoginRepositoryImplTest : Spek({
             Then("result shoult be null") {
                 val actualResult = loginResult.blockingGet()
 
-                Assertions.assertThat(actualResult).isNull()
+                assertThat(actualResult).isNull()
             }
 
         }

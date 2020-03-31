@@ -12,11 +12,11 @@ import org.assertj.core.api.Assertions.*
 object MainViewModelTest : Spek({
 
     //region Fields and functions
-    beforeEachGroup {
+    beforeGroup {
         enableTestMode()
     }
 
-    afterEachGroup {
+    afterGroup {
         disableTestMode()
     }
     //endregion
