@@ -1,10 +1,14 @@
 package com.haraev.authentication.data
 
 import com.haraev.authentication.domain.repository.LoginRepository
+import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.data.exception.NetworkException
 import com.haraev.test.retofit.getTestRetrofit
+import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import io.reactivex.Completable
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -15,7 +19,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.net.HttpURLConnection
 
-object LoginRepositoryImplTest : Spek({
+object LoginRepositoryIntegrationTest : Spek({
 
     Feature("login") {
 
@@ -23,6 +27,12 @@ object LoginRepositoryImplTest : Spek({
         lateinit var mockServer: MockWebServer
 
         lateinit var loginRepository: LoginRepository
+
+        val sessionLocalDataSource = mock<SessionLocalDataSource> {
+            on { sessionId } doReturn null
+            on { userLogin } doReturn null
+            on { userPassword } doReturn null
+        }
 
         beforeEachScenario {
 
@@ -38,7 +48,7 @@ object LoginRepositoryImplTest : Spek({
 
             loginRepository = LoginRepositoryImpl(
                 loginService,
-                mock()
+                sessionLocalDataSource
             )
         }
 
@@ -110,13 +120,19 @@ object LoginRepositoryImplTest : Spek({
                 assertThat(expectedResult).isEqualTo(actualResult)
             }
 
+            And("should be zero interactions with sessionLocalDataSource") {
+                verifyZeroInteractions(sessionLocalDataSource)
+            }
+
         }
 
-        Scenario("enterButtonClicked with correct login data") {
+        Scenario("login with correct login data") {
 
             //region Fields
             val login = "bob123"
             val password = "bob123"
+            val newSessionId = "17d3a37a679d07ecf27ce31f6a1eab75fd638cf5"
+
             val tokenUrlPath = "/authentication/token/new"
             val tokenResponseCode = HttpURLConnection.HTTP_OK
             val tokenResponseBody = """
@@ -140,7 +156,7 @@ object LoginRepositoryImplTest : Spek({
             val newSessionResponseBody = """
                {
                  "success": true,
-                 "session_id": "17d3a37a679d07ecf27ce31f6a1eab75fd638cf5"
+                 "session_id": "$newSessionId"
                }
             """.trimIndent()
 
@@ -179,6 +195,18 @@ object LoginRepositoryImplTest : Spek({
                 val actualResult = loginResult.blockingGet()
 
                 assertThat(actualResult).isNull()
+            }
+
+            And("sessionId should save in sessionLocalDataSource") {
+                verify(sessionLocalDataSource).sessionId = newSessionId
+            }
+
+            And("userLogin should save in sessionLocalDataSource") {
+                verify(sessionLocalDataSource).userLogin = login
+            }
+
+            And("userPassword should save in sessionLocalDataSource") {
+                verify(sessionLocalDataSource).userPassword = password
             }
 
         }
