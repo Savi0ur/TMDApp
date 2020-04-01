@@ -11,6 +11,7 @@ import com.haraev.core.navigation.NavigationActivity
 import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R
 import com.haraev.main.di.component.MainFeatureComponent
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
@@ -52,7 +53,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun onEvent(event: Event) {
         when (event) {
             is ProfileEvents.Logout -> (requireActivity() as NavigationActivity).navigateToLoginScreen()
-            is ProfileEvents.ErrorMessage -> showErrorMessage(event.messageResId, profile_logout_button)
+            is ProfileEvents.ErrorMessage -> showErrorMessage(event.messageResId, bottom_navigation)
         }
     }
 

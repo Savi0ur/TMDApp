@@ -2,4 +2,9 @@
 <resources>
     <string name="exit">Выйти</string>
     <string name="unknown_error_message">Что-то пошло не так, попробуйте позже</string>
+    <string name="movie_search">Поиск фильмов</string>
+    <string name="movies">Фильмы</string>
+    <string name="favorite">Избранное</string>
+    <string name="profile">Профиль</string>
+    <string name="movies_not_found">По вашему запросу ничего не найдено :(</string>
 </resources>

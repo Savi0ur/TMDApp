@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/search_graph"
-        android:icon="@drawable/ic_movie"
-        android:title="Фильмы" />
+        android:icon="@drawable/drawable_tab_icon_movies"
+        android:title="@string/movies" />
 
     <item
         android:id="@+id/favorite_graph"
-        android:icon="@drawable/ic_favorite"
-        android:title="Избранное" />
+        android:icon="@drawable/drawable_tab_icon_favorite"
+        android:title="@string/favorite" />
 
     <item
         android:id="@+id/profile_graph"
-        android:icon="@drawable/ic_profile"
-        android:title="Профиль" />
+        android:icon="@drawable/drawable_tab_icon_profile"
+        android:title="@string/profile" />
 
 </menu>

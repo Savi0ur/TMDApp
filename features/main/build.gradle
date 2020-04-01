@@ -1,6 +1,14 @@
 apply plugin: 'com.android.library'
 apply from: rootProject.file('base.gradle')
 
+android {
+
+    androidExtensions {
+        experimental = true
+    }
+    
+}
+
 dependencies {
     implementation project(":core")
     testImplementation project(":test")
@@ -24,6 +32,9 @@ dependencies {
     implementation deps.rxjava2_rxjava
     implementation deps.rxjava2_rxandroid
 
+    // RxBinding
+    implementation deps.rxbinding_rxbinding
+
     // Moshi
     implementation deps.moshi_kotlin
     kapt deps.moshi_codegen
@@ -43,4 +54,7 @@ dependencies {
     implementation (deps.logging_interceptor) {
         exclude group: 'org.json', module: 'json'
     }
+
+    // Picasso
+    implementation deps.picasso
 }

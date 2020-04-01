@@ -4,7 +4,9 @@ import com.haraev.core.di.component.CoreComponent
 import com.haraev.core.di.scope.FeatureModuleScope
 import com.haraev.main.di.module.NetworkModule
 import com.haraev.main.di.module.ProfileModule
+import com.haraev.main.di.module.SearchModule
 import com.haraev.main.presentation.profile.ProfileFragment
+import com.haraev.main.presentation.search.SearchFragment
 import dagger.Component
 
 @FeatureModuleScope
@@ -12,6 +14,7 @@ import dagger.Component
     modules =
     [
         ProfileModule::class,
+        SearchModule::class,
         NetworkModule::class
     ],
     dependencies =
@@ -20,6 +23,8 @@ import dagger.Component
 interface MainFeatureComponent {
 
     fun inject(target: ProfileFragment)
+
+    fun inject(target: SearchFragment)
 
     class Builder private constructor() {
 

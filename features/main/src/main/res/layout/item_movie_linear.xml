@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    tools:background="@color/colorBackgroundBlack">
+
+    <ImageView
+        android:id="@+id/movie_image"
+        android:layout_width="64dp"
+        android:layout_height="96dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/drawable_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:transitionName="movie_title"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/movie_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Джентельмены" />
+
+    <TextView
+        android:id="@+id/movie_original_title_with_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorDarkGrey"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/movie_image"
+        app:layout_constraintTop_toBottomOf="@id/movie_title"
+        tools:text="The Gentelmen (2020)" />
+
+    <TextView
+        android:id="@+id/movie_genres"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/movie_image"
+        app:layout_constraintTop_toBottomOf="@id/movie_original_title_with_year"
+        tools:text="боевик, комедия, криминал" />
+
+    <TextView
+        android:id="@+id/movie_vote_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorGreen"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/movie_image"
+        app:layout_constraintEnd_toStartOf="@id/movie_vote_count"
+        app:layout_constraintStart_toEndOf="@id/movie_image"
+        app:layout_constraintTop_toBottomOf="@id/movie_genres"
+        tools:text="8.7" />
+
+    <TextView
+        android:id="@+id/movie_vote_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:textColor="@color/colorDarkGrey"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/movie_vote_average"
+        app:layout_constraintStart_toEndOf="@id/movie_vote_average"
+        tools:text="59 286" />
+
+    <TextView
+        android:id="@+id/movie_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_movie_duration"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/movie_vote_average"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/movie_vote_average"
+        tools:text="103 мин" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

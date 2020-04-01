@@ -6,5 +6,17 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.haraev.main.presentation.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.haraev.main.presentation.moviedetails.MovieDetailsFragment"
+        android:label="MovieDetailsFragment" >
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
+    </fragment>
 </navigation>
