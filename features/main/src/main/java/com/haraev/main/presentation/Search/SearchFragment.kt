@@ -1,4 +1,4 @@
-package com.haraev.main.presentation.Search
+package com.haraev.main.presentation.search
 
 import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R

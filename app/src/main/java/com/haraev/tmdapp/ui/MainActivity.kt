@@ -29,6 +29,11 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
         observeViewModel()
     }
 
+    override fun navigateToLoginScreen() {
+        Navigation.findNavController(this, R.id.nav_host_fragment)
+            .setGraph(R.navigation.login_nav_graph)
+    }
+
     override fun navigateToMainScreen() {
         Navigation.findNavController(this, R.id.nav_host_fragment)
             .setGraph(R.navigation.main_graph)
@@ -45,10 +50,6 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
                     .setGraph(R.navigation.login_nav_graph)
             }
             is MainViewCommand.OpenSearchScreen -> {
-                /**
-                 * Заглушка
-                 * TODO Переход на основной экран при наличии sessionId
-                 */
                 Navigation.findNavController(this, R.id.nav_host_fragment)
                     .setGraph(R.navigation.main_graph)
             }

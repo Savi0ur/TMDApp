@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.haraev.main.presentation.Favorite.FavoriteFragment"
+        android:name="com.haraev.main.presentation.favorite.FavoriteFragment"
         android:label="FavoriteFragment" />
 </navigation>

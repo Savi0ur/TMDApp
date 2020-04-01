@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.haraev.main.presentation.Search.SearchFragment"
+        android:name="com.haraev.main.presentation.search.SearchFragment"
         android:label="SearchFragment" />
 </navigation>

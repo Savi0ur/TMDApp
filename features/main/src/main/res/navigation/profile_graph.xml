@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.haraev.main.presentation.Profile.ProfileFragment"
+        android:name="com.haraev.main.presentation.profile.ProfileFragment"
         android:label="ProfileFragment" />
 </navigation>

@@ -17,5 +17,6 @@
 
     <color name="disabled_btn_bg">#E6232636</color>
     <color name="bottom_navigation_bar_bg">#282C3F</color>
+    <color name="colorSnackbarBlack">#0C0C0E</color>
 
 </resources>

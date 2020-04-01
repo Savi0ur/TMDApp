@@ -16,7 +16,14 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [CoreNetworkModule::class, SharedPreferencesModule::class, CoreDataModule::class])
+@Component(
+    modules =
+    [
+        CoreNetworkModule::class,
+        SharedPreferencesModule::class,
+        CoreDataModule::class
+    ]
+)
 interface CoreComponent {
 
     @Component.Builder
@@ -44,8 +51,11 @@ interface CoreComponent {
         }
     }
 
-    @Named("ClientWithOutAuthenticator")
-    fun provideOkHttpClient(): OkHttpClient
+    @Named("ClientWithoutAuthenticator")
+    fun provideOkHttpClientWithoutAuthenticator(): OkHttpClient
+
+    @Named("ClientWithAuthenticator")
+    fun provideOkHttpClientWithAuthenticator(): OkHttpClient
 
     fun provideLoginService(): LoginService
 

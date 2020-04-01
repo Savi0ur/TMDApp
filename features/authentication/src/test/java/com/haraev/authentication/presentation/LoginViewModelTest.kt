@@ -16,11 +16,11 @@ import org.spekframework.spek2.style.gherkin.Feature
 object LoginViewModelTest : Spek({
 
     //region Fields and functions
-    beforeGroup {
+    beforeEachGroup {
         enableTestMode()
     }
 
-    afterGroup {
+    afterEachGroup {
         disableTestMode()
     }
     //endregion

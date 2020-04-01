@@ -1,4 +1,4 @@
-package com.haraev.main.presentation.Favorite
+package com.haraev.main.presentation.favorite
 
 import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R

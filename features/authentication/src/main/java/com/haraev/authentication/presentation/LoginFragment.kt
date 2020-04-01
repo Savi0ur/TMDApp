@@ -6,9 +6,9 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
+import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.navigation.NavigationActivity
 import com.haraev.core.ui.BaseFragment
@@ -23,7 +23,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
-        LoginComponent.Builder.build((requireActivity().application as CoreComponentProvider).getCoreComponent())
+        LoginComponent.Builder.build((requireActivity().application as CoreComponentProvider)
+                .getCoreComponent())
             .inject(this)
 
         super.onAttach(context)
@@ -37,8 +38,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.uiCommand.observe(viewLifecycleOwner, ::handleViewCommand)
-        viewModel.uiState.observe(viewLifecycleOwner, ::handleViewState)
+        observe(viewModel.uiCommand, ::handleViewCommand)
+        observe(viewModel.uiState, ::handleViewState)
     }
 
     private fun initView() {
@@ -103,7 +104,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private fun handleViewState(viewState: LoginViewState) {
         when (viewState.progressBarVisibility) {
             true -> login_progress_bar.visibility = View.VISIBLE
-            false -> login_progress_bar.visibility = View.GONE
+            false -> login_progress_bar.visibility = View.INVISIBLE
         }
 
         login_enter_button.isEnabled = viewState.enterButtonEnable

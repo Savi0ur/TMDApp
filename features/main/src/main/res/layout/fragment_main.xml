@@ -22,6 +22,9 @@
         android:layout_height="wrap_content"
         app:menu="@menu/menu_bottom_navigation"
         android:padding="6dp"
+        android:background="@color/bottom_navigation_bar_bg"
+        app:itemIconTint="@color/bottom_navigation_tabs_selector"
+        app:itemTextColor="@color/bottom_navigation_tabs_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

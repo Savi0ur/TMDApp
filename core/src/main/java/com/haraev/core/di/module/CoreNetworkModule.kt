@@ -48,7 +48,7 @@ class CoreNetworkModule {
             loginService
         )
 
-    @Named("ClientWithOutAuthenticator")
+    @Named("ClientWithoutAuthenticator")
     @Provides
     fun provideOkHttpClient(
         errorHandlingInterceptor: ErrorHandlingInterceptor,
@@ -74,7 +74,7 @@ class CoreNetworkModule {
 
     @Provides
     fun provideLoginService(
-        @Named("ClientWithOutAuthenticator")
+        @Named("ClientWithoutAuthenticator")
         client: OkHttpClient
     ) : LoginService =
         Retrofit.Builder()

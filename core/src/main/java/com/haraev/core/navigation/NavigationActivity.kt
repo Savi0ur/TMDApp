@@ -4,4 +4,6 @@ interface NavigationActivity {
 
     fun navigateToMainScreen()
 
+    fun navigateToLoginScreen()
+
 }
