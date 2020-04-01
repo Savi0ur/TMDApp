@@ -41,7 +41,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun setupLogoutButton() {
-        profile_logout_button.setOnClickListener { viewModel.logout() }
+        profile_logout_button.setOnClickListener { viewModel.exitButtonClicked() }
     }
 
     private fun observeViewModel() {

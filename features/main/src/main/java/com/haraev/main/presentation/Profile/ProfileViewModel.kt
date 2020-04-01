@@ -24,8 +24,12 @@ class ProfileViewModel @Inject constructor(
         loadProfileInfo()
     }
 
-    fun logout() {
+    fun exitButtonClicked() {
         changeProgressBarState(true)
+        logout()
+    }
+
+   private fun logout() {
         profileUseCase.logout()
             .scheduleIoToUi(scheduler)
             .subscribe({

@@ -94,7 +94,7 @@ object LoginRepositoryImplTest : Spek({
 
             }
 
-            When("complete login process") {
+            When("login") {
                 loginResult = loginRepository.login(login, password)
             }
 
@@ -105,8 +105,7 @@ object LoginRepositoryImplTest : Spek({
                     "Invalid username and/or password: You did not provide a valid login."
                 )
 
-                val actualResult = loginResult
-                    .blockingGet()
+                val actualResult = loginResult.blockingGet()
 
                 Assertions.assertThat(expectedResult).isEqualTo(actualResult)
             }
@@ -172,11 +171,11 @@ object LoginRepositoryImplTest : Spek({
 
             }
 
-            When("click enter button") {
+            When("login") {
                 loginResult = loginRepository.login(login, password)
             }
 
-            Then("ui state should show default state with enabled enter button") {
+            Then("result should be null") {
                 val actualResult = loginResult.blockingGet()
 
                 Assertions.assertThat(actualResult).isNull()
