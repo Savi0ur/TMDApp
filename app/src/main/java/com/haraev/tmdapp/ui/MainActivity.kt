@@ -6,11 +6,12 @@ import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.haraev.core.di.provider.CoreComponentProvider
+import com.haraev.core.navigation.NavigationActivity
 import com.haraev.tmdapp.R
 import com.haraev.tmdapp.di.component.MainComponent
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationActivity {
 
     @Inject
     lateinit var viewModelFactory: MainViewModelFactory
@@ -28,6 +29,11 @@ class MainActivity : AppCompatActivity() {
         observeViewModel()
     }
 
+    override fun navigateToMainScreen() {
+        Navigation.findNavController(this, R.id.nav_host_fragment)
+            .setGraph(R.navigation.main_graph)
+    }
+
     private fun observeViewModel() {
         viewModel.uiCommand.observe(this, ::handleViewCommand)
     }
@@ -43,6 +49,8 @@ class MainActivity : AppCompatActivity() {
                  * Заглушка
                  * TODO Переход на основной экран при наличии sessionId
                  */
+                Navigation.findNavController(this, R.id.nav_host_fragment)
+                    .setGraph(R.navigation.main_graph)
             }
         }
     }

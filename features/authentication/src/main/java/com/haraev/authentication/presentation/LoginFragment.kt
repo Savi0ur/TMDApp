@@ -10,6 +10,7 @@ import androidx.lifecycle.observe
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
 import com.haraev.core.di.provider.CoreComponentProvider
+import com.haraev.core.navigation.NavigationActivity
 import com.haraev.core.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -93,7 +94,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                  * Заглушка
                  * TODO Переход на основной экран приложения после успешного логина
                  */
-                requireActivity().finish()
+//                requireActivity().finish()
+                (requireActivity() as NavigationActivity).navigateToMainScreen()
             }
         }
     }
