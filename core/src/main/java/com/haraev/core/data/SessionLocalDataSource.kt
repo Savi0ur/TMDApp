@@ -23,6 +23,10 @@ class SessionLocalDataSource(private val prefs: SharedPreferences) {
             field = value
         }
 
+    fun requireSessionId() : String {
+        return sessionId ?: throw NullPointerException("sessionId = null")
+    }
+
     companion object {
         private const val KEY_SESSION_ID = "KEY_SESSION_ID"
         private const val KEY_USER_LOGIN = "KEY_USER_LOGIN"

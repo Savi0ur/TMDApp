@@ -18,11 +18,11 @@ import java.util.*
 
 object ProfileViewModelTest : Spek({
 
-    beforeEachGroup {
+    beforeGroup {
         enableTestMode()
     }
 
-    afterEachGroup {
+    afterGroup {
         disableTestMode()
     }
 
@@ -186,7 +186,7 @@ object ProfileViewModelTest : Spek({
 
             }
 
-            Then("eventsQueue should show snackbar with unknown error message") {
+            Then("eventsQueue should show unknown error message") {
 
                 val actualResult = profileViewModel.eventsQueue.value
 

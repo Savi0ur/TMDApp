@@ -16,7 +16,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.net.HttpURLConnection
 
-object ProfileRepositoryImplTest : Spek({
+object ProfileRepositoryIntegrationTest : Spek({
 
     Feature("profile repository") {
 
@@ -45,6 +45,7 @@ object ProfileRepositoryImplTest : Spek({
                     on { sessionId } doReturn (sessionIdResult)
                     on { userLogin } doReturn ("login")
                     on { userPassword } doReturn ("password")
+                    on { requireSessionId() } doReturn sessionIdResult
                 }
             )
         }

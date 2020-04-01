@@ -24,9 +24,6 @@ data class Movie(
     @Json(name = "title")
     val title : String,
 
-    @Json(name = "popularity")
-    val popularity : Double,
-
     @Json(name = "vote_count")
     val voteCount : Int,
 

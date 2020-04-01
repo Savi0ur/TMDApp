@@ -14,27 +14,23 @@ class ProfileRepositoryImpl(
 ) : ProfileRepository {
 
     override fun getAccountDetails(): Single<AccountDetailsResponse> {
-        return sessionLocalDataSource.sessionId?.let { sessionId ->
-            mainService.getAccountDetails(sessionId)
-                .flatMap {
-                    it.body()?.let { accountDetailResponse ->
-                        Single.just(accountDetailResponse)
-                    } ?: throw IllegalStateException("Пустое тело ответа")
-                }
-        } ?: throw IllegalStateException("Отсутствует sessionId")
+        return mainService.getAccountDetails(sessionLocalDataSource.requireSessionId())
+            .flatMap {
+                it.body()?.let { accountDetailResponse ->
+                    Single.just(accountDetailResponse)
+                } ?: Single.error(IllegalStateException("Пустое тело ответа"))
+            }
     }
 
     override fun logout(): Completable {
-        return sessionLocalDataSource.sessionId?.let { sessionId ->
-            mainService.deleteSession(DeleteSessionBody(sessionId))
-                .flatMapCompletable {
-                    it.body()?.let {
-                        sessionLocalDataSource.sessionId = null
-                        sessionLocalDataSource.userLogin = null
-                        sessionLocalDataSource.userPassword = null
-                        Completable.complete()
-                    } ?: Completable.error(IllegalStateException("Пустое тело ответа"))
-                }
-        } ?: throw IllegalStateException("Отсутствует sessionId")
+        return mainService.deleteSession(DeleteSessionBody(sessionLocalDataSource.requireSessionId()))
+            .flatMapCompletable {
+                it.body()?.let {
+                    sessionLocalDataSource.sessionId = null
+                    sessionLocalDataSource.userLogin = null
+                    sessionLocalDataSource.userPassword = null
+                    Completable.complete()
+                } ?: Completable.error(IllegalStateException("Пустое тело ответа"))
+            }
     }
 }
