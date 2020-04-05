@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -104,26 +106,26 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun showDefaultScreen() {
-        search_default_image.visibility = View.VISIBLE
-        search_recycler_view.visibility = View.INVISIBLE
-        search_no_movies_image.visibility = View.INVISIBLE
-        search_no_movies_text.visibility = View.INVISIBLE
+        search_default_image.isVisible = true
+        search_recycler_view.isInvisible = true
+        search_no_movies_image.isInvisible = true
+        search_no_movies_text.isInvisible = true
     }
 
     private fun showNoMovies() {
-        search_default_image.visibility = View.INVISIBLE
-        search_recycler_view.visibility = View.INVISIBLE
-        search_no_movies_image.visibility = View.VISIBLE
-        search_no_movies_text.visibility = View.VISIBLE
+        search_default_image.isInvisible = true
+        search_recycler_view.isInvisible = true
+        search_no_movies_image.isVisible = true
+        search_no_movies_text.isVisible = true
     }
 
     private fun showMovies(movies: List<Movie>) {
         moviesAdapter.updateMovies(movies)
 
-        search_default_image.visibility = View.INVISIBLE
-        search_recycler_view.visibility = View.VISIBLE
-        search_no_movies_image.visibility = View.INVISIBLE
-        search_no_movies_text.visibility = View.INVISIBLE
+        search_default_image.isInvisible = true
+        search_recycler_view.isVisible = true
+        search_no_movies_image.isInvisible = true
+        search_no_movies_text.isInvisible = true
     }
 
     private fun navigateToMovieDetailsScreen(movie: Movie, extras: FragmentNavigator.Extras) {

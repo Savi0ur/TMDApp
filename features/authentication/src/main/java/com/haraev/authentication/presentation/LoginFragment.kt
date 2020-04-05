@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.haraev.authentication.R
@@ -91,21 +92,14 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private fun handleViewCommand(viewCommand: LoginViewCommand) {
         when (viewCommand) {
             is LoginViewCommand.NavigateToNextScreen -> {
-                /**
-                 * Заглушка
-                 * TODO Переход на основной экран приложения после успешного логина
-                 */
-//                requireActivity().finish()
                 (requireActivity() as NavigationActivity).navigateToMainScreen()
             }
         }
     }
 
     private fun handleViewState(viewState: LoginViewState) {
-        when (viewState.progressBarVisibility) {
-            true -> login_progress_bar.visibility = View.VISIBLE
-            false -> login_progress_bar.visibility = View.INVISIBLE
-        }
+
+        login_progress_bar.isVisible = viewState.progressBarVisibility
 
         login_enter_button.isEnabled = viewState.enterButtonEnable
 
