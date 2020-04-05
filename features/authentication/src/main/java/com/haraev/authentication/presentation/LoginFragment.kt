@@ -9,6 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
+import com.haraev.core.aac.Event
 import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.navigation.NavigationActivity
@@ -39,8 +40,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        observe(viewModel.uiCommand, ::handleViewCommand)
-        observe(viewModel.uiState, ::handleViewState)
+        observe(viewModel.uiState, ::renderState)
+        observe(viewModel.eventsQueue, ::onEvent)
     }
 
     private fun initView() {
@@ -89,15 +90,14 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         }
     }
 
-    private fun handleViewCommand(viewCommand: LoginViewCommand) {
-        when (viewCommand) {
-            is LoginViewCommand.NavigateToNextScreen -> {
+    private fun onEvent(event: Event) {
+        when (event) {
+            is LoginEvents.NavigateToNextScreen ->
                 (requireActivity() as NavigationActivity).navigateToMainScreen()
-            }
         }
     }
 
-    private fun handleViewState(viewState: LoginViewState) {
+    private fun renderState(viewState: LoginViewState) {
 
         login_progress_bar.isVisible = viewState.progressBarVisibility
 

@@ -229,7 +229,7 @@ object LoginViewModelIntegrationTest : Spek({
             And("command should be NavigateToNextScreen") {
                 val actualResult = loginViewModel.uiCommand.value
 
-                val expectedResult = LoginViewCommand.NavigateToNextScreen
+                val expectedResult = LoginEvents.NavigateToNextScreen
 
                 assertThat(actualResult).isEqualTo(expectedResult)
             }

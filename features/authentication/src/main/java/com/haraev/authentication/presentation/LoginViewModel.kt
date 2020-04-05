@@ -3,14 +3,13 @@ package com.haraev.authentication.presentation
 import androidx.lifecycle.MutableLiveData
 import com.haraev.authentication.R
 import com.haraev.authentication.domain.usecase.LoginUseCase
+import com.haraev.core.aac.EventsQueue
+import com.haraev.core.aac.delegate
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
 import com.haraev.core.data.exception.NetworkException
 import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.core.ui.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
@@ -18,13 +17,11 @@ class LoginViewModel @Inject constructor(
     private val scheduler: ThreadScheduler
 ) : BaseViewModel() {
 
-    companion object {
-        private const val TAG = "LoginViewModel"
-    }
+    val uiState = MutableLiveData<LoginViewState>(createInitialState())
 
-    val uiCommand = MutableLiveData<LoginViewCommand>()
+    private var state: LoginViewState by uiState.delegate()
 
-    val uiState = MutableLiveData<LoginViewState>()
+    val eventsQueue = EventsQueue()
 
     fun loginDataChanged(login: String, password: String) {
         enterButtonEnable(isLoginValid(login, password))
@@ -39,17 +36,17 @@ class LoginViewModel @Inject constructor(
     private fun startLoginProcess(login: String, password: String) {
         loginUseCase.login(login, password)
             .scheduleIoToUi(scheduler)
-            .subscribe({
+            .doOnTerminate {
                 showUiStopLoading()
+            }
+            .subscribe({
                 navigateToNextScreen()
             }, { throwable ->
-                showUiStopLoading()
 
                 if (throwable is NetworkException) {
                     handleNetworkException(throwable)
                 } else {
                     showErrorMessage(R.string.login_unknown_error_message)
-                    Timber.tag(TAG).e(throwable)
                 }
 
             })
@@ -81,35 +78,28 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun navigateToNextScreen() {
-        uiCommand.value = LoginViewCommand.NavigateToNextScreen
+        eventsQueue.offer(LoginEvents.NavigateToNextScreen)
     }
 
     private fun showErrorMessage(messageResId: Int) {
-        uiState.value = getCurrentViewState().copy(errorMessage = messageResId)
+        state = state.copy(errorMessage = messageResId)
     }
 
     private fun clearErrorMessage() {
-        uiState.value = getCurrentViewState().copy(errorMessage = null)
+        state = state.copy(errorMessage = null)
     }
 
     private fun progressBarVisibility(visible: Boolean) {
-        uiState.value = getCurrentViewState().copy(progressBarVisibility = visible)
+        state = state.copy(progressBarVisibility = visible)
     }
 
     private fun loginPasswordEnable(enabled: Boolean) {
-        uiState.value = getCurrentViewState().copy(loginAndPasswordFieldsEnable = enabled)
+        state = state.copy(loginAndPasswordFieldsEnable = enabled)
     }
 
     private fun enterButtonEnable(enabled: Boolean) {
-        uiState.value = getCurrentViewState().copy(enterButtonEnable = enabled)
+        state = state.copy(enterButtonEnable = enabled)
     }
 
-    private fun getCurrentViewState(): LoginViewState {
-        val loginViewState = uiState.value
-        if (loginViewState != null) {
-            return loginViewState
-        } else {
-            return LoginViewState()
-        }
-    }
+    private fun createInitialState(): LoginViewState = LoginViewState()
 }

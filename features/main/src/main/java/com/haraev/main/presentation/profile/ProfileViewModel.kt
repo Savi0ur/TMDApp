@@ -29,7 +29,7 @@ class ProfileViewModel @Inject constructor(
         logout()
     }
 
-   private fun logout() {
+    private fun logout() {
         profileUseCase.logout()
             .scheduleIoToUi(scheduler)
             .subscribe({
@@ -46,14 +46,15 @@ class ProfileViewModel @Inject constructor(
         changeProgressBarState(true)
         profileUseCase.getAccountDetails()
             .scheduleIoToUi(scheduler)
-            .subscribe({ accountDetailsResponse ->
+            .doOnTerminate {
                 changeProgressBarState(false)
+            }
+            .subscribe({ accountDetailsResponse ->
                 showProfileInfo(
                     accountDetailsResponse.name,
                     accountDetailsResponse.username
                 )
             }, {
-                changeProgressBarState(false)
                 eventsQueue.offer(ProfileEvents.ErrorMessage(R.string.unknown_error_message))
             })
             .autoDispose()
@@ -69,14 +70,14 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
+    private fun changeProgressBarState(visible: Boolean) {
+        state = state.copy(progressBarVisibility = visible)
+    }
+
     private fun createInitialState(): ProfileViewState =
         ProfileViewState(
             progressBarVisibility = false,
             name = null,
             userName = null
         )
-
-    private fun changeProgressBarState(visible: Boolean) {
-        state = state.copy(progressBarVisibility = visible)
-    }
 }
