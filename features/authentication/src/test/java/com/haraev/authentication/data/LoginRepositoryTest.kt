@@ -2,13 +2,12 @@ package com.haraev.authentication.data
 
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.LoginService
+import com.haraev.core.data.exception.NetworkException
 import com.haraev.core.data.exception.NetworkExceptionType
-import com.haraev.core.data.exception.ResponseException
 import com.haraev.core.data.model.response.SessionResponse
 import com.haraev.core.data.model.response.TokenResponse
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
-import okhttp3.ResponseBody.Companion.toResponseBody
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -116,20 +115,11 @@ object LoginRepositoryTest : Spek({
                 )
             )
 
-            val validateWithLoginResponse: Response<TokenResponse> =
-                Response.error(
-                    HttpURLConnection.HTTP_UNAUTHORIZED,
-                    """
-                    {
-                        "status_code": $networkExceptionCode,
-                        "status_message": "$networkExceptionMessage"
-                    }
-                """.toResponseBody()
-                )
+            val validateWithLoginResponse = NetworkException(networkExceptionCode, networkExceptionMessage)
 
             val loginService = mock<LoginService> {
                 on { getNewToken() } doReturn Single.just(getNewTokenResponse)
-                on { validateWithLogin(any()) } doReturn Single.just(validateWithLoginResponse)
+                on { validateWithLogin(any()) } doReturn Single.error(validateWithLoginResponse)
             }
 
             val sessionLocalDataSource = mock<SessionLocalDataSource>()
@@ -148,9 +138,9 @@ object LoginRepositoryTest : Spek({
                loginResult = loginRepositoryImpl.login(login, password).blockingGet()
             }
 
-            Then("result should be ResponseException") {
+            Then("result should be NetworkException with message") {
 
-                val expectedResult = ResponseException()
+                val expectedResult = NetworkException(networkExceptionCode, networkExceptionMessage)
 
                 assertThat(loginResult).isEqualTo(expectedResult)
             }
