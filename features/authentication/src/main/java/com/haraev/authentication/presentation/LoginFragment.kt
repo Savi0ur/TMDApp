@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
 import com.haraev.core.aac.Event
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     @Inject
-    lateinit var viewModelFactory: LoginViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 

@@ -1,11 +1,9 @@
-package com.haraev.main.di.module
+package com.haraev.main.di.module.search
 
-import com.haraev.core.common.ThreadScheduler
 import com.haraev.main.data.SearchRepositoryImpl
 import com.haraev.main.data.api.MainService
 import com.haraev.main.domain.repository.SearchRepository
 import com.haraev.main.domain.usecase.SearchUseCase
-import com.haraev.main.presentation.search.SearchViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -27,17 +25,6 @@ class SearchModule {
     ) : SearchUseCase {
         return SearchUseCase(
             searchRepository
-        )
-    }
-
-    @Provides
-    fun provideSearchViewModelFactory(
-        searchUseCase: SearchUseCase,
-        threadScheduler: ThreadScheduler
-    ) : SearchViewModelFactory {
-        return SearchViewModelFactory(
-            searchUseCase,
-            threadScheduler
         )
     }
 

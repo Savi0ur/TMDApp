@@ -1,12 +1,10 @@
-package com.haraev.main.di.module
+package com.haraev.main.di.module.profile
 
-import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.main.data.ProfileRepositoryImpl
 import com.haraev.main.data.api.MainService
 import com.haraev.main.domain.repository.ProfileRepository
 import com.haraev.main.domain.usecase.ProfileUseCase
-import com.haraev.main.presentation.profile.ProfileViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -29,16 +27,5 @@ class ProfileModule {
         profileRepository: ProfileRepository
     ) : ProfileUseCase {
         return ProfileUseCase(profileRepository)
-    }
-
-    @Provides
-    fun provideProfileViewModelFactory(
-        profileUseCase: ProfileUseCase,
-        threadScheduler: ThreadScheduler
-    ) : ProfileViewModelFactory {
-        return ProfileViewModelFactory(
-            profileUseCase,
-            threadScheduler
-        )
     }
 }

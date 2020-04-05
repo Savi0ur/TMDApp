@@ -4,13 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.haraev.core.aac.Event
 import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.navigation.NavigationActivity
 import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R
-import com.haraev.main.di.component.MainFeatureComponent
+import com.haraev.main.di.component.ProfileComponent
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
@@ -18,12 +19,12 @@ import javax.inject.Inject
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Inject
-    lateinit var viewModelFactory: ProfileViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: ProfileViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
-        MainFeatureComponent.Builder
+        ProfileComponent.Builder
             .build((requireActivity().application as CoreComponentProvider).getCoreComponent())
             .inject(this)
 

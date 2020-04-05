@@ -42,6 +42,7 @@ class ProfileViewModel @Inject constructor(
             .autoDispose()
     }
 
+    @Suppress("UnstableApiUsage")
     private fun loadProfileInfo() {
         changeProgressBarState(true)
         profileUseCase.getAccountDetails()

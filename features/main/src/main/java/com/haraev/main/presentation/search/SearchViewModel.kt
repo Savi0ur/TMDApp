@@ -11,8 +11,9 @@ import com.haraev.main.data.model.Movie
 import com.haraev.main.domain.usecase.SearchUseCase
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class SearchViewModel(
+class SearchViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val threadScheduler: ThreadScheduler
 ) : BaseViewModel() {

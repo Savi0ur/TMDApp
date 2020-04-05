@@ -3,12 +3,11 @@ package com.haraev.main.presentation.search
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haraev.core.aac.Event
@@ -17,19 +16,17 @@ import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R
 import com.haraev.main.data.model.Movie
-import com.haraev.main.di.component.MainFeatureComponent
+import com.haraev.main.di.component.SearchComponent
 import com.haraev.main.presentation.adapter.MoviesAdapter
 import com.jakewharton.rxbinding3.widget.textChanges
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.item_movie_grid.*
 import javax.inject.Inject
 
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     @Inject
-    lateinit var viewModelFactory: SearchViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: SearchViewModel by viewModels { viewModelFactory }
 
@@ -42,7 +39,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     override fun onAttach(context: Context) {
-        MainFeatureComponent.Builder
+        SearchComponent.Builder
             .build((requireActivity().application as CoreComponentProvider).getCoreComponent())
             .inject(this)
 
