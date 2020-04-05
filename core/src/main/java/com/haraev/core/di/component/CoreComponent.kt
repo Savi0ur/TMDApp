@@ -8,6 +8,7 @@ import com.haraev.core.data.api.LoginService
 import com.haraev.core.di.module.CoreDataModule
 import com.haraev.core.di.module.CoreNetworkModule
 import com.haraev.core.di.module.SharedPreferencesModule
+import com.haraev.core.di.qualifier.HttpClientQualifier
 import com.squareup.moshi.Moshi
 import dagger.BindsInstance
 import dagger.Component
@@ -51,10 +52,10 @@ interface CoreComponent {
         }
     }
 
-    @Named("ClientWithoutAuthenticator")
+    @HttpClientQualifier(withAuthenticator = false)
     fun provideOkHttpClientWithoutAuthenticator(): OkHttpClient
 
-    @Named("ClientWithAuthenticator")
+    @HttpClientQualifier(withAuthenticator = true)
     fun provideOkHttpClientWithAuthenticator(): OkHttpClient
 
     fun provideLoginService(): LoginService

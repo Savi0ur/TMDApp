@@ -1,6 +1,7 @@
 package com.haraev.main.di.module
 
 import com.haraev.core.common.TMDB_BASE_URL
+import com.haraev.core.di.qualifier.HttpClientQualifier
 import com.haraev.main.data.api.MainService
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,7 @@ class NetworkModule {
 
     @Provides
     fun provideMainService(
-        @Named("ClientWithAuthenticator")
+        @HttpClientQualifier(withAuthenticator = true)
         client: OkHttpClient
     ) : MainService =
         Retrofit.Builder()

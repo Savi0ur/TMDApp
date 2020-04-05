@@ -7,6 +7,7 @@ import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.ErrorHandlingInterceptor
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.data.api.SessionAuthenticator
+import com.haraev.core.di.qualifier.HttpClientQualifier
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.squareup.moshi.Moshi
@@ -48,7 +49,7 @@ class CoreNetworkModule {
             loginService
         )
 
-    @Named("ClientWithoutAuthenticator")
+    @HttpClientQualifier(withAuthenticator = false)
     @Provides
     fun provideOkHttpClient(
         errorHandlingInterceptor: ErrorHandlingInterceptor,
@@ -59,7 +60,7 @@ class CoreNetworkModule {
             .addInterceptor(loggingInterceptor)
             .build()
 
-    @Named("ClientWithAuthenticator")
+    @HttpClientQualifier(withAuthenticator = true)
     @Provides
     fun provideOkHttpClientWithAuthenticator(
         authenticator: SessionAuthenticator,
@@ -74,7 +75,7 @@ class CoreNetworkModule {
 
     @Provides
     fun provideLoginService(
-        @Named("ClientWithoutAuthenticator")
+        @HttpClientQualifier(withAuthenticator = false)
         client: OkHttpClient
     ) : LoginService =
         Retrofit.Builder()
