@@ -2,6 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!--Colors-->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
         <item name="colorSecondary">@color/secondary</item>
@@ -18,6 +19,12 @@
 
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
+
+        <!--Component styles-->
+        <item name="android:progressBarStyle">@style/Widget.AppTheme.ProgressBar</item>
+        <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout</item>h
+        <item name="materialButtonStyle">@style/Widget.AppTheme.MaterialButton</item>
+
     </style>
 
 </resources>

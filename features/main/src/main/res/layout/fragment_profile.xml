@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:background="@color/background">
+    tools:background="@color/background"
+    tools:theme="@style/AppTheme">
 
     <ProgressBar
         android:id="@+id/profile_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,16 +27,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.35"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/profile_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/primary"
-        android:textSize="32sp"
-        android:textStyle="bold"
+        android:textAppearance="@style/Header1"
         app:layout_constraintBottom_toTopOf="@+id/profile_username_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/primary"
-        android:textSize="16sp"
+        android:textAppearance="@style/Content1"
         app:layout_constraintBottom_toTopOf="@+id/profile_logout_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -61,17 +58,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/profile_logout_button"
-        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:backgroundTint="@color/colorDarkBlue"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
+        android:backgroundTint="@color/darkBlue"
         android:text="@string/exit"
-        android:textAllCaps="false"
         android:textColor="@color/onPrimary"
-        android:textSize="16sp"
-        app:cornerRadius="8dp"
+        android:textAppearance="@style/ButtonText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

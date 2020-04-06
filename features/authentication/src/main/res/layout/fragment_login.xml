@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:theme="@style/AppTheme">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,11 +15,8 @@
 
         <ProgressBar
             android:id="@+id/login_progress_bar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,9 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
-            android:textColor="@color/secondaryVariant"
-            android:textSize="32sp"
-            android:textStyle="bold"
+            android:textAppearance="@style/Header1"
             app:layout_constraintBottom_toTopOf="@+id/login_welcome_message_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,8 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/login_info"
-            android:textColor="@color/secondaryVariant"
-            android:textSize="16sp"
+            android:textAppearance="@style/Content1"
             app:layout_constraintBottom_toTopOf="@+id/login_login_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,14 +48,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_login_text_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColorHint="@color/primary"
-            app:boxStrokeColor="@color/login_text_input_box_stroke"
-            app:boxStrokeWidth="2dp"
-            app:hintTextColor="@color/primary"
             app:layout_constraintBottom_toTopOf="@+id/login_password_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,27 +62,19 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_login"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/secondaryVariant"
-                android:textSize="16sp" />
+                android:textAppearance="@style/Content1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_password_text_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.AppTheme.TextInputLayout.Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/primary"
-            android:textColorHint="@color/primary"
-            app:boxStrokeColor="@color/login_text_input_box_stroke"
-            app:boxStrokeWidth="2dp"
-            app:hintTextColor="@color/primary"
             app:layout_constraintBottom_toTopOf="@+id/login_error_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_login_text_input_layout"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/primary">
+            app:layout_constraintTop_toBottomOf="@+id/login_login_text_input_layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password_text_input_edit_text"
@@ -101,7 +83,7 @@
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:textColor="@color/secondaryVariant"
-                android:textSize="16sp" />
+                android:textAppearance="@style/Content1"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -112,7 +94,7 @@
             android:layout_marginBottom="16dp"
             android:lineSpacingExtra="1sp"
             android:textColor="@color/error"
-            android:textSize="16sp"
+            android:textAppearance="@style/Content1"
             app:layout_constraintBottom_toTopOf="@id/login_enter_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -121,18 +103,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_enter_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:backgroundTint="@color/login_btn_bg_selector"
             android:enabled="false"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            android:textAppearance="@style/ButtonText"
             android:text="@string/button_login_enter"
-            android:textAllCaps="false"
             android:textColor="@color/login_btn_text_color_selector"
-            android:textSize="16sp"
-            app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
