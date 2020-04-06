@@ -1,8 +1,8 @@
 package com.haraev.core.di.module
 
 import android.util.Log
-import com.haraev.core.TMDB_API_KEY
-import com.haraev.core.TMDB_BASE_URL
+import com.haraev.core.common.TMDB_API_KEY
+import com.haraev.core.common.TMDB_BASE_URL
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.ErrorHandlingInterceptor
 import com.haraev.core.data.api.LoginService
@@ -33,7 +33,9 @@ class CoreNetworkModule {
         LoggingInterceptor.Builder()
             .setLevel(Level.BASIC)
             .log(Log.VERBOSE)
-            .addQueryParam(API_KEY_QUERY_PARAMETER, TMDB_API_KEY)
+            .addQueryParam(API_KEY_QUERY_PARAMETER,
+                TMDB_API_KEY
+            )
             .build()
 
     @Provides

@@ -2,9 +2,9 @@ package com.haraev.core.data.exception
 
 import java.io.IOException
 
-class NetworkException(
+data class NetworkException(
     val statusCode: Int,
-    statusMessage : String
+    val statusMessage : String
 ) : IOException("statusCode: $statusCode, statusMessage: $statusMessage")
 
 /**

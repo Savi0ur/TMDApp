@@ -3,22 +3,13 @@ apply from: rootProject.file('base.gradle')
 
 dependencies {
     implementation project(":core")
-    testImplementation project(":test")
 
     implementation deps.stdlib
     implementation deps.core_ktx
-    implementation deps.constraint_layout
-
-    // Material components
-    implementation deps.material_material
 
     // Navigation components
     implementation deps.navigation_fragment
     implementation deps.navigation_ui
-
-    // Dagger 2
-    implementation deps.dagger_dagger
-    kapt deps.dagger_compiler
 
     // RxJava 2
     implementation deps.rxjava2_rxjava
@@ -35,12 +26,4 @@ dependencies {
     implementation deps.retrofit_retrofit
     implementation deps.retrofit_converter_moshi
     implementation deps.retrofit_adapter_rxjava2
-
-    // Timber
-    implementation deps.timber
-
-    // LoggingInterceptor
-    implementation (deps.logging_interceptor) {
-        exclude group: 'org.json', module: 'json'
-    }
 }

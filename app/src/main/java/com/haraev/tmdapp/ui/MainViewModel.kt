@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val sessionLocalDataSource: SessionLocalDataSource
-): ViewModel() {
+) : ViewModel() {
 
     val uiCommand = MutableLiveData<MainViewCommand>()
 
@@ -19,7 +19,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun isSessionIdExist() : Boolean =
+    private fun isSessionIdExist(): Boolean =
         sessionLocalDataSource.sessionId != null
 
     private fun navigateToLoginScreen() {
