@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundBlack">
+    tools:background="@color/background">
 
     <LinearLayout
         android:id="@+id/search_search_layout"
@@ -38,8 +38,8 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLines="1"
-            android:textColor="@color/colorLightGrey"
-            android:textColorHint="@color/colorLightGrey"
+            android:textColor="@color/secondaryVariant"
+            android:textColorHint="@color/secondaryVariant"
             tools:ignore="Autofill" />
 
 
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/movies_not_found"
-        android:textColor="@color/colorLightGrey"
+        android:textColor="@color/secondaryVariant"
         android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="invisible"

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundBlack">
+    tools:background="@color/background">
 
     <TextView
         android:id="@+id/movie_details_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/secondary"
         android:textSize="24sp"
         android:transitionName="movie_title"
         app:layout_constraintBottom_toBottomOf="parent"

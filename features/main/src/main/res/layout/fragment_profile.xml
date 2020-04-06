@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundBlack"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:background="@color/background">
 
     <ProgressBar
         android:id="@+id/profile_progress_bar"
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorLightGrey"
+        android:textColor="@color/primary"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/profile_username_text_view"
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorDarkGrey"
+        android:textColor="@color/primary"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/profile_logout_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
         android:insetBottom="0dp"
         android:text="@string/exit"
         android:textAllCaps="false"
-        android:textColor="@color/colorPurpure"
+        android:textColor="@color/onPrimary"
         android:textSize="16sp"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

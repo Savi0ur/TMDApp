@@ -6,7 +6,7 @@
     android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    tools:background="@color/colorBackgroundBlack">
+    tools:background="@color/background">
 
     <ImageView
         android:id="@+id/movie_image"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/secondary"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorDarkGrey"
+        android:textColor="@color/primary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/secondary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -77,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:textColor="@color/colorDarkGrey"
+        android:textColor="@color/primary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average"
         app:layout_constraintStart_toEndOf="@id/movie_vote_average"
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_movie_duration"
         android:drawablePadding="4dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/secondary"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average"
         app:layout_constraintEnd_toEndOf="parent"

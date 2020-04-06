@@ -9,26 +9,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackgroundBlack"
-        android:padding="16dp">
+        android:padding="16dp"
+        tools:background="@color/background">
 
         <ProgressBar
             android:id="@+id/login_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyleHorizontal"
             android:indeterminate="true"
             android:visibility="invisible"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/login_welcome_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
-            android:textColor="@color/colorLightGrey"
+            android:textColor="@color/secondaryVariant"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/login_welcome_message_text_view"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/login_info"
-            android:textColor="@color/colorLightGrey"
+            android:textColor="@color/secondaryVariant"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/login_login_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,10 +57,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColorHint="@color/colorDarkGrey"
+            android:textColorHint="@color/primary"
             app:boxStrokeColor="@color/login_text_input_box_stroke"
             app:boxStrokeWidth="2dp"
-            app:hintTextColor="@color/colorDarkGrey"
+            app:hintTextColor="@color/primary"
             app:layout_constraintBottom_toTopOf="@+id/login_password_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_login"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/colorLightGrey"
+                android:textColor="@color/secondaryVariant"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,17 +82,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/colorDarkGrey"
-            android:textColorHint="@color/colorDarkGrey"
+            android:backgroundTint="@color/primary"
+            android:textColorHint="@color/primary"
             app:boxStrokeColor="@color/login_text_input_box_stroke"
             app:boxStrokeWidth="2dp"
-            app:hintTextColor="@color/colorDarkGrey"
+            app:hintTextColor="@color/primary"
             app:layout_constraintBottom_toTopOf="@+id/login_error_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_login_text_input_layout"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorDarkGrey">
+            app:passwordToggleTint="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password_text_input_edit_text"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
-                android:textColor="@color/colorLightGrey"
+                android:textColor="@color/secondaryVariant"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +111,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:lineSpacingExtra="1sp"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/error"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/login_enter_button"
             app:layout_constraintEnd_toEndOf="parent"

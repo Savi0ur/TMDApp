@@ -19,14 +19,14 @@ abstract class BaseFragment(fragmentLayoutId: Int) : Fragment(fragmentLayoutId) 
     }
 
     fun showMessage(messageResId: Int, anchorView: View?) {
-        val backgroundColorId = R.color.colorSnackbarBlack
-        val textColorId = R.color.colorWhite
+        val backgroundColorId = R.color.onBackgroundVariant
+        val textColorId = R.color.secondary
         showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
     }
 
     fun showErrorMessage(messageResId: Int, anchorView: View?) {
-        val backgroundColorId = R.color.colorSnackbarBlack
-        val textColorId = R.color.colorRed
+        val backgroundColorId = R.color.onBackgroundVariant
+        val textColorId = R.color.secondary
         showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
     }
 
