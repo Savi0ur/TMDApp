@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">LiveDataTest</string>
     <string name="pass">Принять</string>
     <string name="welcome">Добро пожаловать!</string>
     <string name="login_info">Укажите логин и пароль, которые вы использовали для входа</string>

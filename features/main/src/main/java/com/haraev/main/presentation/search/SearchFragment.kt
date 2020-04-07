@@ -8,7 +8,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haraev.core.aac.Event
 import com.haraev.core.aac.observe
@@ -17,8 +19,11 @@ import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R
 import com.haraev.main.data.model.Movie
 import com.haraev.main.di.component.SearchComponent
-import com.haraev.main.presentation.adapter.MoviesAdapter
+import com.haraev.main.presentation.item.MovieItem
 import com.jakewharton.rxbinding3.widget.textChanges
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.OnItemClickListener
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
@@ -30,11 +35,16 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private val viewModel: SearchViewModel by viewModels { viewModelFactory }
 
-    private val moviesAdapter: MoviesAdapter = MoviesAdapter()
+    private val moviesAdapter = GroupAdapter<GroupieViewHolder>()
 
-    private val moviesItemClickListener = object : MoviesAdapter.ItemClickListener {
-        override fun onItemClick(movie: Movie, extras: FragmentNavigator.Extras) {
-            navigateToMovieDetailsScreen(movie, extras)
+    private val moviesItemClickListener = OnItemClickListener { item, _ ->
+        if (item is MovieItem) {
+            navigateToMovieDetailsScreen(
+                item.movie,
+                FragmentNavigatorExtras(
+                    item.movieTitle to "movie_title"
+                )
+            )
         }
     }
 
@@ -94,12 +104,15 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun setupMoviesRecycler() {
-        with(search_recycler_view) {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = moviesAdapter
+        with(moviesAdapter) {
+            setOnItemClickListener(moviesItemClickListener)
         }
 
-        moviesAdapter.setOnItemClickListener(moviesItemClickListener)
+        with(search_recycler_view) {
+//            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = moviesAdapter
+        }
     }
 
     private fun showDefaultScreen() {
@@ -117,7 +130,12 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun showMovies(movies: List<Movie>) {
-        moviesAdapter.updateMovies(movies)
+        moviesAdapter.clear()
+        moviesAdapter.addAll(
+            movies.map {
+                MovieItem(it)
+            }
+        )
 
         search_default_image.isInvisible = true
         search_recycler_view.isVisible = true

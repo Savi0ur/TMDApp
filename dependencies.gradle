@@ -37,6 +37,8 @@ deps_versions.mockWebServer = "4.4.0"
 
 deps_versions.picasso = "2.71828"
 
+deps_versions.groupie = "2.8.0"
+
 ext.deps = [:]
 
 deps.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
@@ -104,3 +106,7 @@ deps.mockWebServer = "com.squareup.okhttp3:mockwebserver:${deps_versions.mockWeb
 
 // Picasso
 deps.picasso = "com.squareup.picasso:picasso:${deps_versions.picasso}"
+
+deps.groupie = "com.xwray:groupie:${deps_versions.groupie}"
+
+deps.groupie_kotlin = "com.xwray:groupie-kotlin-android-extensions:${deps_versions.groupie}"

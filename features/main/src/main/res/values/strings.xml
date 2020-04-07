@@ -7,4 +7,5 @@
     <string name="favorite">Избранное</string>
     <string name="profile">Профиль</string>
     <string name="movies_not_found">По вашему запросу ничего не найдено :(</string>
+    <string name="original_title_with_date">%1$s (%2$s)</string>
 </resources>

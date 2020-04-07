@@ -41,6 +41,7 @@
             android:maxLines="1"
             android:textAppearance="@style/Content1"
             android:textColorHint="@color/secondaryVariant"
+            android:textColor="@color/secondaryVariant"
             tools:ignore="Autofill" />
 
 

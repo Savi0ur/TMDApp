@@ -3,15 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="250dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
     tools:background="@color/background">
 
     <ImageView
         android:id="@+id/movie_image"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_width="152dp"
+        android:layout_height="208dp"
+        android:viewportWidth="152"
+        android:viewportHeight="208"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,38 +22,42 @@
 
     <TextView
         android:id="@+id/movie_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:transitionName="movie_title"
+        android:ellipsize="end"
         android:textAppearance="@style/Header3"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/movie_image"
+        app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_image"
         tools:text="Джентельмены" />
 
     <TextView
         android:id="@+id/movie_original_title_with_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textAppearance="@style/Caption2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/movie_image"
+        app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintTop_toBottomOf="@id/movie_title"
         tools:text="The Gentelmen (2020)" />
 
     <TextView
         android:id="@+id/movie_genres"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/secondaryVariant"
         android:textAppearance="@style/Caption2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/movie_image"
+        app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintTop_toBottomOf="@id/movie_original_title_with_year"
         tools:text="боевик, комедия, криминал" />
 
@@ -65,7 +71,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/movie_vote_count"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintTop_toBottomOf="@id/movie_genres"
         tools:text="8.7" />
 
@@ -89,7 +95,7 @@
         android:textAppearance="@style/Caption2"
         android:gravity="bottom"
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/movie_image"
         tools:text="103 мин" />
 
 
