@@ -15,7 +15,7 @@ class SearchRepositoryImpl(
         page: Int
     ): Single<SearchMoviesResponse> {
         return mainService.getMovies(
-            language = "en",
+            language = "ru",
             query = query,
             page = page
         ).flatMap {

@@ -44,7 +44,13 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             navigateToMovieDetailsScreen(
                 item.movie,
                 FragmentNavigatorExtras(
-                    item.movieTitleView to "movie_title"
+                    item.movieTitleView to "movie_title",
+                    item.movieImageView to "movie_image",
+                    item.movieOriginalTitleView to "movie_original_title",
+                    item.movieGenresView to "movie_genres",
+                    item.movieDurationView to "movie_duration",
+                    item.movieVoteAverageView to "movie_vote_average",
+                    item.movieVoteCountView to "movie_vote_count"
                 )
             )
         }
@@ -89,8 +95,15 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun initViews() {
         setupMoviesRecycler()
         setupSearchEditText()
+        setupSearchButton()
         setupClearButton()
         setupListTypeCheckBox()
+    }
+
+    private fun setupSearchButton() {
+        search_search_button.setOnClickListener {
+            hideKeyboard()
+        }
     }
 
     private fun setupListTypeCheckBox() {
@@ -108,6 +121,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun setupClearButton() {
         search_clear_button.setOnClickListener {
             search_search_edit_text.text = null
+            showDefaultScreen()
         }
     }
 
@@ -116,6 +130,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             search_search_edit_text.textChanges()
                 .map { it.toString() }
         )
+        search_search_edit_text.setOnEditorActionListener { _, _, _ ->
+            hideKeyboard()
+            false
+        }
     }
 
     private fun setupMoviesRecycler() {
@@ -172,7 +190,15 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun navigateToMovieDetailsScreen(movie: Movie, extras: FragmentNavigator.Extras) {
 
         val direction = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
-            movieTitle = movie.title
+            movieTitle = movie.title,
+            moviePosterPath = movie.poster_path,
+            movieOverview = movie.overview,
+            movieReleaseDate = movie.releaseDate,
+            movieOriginalTitle = movie.originalTitle,
+            movieVoteCount = movie.voteCount,
+            movieVoteAverage = movie.voteAverage.toFloat(),
+            movieGenres = null,
+            movieDuration = null
         )
 
         findNavController().navigate(direction, extras)
