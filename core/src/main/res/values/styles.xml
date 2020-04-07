@@ -2,7 +2,7 @@
 
     <style name="Widget.AppTheme.ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:indeterminate">true</item>
-        <item name="android:visibility">invisible</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

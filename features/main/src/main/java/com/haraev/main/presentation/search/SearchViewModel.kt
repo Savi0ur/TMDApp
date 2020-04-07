@@ -7,9 +7,12 @@ import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
 import com.haraev.core.ui.BaseViewModel
 import com.haraev.main.R
-import com.haraev.main.data.model.Movie
+import com.haraev.main.data.model.MovieUi
 import com.haraev.main.domain.usecase.SearchUseCase
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -23,42 +26,64 @@ class SearchViewModel @Inject constructor(
 
     val eventsQueue = EventsQueue()
 
+    private var searchDisposables = CompositeDisposable()
+
+    private var lastQuery = ""
+
     fun onSearchEditTextTextChanged(observable: Observable<String>) {
-        observable
-            .debounce(300, TimeUnit.MILLISECONDS)
+        observable.debounce(300, TimeUnit.MILLISECONDS)
             .scheduleIoToUi(threadScheduler)
             .subscribe({
-                if (it.isBlank()) {
-                    showDefaultImage()
-                } else {
+                if (it.isNotBlank() && it != lastQuery) {
+                    changeProgressBarState(true)
+                    stopSearchProcess()
                     searchMovie(it)
+                    lastQuery = it
                 }
             }, {
+                Timber.tag(TAG).e(it)
                 eventsQueue.offer(SearchEvents.ErrorMessage(R.string.unknown_error_message))
             })
             .autoDispose()
-
     }
 
+    fun stopSearchProcess() {
+        searchDisposables.clear()
+    }
+
+    @Suppress("UnstableApiUsage")
     private fun searchMovie(query: String) {
-        searchUseCase.getMovies(query, 1)
+        searchDisposables.add(searchUseCase.getMovies(query, 1)
             .scheduleIoToUi(threadScheduler)
-            .subscribe({
-                showMovies(it.movies.sortedByDescending { it.voteAverage })
+            .doOnTerminate {
+                changeProgressBarState(false)
+            }
+            .subscribe({ movies ->
+                showMovies(movies.sortedByDescending { it.voteAverage })
             }, {
+                Timber.tag(TAG).e(it)
                 eventsQueue.offer(SearchEvents.ErrorMessage(R.string.unknown_error_message))
             })
             .autoDispose()
+        )
     }
 
     private fun showDefaultImage() {
         state = state.copy(movies = null)
     }
 
-    private fun showMovies(movies : List<Movie>) {
+    private fun showMovies(movies: List<MovieUi>) {
         state = state.copy(movies = movies)
+    }
+
+    private fun changeProgressBarState(visible: Boolean) {
+        state = state.copy(progressBarVisibility = visible)
     }
 
     private fun createInitialState(): SearchViewState =
         SearchViewState(movies = null)
+
+    companion object {
+        private const val TAG = "SearchViewModel"
+    }
 }

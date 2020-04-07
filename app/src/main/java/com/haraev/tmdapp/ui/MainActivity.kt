@@ -3,8 +3,10 @@ package com.haraev.tmdapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.haraev.core.aac.Event
+import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.navigation.NavigationActivity
 import com.haraev.tmdapp.R
@@ -14,7 +16,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), NavigationActivity {
 
     @Inject
-    lateinit var viewModelFactory: MainViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
@@ -40,16 +42,16 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
     }
 
     private fun observeViewModel() {
-        viewModel.uiCommand.observe(this, ::handleViewCommand)
+        observe(viewModel.eventsQueue, ::onEvent)
     }
 
-    private fun handleViewCommand(viewCommand: MainViewCommand) {
-        when (viewCommand) {
-            is MainViewCommand.OpenLoginScreen -> {
+    private fun onEvent(event: Event) {
+        when (event) {
+            is MainEvents.OpenLoginScreen -> {
                 Navigation.findNavController(this, R.id.nav_host_fragment)
                     .setGraph(R.navigation.login_nav_graph)
             }
-            is MainViewCommand.OpenSearchScreen -> {
+            is MainEvents.OpenSearchScreen -> {
                 Navigation.findNavController(this, R.id.nav_host_fragment)
                     .setGraph(R.navigation.main_graph)
             }

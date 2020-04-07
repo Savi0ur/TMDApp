@@ -40,8 +40,12 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
             moviePosterPath?.let {
                 Picasso.get()
                     .load("$BASE_IMAGE_URL$it")
+                    .placeholder(R.drawable.drawable_search)
                     .into(movie_details_image)
-            }
+            } ?: Picasso.get()
+                .load(R.drawable.drawable_search)
+                .placeholder(R.drawable.drawable_search)
+                .into(movie_details_image)
             movie_details_title_text_view.text = movieTitle
             val originalTitleWithYear = resources.getString(
                 R.string.original_title_with_date,

@@ -26,7 +26,7 @@ abstract class BaseFragment(fragmentLayoutId: Int) : Fragment(fragmentLayoutId) 
 
     fun showErrorMessage(messageResId: Int, anchorView: View?) {
         val backgroundColorId = R.color.onBackgroundVariant
-        val textColorId = R.color.secondary
+        val textColorId = R.color.error
         showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
     }
 

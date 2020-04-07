@@ -169,14 +169,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="20dp"
-                android:lineSpacingExtra="6sp"
+                android:gravity="top"
                 android:lineHeight="24dp"
-                android:translationY="-2.45sp"
+                android:lineSpacingExtra="6sp"
                 android:textAppearance="@style/Content1"
+                android:translationY="-2.45sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/movie_details_separator"
+                app:layout_constraintVertical_bias="0.0"
                 tools:text="@string/random_movie_overview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,11 +2,11 @@ package com.haraev.main.presentation.item
 
 import android.widget.ImageView
 import android.widget.TextView
-import com.haraev.main.data.model.Movie
+import com.haraev.main.data.model.MovieUi
 
 interface MovieItem {
 
-    val movie: Movie
+    val movie: MovieUi
 
     var movieImageView: ImageView
     var movieTitleView: TextView

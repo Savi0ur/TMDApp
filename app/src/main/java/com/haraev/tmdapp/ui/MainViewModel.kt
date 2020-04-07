@@ -1,7 +1,7 @@
 package com.haraev.tmdapp.ui
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haraev.core.aac.EventsQueue
 import com.haraev.core.data.SessionLocalDataSource
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ class MainViewModel @Inject constructor(
     private val sessionLocalDataSource: SessionLocalDataSource
 ) : ViewModel() {
 
-    val uiCommand = MutableLiveData<MainViewCommand>()
+    val eventsQueue = EventsQueue()
 
     init {
         if (isSessionIdExist()) {
@@ -23,15 +23,11 @@ class MainViewModel @Inject constructor(
         sessionLocalDataSource.sessionId != null
 
     private fun navigateToLoginScreen() {
-        emitUiCommand(MainViewCommand.OpenLoginScreen)
+        eventsQueue.offer(MainEvents.OpenLoginScreen)
     }
 
     private fun navigateToSearchScreen() {
-        emitUiCommand(MainViewCommand.OpenSearchScreen)
-    }
-
-    private fun emitUiCommand(mainViewCommand: MainViewCommand) {
-        uiCommand.value = mainViewCommand
+        eventsQueue.offer(MainEvents.OpenSearchScreen)
     }
 
 }

@@ -1,4 +1,6 @@
 package com.haraev.core.aac
+import android.app.Activity
+import androidx.activity.ComponentActivity
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +26,14 @@ class EventsQueue : MutableLiveData<Queue<Event>>() {
  */
 fun Fragment.observe(eventsQueue: EventsQueue, eventHandler: (Event) -> Unit) {
     eventsQueue.observe(viewLifecycleOwner) { queue: Queue<Event>? ->
+        while (queue != null && queue.isNotEmpty()) {
+            eventHandler(queue.remove())
+        }
+    }
+}
+
+fun ComponentActivity.observe(eventsQueue: EventsQueue, eventHandler: (Event) -> Unit) {
+    eventsQueue.observe(this) { queue: Queue<Event>? ->
         while (queue != null && queue.isNotEmpty()) {
             eventHandler(queue.remove())
         }

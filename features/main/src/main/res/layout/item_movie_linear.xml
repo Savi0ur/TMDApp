@@ -12,9 +12,9 @@
         android:layout_width="64dp"
         android:layout_height="96dp"
         android:transitionName="movie_image"
-        android:background="@drawable/drawable_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:background="@drawable/drawable_search"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -24,8 +24,8 @@
         android:layout_marginStart="20dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:transitionName="movie_title"
         android:textAppearance="@style/Header3"
+        android:transitionName="movie_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/movie_image"
@@ -52,9 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:transitionName="movie_genres"
-        android:textColor="@color/secondaryVariant"
         android:textAppearance="@style/Caption2"
+        android:textColor="@color/secondaryVariant"
+        android:transitionName="movie_genres"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/movie_image"
@@ -67,10 +67,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:transitionName="movie_vote_average"
-        android:textColor="@color/green"
         android:textAppearance="@style/Content1"
+        android:textColor="@color/green"
         android:textStyle="bold"
+        android:transitionName="movie_vote_average"
         app:layout_constraintBottom_toBottomOf="@id/movie_image"
         app:layout_constraintEnd_toStartOf="@id/movie_vote_count_text"
         app:layout_constraintStart_toEndOf="@id/movie_image"
@@ -82,25 +82,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:transitionName="movie_vote_count"
         android:textAppearance="@style/Caption2"
+        android:transitionName="movie_vote_count"
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average_text"
         app:layout_constraintStart_toEndOf="@id/movie_vote_average_text"
         tools:text="59 286" />
 
     <TextView
-        android:id="@+id/movie_duration_text"
+        android:id="@+id/movie_duration_context_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:drawableStart="@drawable/drawable_duration"
         android:drawablePadding="4dp"
         android:gravity="bottom"
-        android:transitionName="movie_duration"
-        android:textColor="@color/secondaryVariant"
         android:textAppearance="@style/Caption2"
+        android:textColor="@color/secondaryVariant"
+        android:transitionName="movie_duration"
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/movie_vote_average_text"
-        tools:text="103 мин" />
+        app:layout_constraintStart_toEndOf="@id/movie_vote_count_text"
+        tools:text="103" />
+
+    <TextView
+        android:id="@+id/movie_duration_content_description_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:gravity="bottom"
+        android:text="@string/minutes"
+        android:textAppearance="@style/Caption2"
+        android:textColor="@color/secondaryVariant"
+        app:layout_constraintBottom_toBottomOf="@id/movie_duration_context_text"
+        app:layout_constraintStart_toEndOf="@id/movie_duration_context_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

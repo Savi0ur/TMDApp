@@ -3,6 +3,7 @@ package com.haraev.main.data.api
 import com.haraev.main.data.model.request.DeleteSessionBody
 import com.haraev.main.data.model.response.AccountDetailsResponse
 import com.haraev.main.data.model.response.DeleteSessionResponse
+import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.data.model.response.SearchMoviesResponse
 import io.reactivex.Single
 import retrofit2.Response
@@ -27,4 +28,10 @@ interface MainService {
         @Query("query") query: String,
         @Query("page") page: Int
     ): Single<Response<SearchMoviesResponse>>
+
+    @GET(value = "movie/{movie_id}")
+    fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("language") language: String
+    ): Single<Response<MovieDetailsResponse>>
 }

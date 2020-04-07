@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,9 +11,9 @@
         android:id="@+id/movie_image"
         android:layout_width="152dp"
         android:layout_height="208dp"
+        android:transitionName="movie_image"
         android:viewportWidth="152"
         android:viewportHeight="208"
-        android:transitionName="movie_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,13 +25,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:maxLines="1"
-        android:transitionName="movie_title"
         android:ellipsize="end"
+        android:maxLines="1"
         android:textAppearance="@style/Header3"
+        android:transitionName="movie_title"
         app:layout_constraintEnd_toEndOf="@id/movie_image"
-        app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintTop_toBottomOf="@id/movie_image"
         tools:text="Джентельмены" />
 
@@ -41,12 +40,12 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
-        android:maxLines="2"
         android:ellipsize="end"
-        android:transitionName="movie_original_title"
+        android:maxLines="2"
         android:textAppearance="@style/Caption2"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:transitionName="movie_original_title"
         app:layout_constraintEnd_toEndOf="@id/movie_image"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintTop_toBottomOf="@id/movie_title_text"
         tools:text="The Gentelmen (2020)" />
@@ -56,9 +55,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:transitionName="movie_genres"
-        android:textColor="@color/secondaryVariant"
         android:textAppearance="@style/Caption2"
+        android:textColor="@color/secondaryVariant"
+        android:transitionName="movie_genres"
         app:layout_constraintEnd_toEndOf="@id/movie_image"
         app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintTop_toBottomOf="@id/movie_original_title_with_year_text"
@@ -69,10 +68,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/green"
-        android:transitionName="movie_vote_average"
         android:textAppearance="@style/Content1"
+        android:textColor="@color/green"
         android:textStyle="bold"
+        android:transitionName="movie_vote_average"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/movie_vote_count_text"
         app:layout_constraintStart_toStartOf="@id/movie_image"
@@ -91,18 +90,31 @@
         tools:text="59 286" />
 
     <TextView
-        android:id="@+id/movie_duration_text"
+        android:id="@+id/movie_duration_context_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
         android:drawableStart="@drawable/drawable_duration"
         android:drawablePadding="4dp"
-        android:transitionName="movie_duration"
-        android:textColor="@color/secondaryVariant"
-        android:textAppearance="@style/Caption2"
         android:gravity="bottom"
+        android:textAppearance="@style/Caption2"
+        android:textColor="@color/secondaryVariant"
+        android:transitionName="movie_duration"
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average_text"
-        app:layout_constraintEnd_toEndOf="@id/movie_image"
-        tools:text="103 мин" />
+        app:layout_constraintEnd_toStartOf="@id/movie_duration_content_description_text"
+        tools:text="103" />
+
+    <TextView
+        android:id="@+id/movie_duration_content_description_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:gravity="bottom"
+        android:text="@string/minutes"
+        android:textAppearance="@style/Caption2"
+        android:textColor="@color/secondaryVariant"
+        app:layout_constraintBottom_toBottomOf="@id/movie_duration_context_text"
+        app:layout_constraintEnd_toEndOf="@id/movie_image" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.haraev.main.presentation.search
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -17,7 +18,7 @@ import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R
-import com.haraev.main.data.model.Movie
+import com.haraev.main.data.model.MovieUi
 import com.haraev.main.di.component.SearchComponent
 import com.haraev.main.presentation.item.MovieGridItem
 import com.haraev.main.presentation.item.MovieItem
@@ -26,6 +27,7 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
@@ -90,6 +92,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 showNoMovies()
             }
         } ?: showDefaultScreen()
+
+        search_progress_bar.isVisible = viewState.progressBarVisibility
     }
 
     private fun initViews() {
@@ -102,6 +106,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun setupSearchButton() {
         search_search_button.setOnClickListener {
+            viewModel.onSearchEditTextTextChanged(Observable.just(search_search_edit_text.text.toString()))
             hideKeyboard()
         }
     }
@@ -120,8 +125,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun setupClearButton() {
         search_clear_button.setOnClickListener {
-            search_search_edit_text.text = null
+            search_search_edit_text.setText("")
+            viewModel.stopSearchProcess()
             showDefaultScreen()
+            search_progress_bar.isVisible = false
         }
     }
 
@@ -130,7 +137,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             search_search_edit_text.textChanges()
                 .map { it.toString() }
         )
-        search_search_edit_text.setOnEditorActionListener { _, _, _ ->
+        search_search_edit_text.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.onSearchEditTextTextChanged(Observable.just(search_search_edit_text.text.toString()))
+            }
             hideKeyboard()
             false
         }
@@ -153,21 +163,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
     }
 
-    private fun showDefaultScreen() {
-        search_default_image.isVisible = true
-        search_recycler_view.isInvisible = true
-        search_no_movies_image.isInvisible = true
-        search_no_movies_text.isInvisible = true
-    }
-
-    private fun showNoMovies() {
-        search_default_image.isInvisible = true
-        search_recycler_view.isInvisible = true
-        search_no_movies_image.isVisible = true
-        search_no_movies_text.isVisible = true
-    }
-
-    private fun showMovies(movies: List<Movie>) {
+    private fun showMovies(movies: List<MovieUi>) {
         moviesAdapter.clear()
         moviesAdapter.addAll(
             if (search_list_type_check_box.isChecked) {
@@ -187,7 +183,21 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         search_no_movies_text.isInvisible = true
     }
 
-    private fun navigateToMovieDetailsScreen(movie: Movie, extras: FragmentNavigator.Extras) {
+    private fun showDefaultScreen() {
+        search_default_image.isVisible = true
+        search_recycler_view.isInvisible = true
+        search_no_movies_image.isInvisible = true
+        search_no_movies_text.isInvisible = true
+    }
+
+    private fun showNoMovies() {
+        search_default_image.isInvisible = true
+        search_recycler_view.isInvisible = true
+        search_no_movies_image.isVisible = true
+        search_no_movies_text.isVisible = true
+    }
+
+    private fun navigateToMovieDetailsScreen(movie: MovieUi, extras: FragmentNavigator.Extras) {
 
         val direction = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
             movieTitle = movie.title,
@@ -197,8 +207,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             movieOriginalTitle = movie.originalTitle,
             movieVoteCount = movie.voteCount,
             movieVoteAverage = movie.voteAverage.toFloat(),
-            movieGenres = null,
-            movieDuration = null
+            movieGenres = movie.genres?.joinToString(separator = ", ") { it.name },
+            movieDuration = movie.duration.toString()
         )
 
         findNavController().navigate(direction, extras)
