@@ -19,7 +19,9 @@ import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R
 import com.haraev.main.data.model.Movie
 import com.haraev.main.di.component.SearchComponent
+import com.haraev.main.presentation.item.MovieGridItem
 import com.haraev.main.presentation.item.MovieItem
+import com.haraev.main.presentation.item.MovieLinearItem
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
@@ -42,7 +44,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             navigateToMovieDetailsScreen(
                 item.movie,
                 FragmentNavigatorExtras(
-                    item.movieTitle to "movie_title"
+                    item.movieTitleView to "movie_title"
                 )
             )
         }
@@ -88,6 +90,19 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         setupMoviesRecycler()
         setupSearchEditText()
         setupClearButton()
+        setupListTypeCheckBox()
+    }
+
+    private fun setupListTypeCheckBox() {
+        search_list_type_check_box.setOnCheckedChangeListener { _, isChecked ->
+            changeRecyclerViewLayoutManager(isChecked)
+
+            viewModel.uiState.value?.movies?.let {
+                if (it.isNotEmpty()) {
+                    showMovies(it)
+                }
+            }
+        }
     }
 
     private fun setupClearButton() {
@@ -104,14 +119,19 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun setupMoviesRecycler() {
-        with(moviesAdapter) {
-            setOnItemClickListener(moviesItemClickListener)
-        }
-
+        moviesAdapter.setOnItemClickListener(moviesItemClickListener)
         with(search_recycler_view) {
-//            layoutManager = LinearLayoutManager(requireContext())
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = moviesAdapter
+        }
+    }
+
+    private fun changeRecyclerViewLayoutManager(isGrid: Boolean) {
+        search_recycler_view.layoutManager = if (isGrid) {
+            val spanCount = 2
+            GridLayoutManager(requireContext(), spanCount)
+        } else {
+            LinearLayoutManager(requireContext())
         }
     }
 
@@ -132,8 +152,14 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun showMovies(movies: List<Movie>) {
         moviesAdapter.clear()
         moviesAdapter.addAll(
-            movies.map {
-                MovieItem(it)
+            if (search_list_type_check_box.isChecked) {
+                movies.map {
+                    MovieGridItem(it)
+                }
+            } else {
+                movies.map {
+                    MovieLinearItem(it)
+                }
             }
         )
 

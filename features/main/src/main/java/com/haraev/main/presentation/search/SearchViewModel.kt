@@ -44,7 +44,7 @@ class SearchViewModel @Inject constructor(
         searchUseCase.getMovies(query, 1)
             .scheduleIoToUi(threadScheduler)
             .subscribe({
-                showMovies(it.movies)
+                showMovies(it.movies.sortedByDescending { it.voteAverage })
             }, {
                 eventsQueue.offer(SearchEvents.ErrorMessage(R.string.unknown_error_message))
             })
