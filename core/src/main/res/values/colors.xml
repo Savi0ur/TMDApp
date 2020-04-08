@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#FE4E27</color>
 
-    <color name="colorWhite">#FFFFFF</color>
-    <color name="colorDarkGrey">#656D8A</color>
-    <color name="colorLightGrey">#E7EDFF</color>
-    <color name="colorGreen">#17B913</color>
-    <color name="colorOrange">#FE4E27</color>
-    <color name="colorDarkBlue">#2A2E42</color>
-    <color name="colorYellow">#FFCD1B</color>
-    <color name="colorBackgroundBlack">#191A25</color>
-    <color name="colorRed">#E1172F</color>
-    <color name="colorPurpure">#6C63FF</color>
+    <color name="green">#17B913</color>
+    <color name="darkBlue">#2A2E42</color>
+    <color name="yellow">#FFCD1B</color>
 
-    <color name="disabled_btn_bg">#E6232636</color>
-    <color name="bottom_navigation_bar_bg">#282C3F</color>
-    <color name="colorSnackbarBlack">#0C0C0E</color>
+    <color name="background">#191A25</color>
+    <color name="onBackground">#E6282C3F</color>
+    <color name="onBackgroundVariant">#0C0C0E</color>
+
+    <color name="surface">#282C3F</color>
+
+    <color name="primary">#656D8A</color>
+    <color name="primaryVariant">#E6232636</color>
+    <color name="onPrimary">#6C63FF</color>
+
+    <color name="secondary">#FFFFFF</color>
+    <color name="secondaryVariant">#E7EDFF</color>
+    <color name="onSecondary">#FE4E27</color>
+
+    <color name="error">#E1172F</color>
 
 </resources>

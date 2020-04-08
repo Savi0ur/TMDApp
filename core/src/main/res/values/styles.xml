@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Widget.AppTheme.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/onBackgroundVariant</item>
+    </style>
+
+</resources>

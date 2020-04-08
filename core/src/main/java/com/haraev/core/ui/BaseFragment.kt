@@ -19,15 +19,12 @@ abstract class BaseFragment(fragmentLayoutId: Int) : Fragment(fragmentLayoutId) 
     }
 
     fun showMessage(messageResId: Int, anchorView: View?) {
-        val backgroundColorId = R.color.colorSnackbarBlack
-        val textColorId = R.color.colorWhite
-        showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
+        showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG)
     }
 
     fun showErrorMessage(messageResId: Int, anchorView: View?) {
-        val backgroundColorId = R.color.colorSnackbarBlack
-        val textColorId = R.color.colorRed
-        showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
+        val textColorId = R.color.error
+        showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, textColorId)
     }
 
     private fun showSnackBar(
@@ -35,8 +32,7 @@ abstract class BaseFragment(fragmentLayoutId: Int) : Fragment(fragmentLayoutId) 
         containerResId: Int,
         anchorViewId: Int?,
         duration: Int,
-        @ColorRes backgroundColor: Int,
-        @ColorRes textColor: Int
+        @ColorRes textColor: Int = R.color.secondaryVariant
     ) {
         val message = getString(messageResId)
         val snackbar = SnackbarFactory.create(
@@ -44,7 +40,6 @@ abstract class BaseFragment(fragmentLayoutId: Int) : Fragment(fragmentLayoutId) 
             messageText = message,
             containerResId = containerResId,
             duration = duration,
-            backgroundColor = backgroundColor,
             textColor = textColor
         )
         anchorViewId?.let { snackbar?.setAnchorView(it) }

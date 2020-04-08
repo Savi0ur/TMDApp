@@ -1,6 +1,5 @@
 package com.haraev.core.snackbar
 
-import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -16,7 +15,6 @@ object SnackbarFactory {
         messageText: String,
         containerResId: Int,
         duration: Int,
-        @ColorRes backgroundColor: Int,
         @ColorRes textColor: Int
     ): Snackbar? {
 
@@ -25,17 +23,14 @@ object SnackbarFactory {
         return viewGroup?.let {
             Snackbar
                 .make(viewGroup, messageText, duration)
-                .decorate(backgroundColor, textColor)
+                .decorate(textColor)
         }
     }
 
-    private fun Snackbar.decorate(@ColorRes backgroundId: Int, @ColorRes textColorId: Int): Snackbar {
+    private fun Snackbar.decorate(@ColorRes textColorId: Int): Snackbar {
         val layout = view as? Snackbar.SnackbarLayout ?: return this
 
-        val textView = with(layout) {
-            layout.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, backgroundId))
-            findViewById<TextView>(R.id.snackbar_text)
-        }
+        val textView = layout.findViewById<TextView>(R.id.snackbar_text)
 
         textView.setTextColor(ContextCompat.getColor(view.context, textColorId))
 
