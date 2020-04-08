@@ -4,22 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundBlack">
+    tools:background="@color/background"
+    tools:theme="@style/AppTheme">
+
+    <ProgressBar
+        android:id="@+id/search_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/search_default_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/drawable_search"
+        android:scaleType="fitEnd"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:id="@+id/search_search_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/rounded_shape"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toStartOf="@id/search_list_type_check_box"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:id="@+id/search_search_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
@@ -38,8 +64,9 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLines="1"
-            android:textColor="@color/colorLightGrey"
-            android:textColorHint="@color/colorLightGrey"
+            android:textAppearance="@style/Content1"
+            android:textColor="@color/secondaryVariant"
+            android:textColorHint="@color/secondaryVariant"
             tools:ignore="Autofill" />
 
 
@@ -47,12 +74,24 @@
             android:id="@+id/search_clear_button"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_margin="16dp"
             android:layout_gravity="center"
+            android:layout_margin="16dp"
             android:background="@drawable/drawable_icon_clear_text"
             tools:ignore="ContentDescription" />
 
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/search_list_type_check_box"
+        android:layout_width="24dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:button="@drawable/drawable_selector_list_type_check_box"
+        android:buttonTint="@color/secondaryVariant"
+        app:layout_constraintBottom_toBottomOf="@id/search_search_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/search_search_layout"
+        app:layout_constraintTop_toTopOf="@id/search_search_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler_view"
@@ -66,47 +105,33 @@
         app:layout_constraintTop_toBottomOf="@id/search_search_layout"
         tools:listitem="@layout/item_movie_grid" />
 
-    <ImageView
-        android:id="@+id/search_default_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/drawable_search"
-        android:scaleType="fitEnd"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:id="@+id/search_no_movies_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/drawable_movies_not_found"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
     <TextView
         android:id="@+id/search_no_movies_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/movies_not_found"
-        android:textColor="@color/colorLightGrey"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textAppearance="@style/Header3"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/search_no_movies_image"
         app:layout_constraintStart_toStartOf="@id/search_no_movies_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@id/search_search_layout"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <ImageView
+        android:id="@+id/search_no_movies_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawable_movies_not_found"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_no_movies_text"
+        app:layout_constraintVertical_bias="0.1"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

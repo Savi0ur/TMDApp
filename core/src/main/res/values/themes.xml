@@ -21,6 +21,9 @@
         <item name="android:windowBackground">@color/background</item>
 
         <!--Component styles-->
+        <item name="android:progressBarStyle">@style/Widget.AppTheme.ProgressBar</item>
+        <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout</item>
+        <item name="materialButtonStyle">@style/Widget.AppTheme.MaterialButton</item>
         <item name="snackbarStyle">@style/Widget.AppTheme.Snackbar</item>
 
     </style>

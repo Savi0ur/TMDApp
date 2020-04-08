@@ -19,15 +19,15 @@ class MoviesViewHolder(
                 .resize(64, 96)
                 .into(movie_image)
         }
-        movie_title.text = movie.title
-        movie_original_title_with_year.text = "${movie.originalTitle} (${movie.releaseDate})"
-        movie_vote_average.text = movie.voteAverage.toString()
-        movie_vote_count.text = movie.voteCount.toString()
+        movie_title_text.text = movie.title
+        movie_original_title_with_year_text.text = "${movie.originalTitle} (${movie.releaseDate})"
+        movie_vote_average_text.text = movie.voteAverage.toString()
+        movie_vote_count_text.text = movie.voteCount.toString()
         movie_image.setOnClickListener {
             itemClickListener?.onItemClick(
                 movie = movie,
                 extras = FragmentNavigatorExtras(
-                    movie_title to "movie_title"
+                    movie_title_text to "movie_title"
                 )
             )
         }
