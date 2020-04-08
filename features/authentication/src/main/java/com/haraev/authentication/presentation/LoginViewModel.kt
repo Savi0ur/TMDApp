@@ -7,6 +7,8 @@ import com.haraev.core.aac.EventsQueue
 import com.haraev.core.aac.delegate
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
+import com.haraev.core.data.exception.EmailNotVerifiedException
+import com.haraev.core.data.exception.InvalidLoginCredentialsException
 import com.haraev.core.data.exception.NetworkException
 import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.core.ui.BaseViewModel
@@ -70,9 +72,9 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun handleNetworkException(networkException: NetworkException) {
-        when (networkException.statusCode) {
-            NetworkExceptionType.EMAIL_NOT_VERIFIED.code -> showErrorMessage(R.string.wrong_login_or_password)
-            NetworkExceptionType.INVALID_LOGIN_CREDENTIALS.code -> showErrorMessage(R.string.wrong_login_or_password)
+        when (networkException) {
+            is EmailNotVerifiedException -> showErrorMessage(R.string.wrong_login_or_password)
+            is InvalidLoginCredentialsException -> showErrorMessage(R.string.wrong_login_or_password)
             else -> showErrorMessage(R.string.login_unknown_error_message)
         }
     }
