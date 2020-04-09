@@ -33,7 +33,7 @@ object SnackbarFactory {
         val layout = view as? Snackbar.SnackbarLayout ?: return this
 
         val textView = with(layout) {
-            layout.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, backgroundId))
+            backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, backgroundId))
             findViewById<TextView>(R.id.snackbar_text)
         }
 

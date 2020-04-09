@@ -4,6 +4,7 @@ import com.haraev.main.data.api.MainService
 import com.haraev.main.data.model.Movie
 import com.haraev.main.data.model.MovieUi
 import com.haraev.main.data.model.response.MovieDetailsResponse
+import com.haraev.main.data.common.ApiLanguageEnum
 import com.haraev.main.domain.repository.SearchRepository
 import io.reactivex.Single
 
@@ -16,14 +17,14 @@ class SearchRepositoryImpl(
         page: Int
     ): Single<List<MovieUi>> {
         return mainService.getMovies(
-            language = "ru",
+            language = ApiLanguageEnum.RU.value,
             query = query,
             page = page
         ).flatMap {
             val movies: MutableList<MovieUi> = mutableListOf()
             it.body()?.movies?.forEach { movie ->
                 val movieDetails = mainService.getMovieDetails(
-                    language = "ru",
+                    language = ApiLanguageEnum.RU.value,
                     movieId = movie.serverId
                 ).blockingGet().body()
                 val movieUi = mapMovieWithDetails(movie, movieDetails)

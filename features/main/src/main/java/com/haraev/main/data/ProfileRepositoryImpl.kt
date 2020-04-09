@@ -15,22 +15,18 @@ class ProfileRepositoryImpl(
 
     override fun getAccountDetails(): Single<AccountDetailsResponse> {
         return mainService.getAccountDetails(sessionLocalDataSource.requireSessionId())
-            .flatMap {
-                it.body()?.let { accountDetailResponse ->
-                    Single.just(accountDetailResponse)
-                } ?: Single.error(IllegalStateException("Пустое тело ответа"))
+            .flatMap { response ->
+                Single.just(response.body())
             }
     }
 
     override fun logout(): Completable {
         return mainService.deleteSession(DeleteSessionBody(sessionLocalDataSource.requireSessionId()))
             .flatMapCompletable {
-                it.body()?.let {
-                    sessionLocalDataSource.sessionId = null
-                    sessionLocalDataSource.userLogin = null
-                    sessionLocalDataSource.userPassword = null
-                    Completable.complete()
-                } ?: Completable.error(IllegalStateException("Пустое тело ответа"))
+                sessionLocalDataSource.sessionId = null
+                sessionLocalDataSource.userLogin = null
+                sessionLocalDataSource.userPassword = null
+                Completable.complete()
             }
     }
 }

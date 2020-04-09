@@ -3,13 +3,14 @@ package com.haraev.authentication.data
 import com.haraev.authentication.domain.repository.LoginRepository
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.LoginService
+import com.haraev.core.data.exception.InvalidLoginCredentialsException
 import com.haraev.core.data.exception.NetworkException
+import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.test.retofit.getTestRetrofit
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import io.reactivex.Completable
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -79,7 +80,7 @@ object LoginRepositoryIntegrationTest : Spek({
              "status_message": "Invalid username and/or password: You did not provide a valid login."
            }
             """.trimIndent()
-            lateinit var loginResult: Completable
+            var loginResult: Throwable? = null
             //endregion
 
 
@@ -105,19 +106,16 @@ object LoginRepositoryIntegrationTest : Spek({
             }
 
             When("complete login process") {
-                loginResult = loginRepository.login(login, password)
+                loginResult = loginRepository.login(login, password).blockingGet()
             }
 
             Then("result should be error with status and message") {
 
-                val expectedResult = NetworkException(
-                    30,
+                val expectedResult = InvalidLoginCredentialsException(
                     "Invalid username and/or password: You did not provide a valid login."
                 )
 
-                val actualResult = loginResult.blockingGet()
-
-                assertThat(expectedResult).isEqualTo(actualResult)
+                assertThat(loginResult).isEqualTo(expectedResult)
             }
 
             And("should be zero interactions with sessionLocalDataSource") {
@@ -160,7 +158,7 @@ object LoginRepositoryIntegrationTest : Spek({
                }
             """.trimIndent()
 
-            lateinit var loginResult: Completable
+            var loginResult: Throwable? = null
             //endregion
 
             Given("correct login and password, 200 response") {
@@ -188,13 +186,12 @@ object LoginRepositoryIntegrationTest : Spek({
             }
 
             When("complete login process") {
-                loginResult = loginRepository.login(login, password)
+                loginResult = loginRepository.login(login, password).blockingGet()
             }
 
             Then("result shoult be null") {
-                val actualResult = loginResult.blockingGet()
 
-                assertThat(actualResult).isNull()
+                assertThat(loginResult).isNull()
             }
 
             And("sessionId should save in sessionLocalDataSource") {
