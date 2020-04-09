@@ -24,8 +24,16 @@ dependencies {
     implementation deps.stdlib
     implementation deps.core_ktx
 
-    // Material component
+    implementation deps.stdlib
+    implementation deps.core_ktx
+    implementation deps.constraint_layout
+
+    // Material components
     implementation deps.material_material
+
+    // Navigation components
+    implementation deps.navigation_fragment
+    implementation deps.navigation_ui
 
     // Dagger 2
     implementation deps.dagger_dagger

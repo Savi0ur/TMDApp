@@ -17,6 +17,7 @@ import org.assertj.core.api.Assertions.*
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.net.HttpURLConnection
+import java.util.*
 
 object LoginViewModelIntegrationTest : Spek({
 
@@ -137,7 +138,7 @@ object LoginViewModelIntegrationTest : Spek({
 
             And("command should be null") {
 
-                val actualResult = loginViewModel.uiCommand.value
+                val actualResult = loginViewModel.eventsQueue.value
 
                 assertThat(actualResult).isNull()
             }
@@ -227,9 +228,9 @@ object LoginViewModelIntegrationTest : Spek({
             }
 
             And("command should be NavigateToNextScreen") {
-                val actualResult = loginViewModel.uiCommand.value
+                val actualResult = loginViewModel.eventsQueue.value
 
-                val expectedResult = LoginViewCommand.NavigateToNextScreen
+                val expectedResult = LinkedList<LoginEvents>().apply { add(LoginEvents.NavigateToNextScreen) }
 
                 assertThat(actualResult).isEqualTo(expectedResult)
             }

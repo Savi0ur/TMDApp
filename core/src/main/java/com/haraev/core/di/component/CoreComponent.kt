@@ -8,6 +8,7 @@ import com.haraev.core.data.api.LoginService
 import com.haraev.core.di.module.CoreDataModule
 import com.haraev.core.di.module.CoreNetworkModule
 import com.haraev.core.di.module.SharedPreferencesModule
+import com.haraev.core.di.qualifier.HttpClientQualifier
 import com.squareup.moshi.Moshi
 import dagger.BindsInstance
 import dagger.Component
@@ -16,7 +17,14 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [CoreNetworkModule::class, SharedPreferencesModule::class, CoreDataModule::class])
+@Component(
+    modules =
+    [
+        CoreNetworkModule::class,
+        SharedPreferencesModule::class,
+        CoreDataModule::class
+    ]
+)
 interface CoreComponent {
 
     @Component.Builder
@@ -44,8 +52,11 @@ interface CoreComponent {
         }
     }
 
-    @Named("ClientWithOutAuthenticator")
-    fun provideOkHttpClient(): OkHttpClient
+    @HttpClientQualifier(withAuthenticator = false)
+    fun provideOkHttpClientWithoutAuthenticator(): OkHttpClient
+
+    @HttpClientQualifier(withAuthenticator = true)
+    fun provideOkHttpClientWithAuthenticator(): OkHttpClient
 
     fun provideLoginService(): LoginService
 

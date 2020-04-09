@@ -14,6 +14,7 @@ android {
 dependencies {
     implementation project(":core")
     implementation project(":features:authentication")
+    implementation project(":features:main")
     testImplementation project(":test")
 
     implementation deps.stdlib

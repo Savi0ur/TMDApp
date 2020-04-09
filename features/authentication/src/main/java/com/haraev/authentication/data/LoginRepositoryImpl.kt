@@ -34,13 +34,10 @@ class LoginRepositoryImpl(
                 } ?: Single.error(ResponseException())
             }
             .flatMapCompletable { response ->
-                response.body()?.sessionId?.let {
-                    sessionLocalDataSource.sessionId = it
-                    sessionLocalDataSource.userLogin = login
-                    sessionLocalDataSource.userPassword = password
-                    return@flatMapCompletable Completable.complete()
-                } ?: Completable.error(ResponseException())
-                return@flatMapCompletable Completable.error(NetworkErrorException())
+                sessionLocalDataSource.sessionId = response.body()?.sessionId
+                sessionLocalDataSource.userLogin = login
+                sessionLocalDataSource.userPassword = password
+                Completable.complete()
             }
     }
 }

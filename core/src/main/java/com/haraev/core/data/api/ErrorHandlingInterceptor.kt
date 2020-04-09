@@ -1,6 +1,9 @@
 package com.haraev.core.data.api
 
+import com.haraev.core.data.exception.EmailNotVerifiedException
+import com.haraev.core.data.exception.InvalidLoginCredentialsException
 import com.haraev.core.data.exception.NetworkException
+import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.core.data.model.response.ErrorResponse
 import com.squareup.moshi.Moshi
 import okhttp3.Interceptor
@@ -22,7 +25,11 @@ class ErrorHandlingInterceptor(
                         .fromJson(responseBody.string())
 
                 errorResponse?.let { response ->
-                    throw NetworkException(response.statusCode, response.statusMessage)
+                    when (response.statusCode) {
+                        NetworkExceptionType.INVALID_LOGIN_CREDENTIALS.code -> throw InvalidLoginCredentialsException(response.statusMessage)
+                        NetworkExceptionType.EMAIL_NOT_VERIFIED.code -> throw EmailNotVerifiedException(response.statusMessage)
+                        else -> throw NetworkException(response.statusCode, response.statusMessage)
+                    }
                 }
             }
         }

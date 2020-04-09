@@ -11,6 +11,8 @@ deps_versions.dagger = "2.25.4"
 deps_versions.rxJava = "2.2.18"
 deps_versions.rxAndroid = "2.1.1"
 
+deps_versions.rxBinding = "3.1.0"
+
 deps_versions.moshi = "1.9.2"
 
 deps_versions.okhttp = "4.4.0"
@@ -32,6 +34,8 @@ deps_versions.assertJ = "3.15.0"
 deps_versions.mockitoKotlin = "2.2.0"
 
 deps_versions.mockWebServer = "4.4.0"
+
+deps_versions.picasso = "2.71828"
 
 ext.deps = [:]
 
@@ -55,6 +59,9 @@ deps.dagger_compiler = "com.google.dagger:dagger-compiler:${deps_versions.dagger
 // RxJava 2 RxAndroid 2
 deps.rxjava2_rxjava = "io.reactivex.rxjava2:rxjava:${deps_versions.rxJava}"
 deps.rxjava2_rxandroid = "io.reactivex.rxjava2:rxandroid:${deps_versions.rxAndroid}"
+
+// RxBinding
+deps.rxbinding_rxbinding = "com.jakewharton.rxbinding3:rxbinding:${deps_versions.rxBinding}"
 
 // Moshi
 deps.moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${deps_versions.moshi}"
@@ -94,3 +101,6 @@ deps.mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${deps_versions
 
 // MockWebServer
 deps.mockWebServer = "com.squareup.okhttp3:mockwebserver:${deps_versions.mockWebServer}"
+
+// Picasso
+deps.picasso = "com.squareup.picasso:picasso:${deps_versions.picasso}"

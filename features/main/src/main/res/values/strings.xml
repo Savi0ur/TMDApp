@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="exit">Выйти</string>
+    <string name="unknown_error_message">Что-то пошло не так, попробуйте позже</string>
+    <string name="movie_search">Поиск фильмов</string>
+    <string name="movies">Фильмы</string>
+    <string name="favorite">Избранное</string>
+    <string name="profile">Профиль</string>
+    <string name="movies_not_found">По вашему запросу ничего не найдено :(</string>
+    <string name="original_title_with_date">%1$s (%2$s)</string>
+    <string name="random_movie_overview">
+        Семь лет назад доктор Дулиттл, прославленный врач-ветеринар, живущий в викторианской Англии, потерял свою жену. Теперь он ведет затворнический образ жизни, скрывшись за высокими стенами своего поместья. Экзотические животные из его коллекции — его единственная компания.\n\nНо когда неизвестная болезнь становится угрозой для жизни юной королевы, доктору Дулиттлу приходится покинуть свое убежище и отправиться в невероятное путешествие к мифическому острову. В поисках лекарства для королевы он вступит в схватку с беспощадными врагами, познакомится с диковинными существами и будет вынужден проявить недюжинное мужество и смекалку.
+    </string>
+    <string name="duration_header">Время</string>
+    <string name="rating_header">Рейтинг фильма</string>
+    <string name="minutes">мин</string>
+</resources>

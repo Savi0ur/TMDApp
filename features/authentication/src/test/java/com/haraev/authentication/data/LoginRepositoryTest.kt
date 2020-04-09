@@ -2,6 +2,7 @@ package com.haraev.authentication.data
 
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.LoginService
+import com.haraev.core.data.exception.InvalidLoginCredentialsException
 import com.haraev.core.data.exception.NetworkException
 import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.core.data.model.response.SessionResponse
@@ -104,7 +105,6 @@ object LoginRepositoryTest : Spek({
             val login = "wrong_login"
             val password = "wrong_password"
 
-            val networkExceptionCode = NetworkExceptionType.INVALID_LOGIN_CREDENTIALS.code
             val networkExceptionMessage = "Invalid username and/or password: You did not provide a valid login."
 
             val getNewTokenResponse: Response<TokenResponse> = Response.success(
@@ -115,7 +115,7 @@ object LoginRepositoryTest : Spek({
                 )
             )
 
-            val validateWithLoginResponse = NetworkException(networkExceptionCode, networkExceptionMessage)
+            val validateWithLoginResponse = InvalidLoginCredentialsException(networkExceptionMessage)
 
             val loginService = mock<LoginService> {
                 on { getNewToken() } doReturn Single.just(getNewTokenResponse)
@@ -138,9 +138,9 @@ object LoginRepositoryTest : Spek({
                loginResult = loginRepositoryImpl.login(login, password).blockingGet()
             }
 
-            Then("result should be NetworkException with message") {
+            Then("result should be InvalidLoginCredentialsException with message") {
 
-                val expectedResult = NetworkException(networkExceptionCode, networkExceptionMessage)
+                val expectedResult = InvalidLoginCredentialsException(networkExceptionMessage)
 
                 assertThat(loginResult).isEqualTo(expectedResult)
             }

@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!--Colors-->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondaryVariant</item>
+
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/onBackground</item>
+        <item name="colorError">@color/error</item>
+
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+
+        <item name="colorSurface">@color/surface</item>
+
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+
+        <!--Component styles-->
+        <item name="android:progressBarStyle">@style/Widget.AppTheme.ProgressBar</item>
+        <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout</item>
+        <item name="materialButtonStyle">@style/Widget.AppTheme.MaterialButton</item>
+        <item name="snackbarStyle">@style/Widget.AppTheme.Snackbar</item>
+
+    </style>
+
+</resources>

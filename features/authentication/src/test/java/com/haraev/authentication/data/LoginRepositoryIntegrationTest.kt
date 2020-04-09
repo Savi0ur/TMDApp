@@ -3,6 +3,7 @@ package com.haraev.authentication.data
 import com.haraev.authentication.domain.repository.LoginRepository
 import com.haraev.core.data.SessionLocalDataSource
 import com.haraev.core.data.api.LoginService
+import com.haraev.core.data.exception.InvalidLoginCredentialsException
 import com.haraev.core.data.exception.NetworkException
 import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.test.retofit.getTestRetrofit
@@ -110,8 +111,7 @@ object LoginRepositoryIntegrationTest : Spek({
 
             Then("result should be error with status and message") {
 
-                val expectedResult = NetworkException(
-                    NetworkExceptionType.INVALID_LOGIN_CREDENTIALS.code,
+                val expectedResult = InvalidLoginCredentialsException(
                     "Invalid username and/or password: You did not provide a valid login."
                 )
 

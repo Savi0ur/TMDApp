@@ -4,12 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.ViewModelProvider
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
+import com.haraev.core.aac.Event
+import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
+import com.haraev.core.navigation.NavigationActivity
 import com.haraev.core.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import javax.inject.Inject
@@ -17,12 +21,13 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     @Inject
-    lateinit var viewModelFactory: LoginViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
-        LoginComponent.Builder.build((requireActivity().application as CoreComponentProvider).getCoreComponent())
+        LoginComponent.Builder.build((requireActivity().application as CoreComponentProvider)
+                .getCoreComponent())
             .inject(this)
 
         super.onAttach(context)
@@ -36,8 +41,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     }
 
     private fun observeViewModel() {
-        viewModel.uiCommand.observe(viewLifecycleOwner, ::handleViewCommand)
-        viewModel.uiState.observe(viewLifecycleOwner, ::handleViewState)
+        observe(viewModel.uiState, ::renderState)
+        observe(viewModel.eventsQueue, ::onEvent)
     }
 
     private fun initView() {
@@ -86,23 +91,16 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         }
     }
 
-    private fun handleViewCommand(viewCommand: LoginViewCommand) {
-        when (viewCommand) {
-            is LoginViewCommand.NavigateToNextScreen -> {
-                /**
-                 * Заглушка
-                 * TODO Переход на основной экран приложения после успешного логина
-                 */
-                requireActivity().finish()
-            }
+    private fun onEvent(event: Event) {
+        when (event) {
+            is LoginEvents.NavigateToNextScreen ->
+                (requireActivity() as NavigationActivity).navigateToMainScreen()
         }
     }
 
-    private fun handleViewState(viewState: LoginViewState) {
-        when (viewState.progressBarVisibility) {
-            true -> login_progress_bar.visibility = View.VISIBLE
-            false -> login_progress_bar.visibility = View.GONE
-        }
+    private fun renderState(viewState: LoginViewState) {
+
+        login_progress_bar.isVisible = viewState.progressBarVisibility
 
         login_enter_button.isEnabled = viewState.enterButtonEnable
 
