@@ -14,4 +14,13 @@
     <string name="duration_header">Время</string>
     <string name="rating_header">Рейтинг фильма</string>
     <string name="minutes">мин</string>
+
+    <string name="transition_movie_image">movie_image_%1$s</string>
+    <string name="transition_movie_title">movie_title_%1$s</string>
+    <string name="transition_movie_original_title_with_year">movie_original_title_with_year_%1$s</string>
+    <string name="transition_movie_genres">movie_genres_%1$s</string>
+    <string name="transition_movie_duration">movie_duration_%1$s</string>
+    <string name="transition_movie_duration_description">movie_duration_description_%1$s</string>
+    <string name="transition_movie_vote_average">movie_duration_vote_average_%1$s</string>
+    <string name="transition_movie_vote_count">movie_duration_vote_count_%1$s</string>
 </resources>

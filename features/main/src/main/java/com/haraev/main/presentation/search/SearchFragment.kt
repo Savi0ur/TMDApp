@@ -46,13 +46,14 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             navigateToMovieDetailsScreen(
                 item.movie,
                 FragmentNavigatorExtras(
-                    item.movieTitleView to "movie_title",
-                    item.movieImageView to "movie_image",
-                    item.movieOriginalTitleView to "movie_original_title",
-                    item.movieGenresView to "movie_genres",
-                    item.movieDurationView to "movie_duration",
-                    item.movieVoteAverageView to "movie_vote_average",
-                    item.movieVoteCountView to "movie_vote_count"
+                    item.movieTitleView to getString(R.string.transition_movie_title),
+                    item.movieImageView to getString(R.string.transition_movie_image),
+                    item.movieOriginalTitleView to getString(R.string.transition_movie_original_title_with_year),
+                    item.movieGenresView to getString(R.string.transition_movie_genres),
+                    item.movieDurationView to getString(R.string.transition_movie_duration),
+                    item.movieDurationDescriptionView to getString(R.string.transition_movie_duration_description),
+                    item.movieVoteAverageView to getString(R.string.transition_movie_vote_average),
+                    item.movieVoteCountView to getString(R.string.transition_movie_vote_count)
                 )
             )
         }
@@ -164,8 +165,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun showMovies(movies: List<MovieUi>) {
-        moviesAdapter.clear()
-        moviesAdapter.addAll(
+        moviesAdapter.update(
             if (search_list_type_check_box.isChecked) {
                 movies.map {
                     MovieGridItem(it)
