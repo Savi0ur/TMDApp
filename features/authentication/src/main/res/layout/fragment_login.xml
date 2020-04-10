@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:theme="@style/AppTheme">
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        tools:background="@color/background">
+        android:padding="@dimen/spacing_medium">
 
         <ProgressBar
             android:id="@+id/login_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/login_welcome_text_view"
+            style="@style/Widget.AppTheme.TextView.Header1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
-            android:textAppearance="@style/Header1"
+
             app:layout_constraintBottom_toTopOf="@+id/login_welcome_message_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,11 +36,12 @@
 
         <TextView
             android:id="@+id/login_welcome_message_text_view"
+            style="@style/Widget.AppTheme.TextView.Content1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/spacing_large"
             android:text="@string/login_info"
-            android:textAppearance="@style/Content1"
+
             app:layout_constraintBottom_toTopOf="@+id/login_login_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +51,8 @@
             android:id="@+id/login_login_text_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/spacing_large"
+
             app:layout_constraintBottom_toTopOf="@+id/login_password_text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_login"
-                android:inputType="textEmailAddress"
-                android:textAppearance="@style/Content1" />
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -70,7 +71,8 @@
             style="@style/Widget.AppTheme.TextInputLayout.Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_medium"
+
             app:layout_constraintBottom_toTopOf="@+id/login_error_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,20 +83,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
-                android:inputType="textPassword"
-                android:textColor="@color/secondaryVariant"
-                android:textAppearance="@style/Content1"/>
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/login_error_text_view"
+            style="@style/Widget.AppTheme.TextView.Content1.Error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:lineSpacingExtra="1sp"
-            android:textColor="@color/error"
-            android:textAppearance="@style/Content1"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_medium"
+
             app:layout_constraintBottom_toTopOf="@id/login_enter_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,13 +102,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_enter_button"
+            style="@style/Widget.AppTheme.MaterialButton.Orange"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="@color/login_btn_bg_selector"
             android:enabled="false"
-            android:textAppearance="@style/ButtonText"
             android:text="@string/button_login_enter"
-            android:textColor="@color/login_btn_text_color_selector"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

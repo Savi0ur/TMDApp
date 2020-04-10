@@ -8,7 +8,7 @@
     <style name="Widget.AppTheme.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">@color/primary</item>
         <item name="hintTextColor">@color/primary</item>
-        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="boxStrokeColor">@color/selector_text_input_box_stroke</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.AppTheme.TextInputEditText</item>
     </style>
@@ -24,14 +24,88 @@
 
     <style name="Widget.AppTheme.TextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
         <item name="android:textColor">@color/secondaryVariant</item>
+        <item name="android:textAppearance">@style/Content1</item>
     </style>
 
-    <style name="Widget.AppTheme.MaterialButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="Widget.AppTheme.MaterialButton" parent="Widget.MaterialComponents.Button">
         <item name="textAllCaps">false</item>
         <item name="cornerRadius">8dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textAppearance">@style/ButtonText</item>
+        <item name="backgroundTint">@color/darkBlue</item>
+        <item name="android:textColor">@color/onPrimary</item>
+    </style>
+
+    <style name="Widget.AppTheme.MaterialButton.Orange" parent="Widget.AppTheme.MaterialButton">
+        <item name="backgroundTint">@color/selector_orange_button_background</item>
+        <item name="android:textColor">@color/selector_orange_button_text_color</item>
+    </style>
+
+    <style name="Widget.AppTheme.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="background">@color/onBackground</item>
+        <item name="android:padding">@dimen/spacing_small_extra</item>
+        <item name="itemIconTint">@color/selector_color_bottom_navigation</item>
+        <item name="itemTextColor">@color/selector_color_bottom_navigation</item>
+    </style>
+
+    <style name="Widget.AppTheme.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/secondaryVariant</item>
+        <item name="android:textColorHint">@color/secondaryVariant</item>
+        <item name="android:textAppearance">@style/Content1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">text</item>
+        <item name="android:alpha">0.8</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    
+    <style name="Widget.AppTheme.TextView.Header1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Header1</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Header2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Header2</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Header3" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Header3</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Content1</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content1.Primary" parent="Widget.AppTheme.TextView.Content1">
+        <item name="android:textAppearance">@style/Content1</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content1.Error" parent="Widget.AppTheme.TextView.Content1">
+        <item name="android:textAppearance">@style/Content1</item>
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Content2</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Caption1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Caption1</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Caption2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Caption2</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Caption2.SecondaryVariant" parent="Widget.AppTheme.TextView.Caption2">
+        <item name="android:textColor">@color/secondaryVariant</item>
     </style>
 
 </resources>

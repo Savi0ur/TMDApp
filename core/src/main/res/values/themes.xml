@@ -22,8 +22,10 @@
 
         <!--Component styles-->
         <item name="android:progressBarStyle">@style/Widget.AppTheme.ProgressBar</item>
-        <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout</item>h
+        <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout</item>
         <item name="materialButtonStyle">@style/Widget.AppTheme.MaterialButton</item>
+        <item name="bottomNavigationStyle">@style/Widget.AppTheme.BottomNavigation</item>
+        <item name="editTextStyle">@style/Widget.AppTheme.EditText</item>
 
     </style>
 

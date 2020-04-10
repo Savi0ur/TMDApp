@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    tools:background="@color/background">
+    android:padding="@dimen/spacing_medium"
+    tools:showIn="@layout/fragment_search">
 
     <ImageView
         android:id="@+id/movie_image"
         android:layout_width="152dp"
         android:layout_height="208dp"
-        android:viewportWidth="152"
-        android:viewportHeight="208"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,12 +20,13 @@
 
     <TextView
         android:id="@+id/movie_title_text"
+        style="@style/Widget.AppTheme.TextView.Header3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/spacing_small"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="@style/Header3"
+
         app:layout_constraintEnd_toEndOf="@id/movie_image"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/movie_image"
@@ -35,12 +35,13 @@
 
     <TextView
         android:id="@+id/movie_original_title_with_year_text"
+        style="@style/Widget.AppTheme.TextView.Caption2"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/spacing_small_extra"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textAppearance="@style/Caption2"
+
         app:layout_constraintEnd_toEndOf="@id/movie_image"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/movie_image"
@@ -49,11 +50,11 @@
 
     <TextView
         android:id="@+id/movie_genres_text"
+        style="@style/Widget.AppTheme.TextView.Caption2.SecondaryVariant"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/Caption2"
-        android:textColor="@color/secondaryVariant"
+        android:layout_marginTop="@dimen/spacing_small_extra"
+
         app:layout_constraintEnd_toEndOf="@id/movie_image"
         app:layout_constraintStart_toStartOf="@id/movie_image"
         app:layout_constraintTop_toBottomOf="@id/movie_original_title_with_year_text"
@@ -61,12 +62,11 @@
 
     <TextView
         android:id="@+id/movie_vote_average_text"
+        style="@style/Widget.AppTheme.TextView.Header3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/Content1"
-        android:textColor="@color/green"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/spacing_small"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/movie_vote_count_text"
         app:layout_constraintStart_toStartOf="@id/movie_image"
@@ -75,39 +75,38 @@
 
     <TextView
         android:id="@+id/movie_vote_count_text"
+        style="@style/Widget.AppTheme.TextView.Caption2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:textAppearance="@style/Caption2"
+        android:layout_marginStart="@dimen/spacing_small_extra"
+
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average_text"
         app:layout_constraintStart_toEndOf="@id/movie_vote_average_text"
         tools:text="59 286" />
 
     <TextView
         android:id="@+id/movie_duration_context_text"
+        style="@style/Widget.AppTheme.TextView.Caption2.SecondaryVariant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="@dimen/spacing_small_extra"
         android:drawableStart="@drawable/drawable_duration"
         android:drawablePadding="4dp"
         android:gravity="bottom"
-        android:textAppearance="@style/Caption2"
-        android:textColor="@color/secondaryVariant"
+
         app:layout_constraintBottom_toBottomOf="@id/movie_vote_average_text"
         app:layout_constraintEnd_toStartOf="@id/movie_duration_content_description_text"
         tools:text="103" />
 
     <TextView
         android:id="@+id/movie_duration_content_description_text"
+        style="@style/Widget.AppTheme.TextView.Caption2.SecondaryVariant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:gravity="bottom"
         android:text="@string/minutes"
-        android:textAppearance="@style/Caption2"
-        android:textColor="@color/secondaryVariant"
+
         app:layout_constraintBottom_toBottomOf="@id/movie_duration_context_text"
         app:layout_constraintEnd_toEndOf="@id/movie_image" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

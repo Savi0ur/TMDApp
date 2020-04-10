@@ -14,14 +14,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            tools:background="@color/background"
-            tools:theme="@style/AppTheme">
+            android:padding="@dimen/spacing_medium">
 
             <ProgressBar
                 android:id="@+id/profile_progress_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -30,9 +29,9 @@
                 android:id="@+id/profile_drawable_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/drawable_profile"
+                android:layout_marginTop="@dimen/spacing_large"
+                app:srcCompat="@drawable/drawable_profile"
+
                 app:layout_constraintBottom_toTopOf="@id/profile_name_text_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +42,11 @@
 
             <TextView
                 android:id="@+id/profile_name_text_view"
+                style="@style/Widget.AppTheme.TextView.Header1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="@style/Header1"
+                android:layout_marginTop="@dimen/spacing_small"
+
                 app:layout_constraintBottom_toTopOf="@+id/profile_username_text_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,12 +55,12 @@
 
             <TextView
                 android:id="@+id/profile_username_text_view"
+                style="@style/Widget.AppTheme.TextView.Content1.Primary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="@style/Content1"
-                android:textColor="@color/primary"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_small"
+
                 app:layout_constraintBottom_toTopOf="@+id/profile_logout_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -72,10 +72,8 @@
                 android:id="@+id/profile_logout_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:backgroundTint="@color/darkBlue"
                 android:text="@string/exit"
-                android:textAppearance="@style/ButtonText"
-                android:textColor="@color/onPrimary"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
