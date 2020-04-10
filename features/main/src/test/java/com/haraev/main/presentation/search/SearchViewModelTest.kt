@@ -1,6 +1,6 @@
 package com.haraev.main.presentation.search
 
-import com.haraev.core.aac.Event
+import com.haraev.core.ui.Event
 import com.haraev.main.R
 import com.haraev.main.data.model.Movie
 import com.haraev.main.data.model.response.SearchMoviesResponse

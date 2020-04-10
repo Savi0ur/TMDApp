@@ -13,10 +13,11 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.haraev.core.aac.Event
+import com.haraev.core.ui.Event
 import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.ui.BaseFragment
+import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
 import com.haraev.main.data.model.MovieUi
 import com.haraev.main.di.component.SearchComponent
@@ -28,7 +29,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
@@ -67,7 +67,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         super.onAttach(context)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -82,7 +81,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun onEvent(event: Event) {
         when (event) {
-            is SearchEvents.ErrorMessage -> showErrorMessage(event.messageResId, bottom_navigation)
+            is ShowErrorMessage -> showErrorMessage(event.messageResId, R.id.search_root_coordinator)
         }
     }
 

@@ -3,14 +3,12 @@ package com.haraev.authentication.presentation
 import androidx.lifecycle.MutableLiveData
 import com.haraev.authentication.R
 import com.haraev.authentication.domain.usecase.LoginUseCase
-import com.haraev.core.aac.EventsQueue
 import com.haraev.core.aac.delegate
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
 import com.haraev.core.data.exception.EmailNotVerifiedException
 import com.haraev.core.data.exception.InvalidLoginCredentialsException
 import com.haraev.core.data.exception.NetworkException
-import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.core.ui.BaseViewModel
 import javax.inject.Inject
 
@@ -23,14 +21,12 @@ class LoginViewModel @Inject constructor(
 
     private var state: LoginViewState by uiState.delegate()
 
-    val eventsQueue = EventsQueue()
-
     fun loginDataChanged(login: String, password: String) {
         enterButtonEnable(isLoginValid(login, password))
     }
 
     fun enterButtonClicked(login: String, password: String) {
-        clearErrorMessage()
+        clearStateErrorMessage()
         showUiStartLoading()
         startLoginProcess(login, password)
     }
@@ -73,9 +69,9 @@ class LoginViewModel @Inject constructor(
 
     private fun handleNetworkException(networkException: NetworkException) {
         when (networkException) {
-            is EmailNotVerifiedException -> showErrorMessage(R.string.wrong_login_or_password)
-            is InvalidLoginCredentialsException -> showErrorMessage(R.string.wrong_login_or_password)
-            else -> showErrorMessage(R.string.login_unknown_error_message)
+            is EmailNotVerifiedException -> stateErrorMessage(R.string.wrong_login_or_password)
+            is InvalidLoginCredentialsException -> stateErrorMessage(R.string.wrong_login_or_password)
+            else -> stateErrorMessage(R.string.login_unknown_error_message)
         }
     }
 
@@ -83,11 +79,11 @@ class LoginViewModel @Inject constructor(
         eventsQueue.offer(LoginEvents.NavigateToNextScreen)
     }
 
-    private fun showErrorMessage(messageResId: Int) {
+    private fun stateErrorMessage(messageResId: Int) {
         state = state.copy(errorMessage = messageResId)
     }
 
-    private fun clearErrorMessage() {
+    private fun clearStateErrorMessage() {
         state = state.copy(errorMessage = null)
     }
 

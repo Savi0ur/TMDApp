@@ -1,6 +1,6 @@
 package com.haraev.main.presentation.profile
 
-import com.haraev.core.aac.Event
+import com.haraev.core.ui.Event
 import com.haraev.main.R
 import com.haraev.main.data.model.response.AccountDetailsResponse
 import com.haraev.main.domain.usecase.ProfileUseCase

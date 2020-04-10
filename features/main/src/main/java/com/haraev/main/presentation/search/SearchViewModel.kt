@@ -24,8 +24,6 @@ class SearchViewModel @Inject constructor(
     val uiState = MutableLiveData<SearchViewState>(createInitialState())
     private var state: SearchViewState by uiState.delegate()
 
-    val eventsQueue = EventsQueue()
-
     private var searchDisposables = CompositeDisposable()
 
     private var lastQuery = ""
@@ -42,7 +40,7 @@ class SearchViewModel @Inject constructor(
                 }
             }, {
                 Timber.tag(TAG).e(it)
-                eventsQueue.offer(SearchEvents.ErrorMessage(R.string.unknown_error_message))
+                showErrorMessage(R.string.unknown_error_message)
             })
             .autoDispose()
     }
@@ -62,14 +60,10 @@ class SearchViewModel @Inject constructor(
                 showMovies(movies.sortedByDescending { it.voteAverage })
             }, {
                 Timber.tag(TAG).e(it)
-                eventsQueue.offer(SearchEvents.ErrorMessage(R.string.unknown_error_message))
+                showErrorMessage(R.string.unknown_error_message)
             })
             .autoDispose()
         )
-    }
-
-    private fun showDefaultImage() {
-        state = state.copy(movies = null)
     }
 
     private fun showMovies(movies: List<MovieUi>) {

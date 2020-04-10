@@ -18,16 +18,16 @@ abstract class BaseFragment(fragmentLayoutId: Int) : Fragment(fragmentLayoutId) 
         imm?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
-    fun showMessage(messageResId: Int, anchorView: View?) {
+    fun showMessage(messageResId: Int, containerResId: Int = android.R.id.content, anchorView: View? = null) {
         val backgroundColorId = R.color.onBackgroundVariant
         val textColorId = R.color.secondary
-        showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
+        showSnackBar(messageResId, containerResId, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
     }
 
-    fun showErrorMessage(messageResId: Int, anchorView: View?) {
+    fun showErrorMessage(messageResId: Int, containerResId: Int = android.R.id.content, anchorView: View? = null) {
         val backgroundColorId = R.color.onBackgroundVariant
         val textColorId = R.color.error
-        showSnackBar(messageResId, android.R.id.content, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
+        showSnackBar(messageResId, containerResId, anchorView?.id, Snackbar.LENGTH_LONG, backgroundColorId, textColorId)
     }
 
     private fun showSnackBar(
