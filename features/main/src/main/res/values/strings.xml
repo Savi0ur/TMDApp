@@ -23,4 +23,7 @@
     <string name="transition_movie_duration_description">movie_duration_description_%1$s</string>
     <string name="transition_movie_vote_average">movie_duration_vote_average_%1$s</string>
     <string name="transition_movie_vote_count">movie_duration_vote_count_%1$s</string>
+
+    <string name="menu_favorite">Добавить в избранное</string>
+    <string name="back_button_description">Назад</string>
 </resources>

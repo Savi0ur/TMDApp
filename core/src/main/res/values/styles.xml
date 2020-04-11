@@ -58,7 +58,11 @@
         <item name="android:alpha">0.8</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
-    
+
+    <style name="Widget.AppTheme.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.PrimarySurface">
+        <item name="android:background">?attr/colorPrimarySurface</item>
+    </style>
+
     <style name="Widget.AppTheme.TextView.Header1" parent="Widget.MaterialComponents.TextView">
         <item name="android:textAppearance">@style/Header1</item>
         <item name="android:textColor">@color/secondaryVariant</item>

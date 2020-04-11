@@ -1,6 +1,9 @@
 package com.haraev.main.presentation.moviedetails
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -10,6 +13,7 @@ import com.haraev.core.ui.BaseFragment
 import com.haraev.main.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_details.*
+import kotlinx.android.synthetic.main.movie_details_toolbar.*
 
 class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
 
@@ -25,13 +29,31 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
     }
 
     private fun initViews() {
+        setupMenu()
         initContentFromArgs()
-        setupBackButton()
     }
 
-    private fun setupBackButton() {
-        movie_details_back_button.setOnClickListener {
+    private fun setupMenu() {
+        movie_details_toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
+        }
+
+        movie_details_toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.movie_details_add_to_favorite -> {
+                    val isChecked = !item.isChecked
+
+                    if (isChecked) {
+                        item.setIcon(R.drawable.drawable_action_favorite_filled)
+                    } else {
+                        item.setIcon(R.drawable.drawable_action_favorite_border_outlined)
+                    }
+
+                    item.isChecked = isChecked
+                    true
+                }
+                else -> false
+            }
         }
     }
 
