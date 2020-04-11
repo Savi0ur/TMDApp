@@ -4,14 +4,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.haraev.core.common.BASE_IMAGE_URL
 import com.haraev.main.R
-import com.haraev.main.data.model.MovieUi
+import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.item_movie_grid.*
 
 abstract class MovieItem(
-    open val movie: MovieUi
+    open val movie: MovieDetailsResponse
 ) : Item(movie.serverId.toLong()) {
 
     lateinit var movieTitleView: TextView
@@ -46,7 +46,7 @@ abstract class MovieItem(
             movieVoteAverageView.transitionName = resources.getString(R.string.transition_movie_vote_average, position.toString())
             movieVoteCountView.transitionName = resources.getString(R.string.transition_movie_vote_count, position.toString())
 
-            movie.poster_path?.let {
+            movie.posterPath?.let {
                 Picasso.get()
                     .load("$BASE_IMAGE_URL$it")
                     .placeholder(R.drawable.drawable_search)
@@ -72,7 +72,7 @@ abstract class MovieItem(
             movie_duration_context_text.text = movie.duration.toString()
 
             movie_genres_text.text =
-                movie.genres?.joinToString(separator = ", ", limit = 3) { it.name }
+                movie.genres.joinToString(separator = ", ", limit = 3) { it.name }
         }
     }
 }

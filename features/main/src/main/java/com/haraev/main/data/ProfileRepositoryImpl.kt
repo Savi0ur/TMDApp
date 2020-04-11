@@ -16,7 +16,7 @@ class ProfileRepositoryImpl(
     override fun getAccountDetails(): Single<AccountDetailsResponse> {
         return mainService.getAccountDetails(sessionLocalDataSource.requireSessionId())
             .flatMap { response ->
-                Single.just(response.body())
+                Single.just(response)
             }
     }
 

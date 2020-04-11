@@ -19,7 +19,7 @@ import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.ui.BaseFragment
 import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
-import com.haraev.main.data.model.MovieUi
+import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.di.component.SearchComponent
 import com.haraev.main.presentation.item.MovieGridItem
 import com.haraev.main.presentation.item.MovieItem
@@ -163,7 +163,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
     }
 
-    private fun showMovies(movies: List<MovieUi>) {
+    private fun showMovies(movies: List<MovieDetailsResponse>) {
         moviesAdapter.update(
             if (search_list_type_check_box.isChecked) {
                 movies.map {
@@ -196,18 +196,18 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         search_no_movies_text.isVisible = true
     }
 
-    private fun navigateToMovieDetailsScreen(movie: MovieUi, extras: FragmentNavigator.Extras) {
+    private fun navigateToMovieDetailsScreen(movie: MovieDetailsResponse, extras: FragmentNavigator.Extras) {
 
         val direction = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
             movieTitle = movie.title,
-            moviePosterPath = movie.poster_path,
+            moviePosterPath = movie.posterPath,
             movieOverview = movie.overview,
             movieReleaseDate = movie.releaseDate,
             movieOriginalTitle = movie.originalTitle,
             movieVoteCount = movie.voteCount,
             movieVoteAverage = movie.voteAverage.toFloat(),
-            movieGenres = movie.genres?.joinToString(separator = ", ") { it.name },
-            movieDuration = movie.duration.toString()
+            movieGenres = movie.genres.joinToString(separator = ", ") { it.name },
+            movieDuration = movie.duration?.toString() ?: "0"
         )
 
         findNavController().navigate(direction, extras)

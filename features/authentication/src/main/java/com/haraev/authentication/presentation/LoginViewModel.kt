@@ -34,17 +34,15 @@ class LoginViewModel @Inject constructor(
     private fun startLoginProcess(login: String, password: String) {
         loginUseCase.login(login, password)
             .scheduleIoToUi(scheduler)
-            .doOnTerminate {
-                showUiStopLoading()
-            }
             .subscribe({
+                showUiStopLoading()
                 navigateToNextScreen()
             }, { throwable ->
-
+                showUiStopLoading()
                 if (throwable is NetworkException) {
                     handleNetworkException(throwable)
                 } else {
-                    showErrorMessage(R.string.login_unknown_error_message)
+                    stateErrorMessage(R.string.login_unknown_error_message)
                 }
 
             })

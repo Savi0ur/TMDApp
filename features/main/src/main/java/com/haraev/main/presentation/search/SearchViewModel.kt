@@ -1,17 +1,15 @@
 package com.haraev.main.presentation.search
 
 import androidx.lifecycle.MutableLiveData
-import com.haraev.core.aac.EventsQueue
 import com.haraev.core.aac.delegate
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
 import com.haraev.core.ui.BaseViewModel
 import com.haraev.main.R
-import com.haraev.main.data.model.MovieUi
+import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.domain.usecase.SearchUseCase
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -26,18 +24,16 @@ class SearchViewModel @Inject constructor(
 
     private var searchDisposables = CompositeDisposable()
 
-    private var lastQuery = ""
-
     fun onSearchEditTextTextChanged(observable: Observable<String>) {
-        observable.debounce(300, TimeUnit.MILLISECONDS)
+        observable
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged()
+            .filter { it.isNotBlank() }
             .scheduleIoToUi(threadScheduler)
             .subscribe({
-                if (it.isNotBlank() && it != lastQuery) {
-                    changeProgressBarState(true)
-                    stopSearchProcess()
-                    searchMovie(it)
-                    lastQuery = it
-                }
+                changeProgressBarState(true)
+                stopSearchProcess()
+                searchMovies(it)
             }, {
                 Timber.tag(TAG).e(it)
                 showErrorMessage(R.string.unknown_error_message)
@@ -49,24 +45,31 @@ class SearchViewModel @Inject constructor(
         searchDisposables.clear()
     }
 
-    @Suppress("UnstableApiUsage")
-    private fun searchMovie(query: String) {
-        searchDisposables.add(searchUseCase.getMovies(query, 1)
-            .scheduleIoToUi(threadScheduler)
-            .doOnTerminate {
-                changeProgressBarState(false)
-            }
-            .subscribe({ movies ->
-                showMovies(movies.sortedByDescending { it.voteAverage })
-            }, {
-                Timber.tag(TAG).e(it)
-                showErrorMessage(R.string.unknown_error_message)
-            })
-            .autoDispose()
+    private fun searchMovies(query: String) {
+        searchDisposables.add(
+            searchUseCase.getMovies(query, 1)
+                .flattenAsObservable { it.movies }
+                .flatMap { movie ->
+                    searchUseCase.getMovieDetails(movie.serverId).toObservable()
+                }
+                .collect(
+                    { ArrayList<MovieDetailsResponse>() },
+                    { list, item -> list.add(item) }
+                )
+                .scheduleIoToUi(threadScheduler)
+                .subscribe({ list ->
+                    changeProgressBarState(false)
+                    showMovies(list)
+                }, { e ->
+                    changeProgressBarState(false)
+                    Timber.tag(TAG).e(e)
+                    showErrorMessage(R.string.unknown_error_message)
+                })
+                .autoDispose()
         )
     }
 
-    private fun showMovies(movies: List<MovieUi>) {
+    private fun showMovies(movies: List<MovieDetailsResponse>) {
         state = state.copy(movies = movies)
     }
 

@@ -13,15 +13,15 @@ import retrofit2.http.POST
 interface LoginService {
 
     @GET(value = "authentication/token/new")
-    fun getNewToken() : Single<Response<TokenResponse>>
+    fun getNewToken() : Single<TokenResponse>
 
     @POST(value = "authentication/token/validate_with_login")
     fun validateWithLogin(
         @Body validateWithLoginBody: ValidateWithLoginBody
-    ) : Single<Response<TokenResponse>>
+    ) : Single<TokenResponse>
 
     @POST(value = "authentication/session/new")
     fun getNewSession(
         @Body sessionBody: SessionBody
-    ) : Single<Response<SessionResponse>>
+    ) : Single<SessionResponse>
 }

@@ -1,5 +1,6 @@
 package com.haraev.main.data.api
 
+import com.haraev.main.data.common.ApiLanguageEnum
 import com.haraev.main.data.model.request.DeleteSessionBody
 import com.haraev.main.data.model.response.AccountDetailsResponse
 import com.haraev.main.data.model.response.DeleteSessionResponse
@@ -14,24 +15,24 @@ interface MainService {
     @GET(value = "account")
     fun getAccountDetails(
         @Query("session_id") sessionId: String
-    ): Single<Response<AccountDetailsResponse>>
+    ): Single<AccountDetailsResponse>
 
     @HTTP(method = "DELETE", path = "authentication/session", hasBody = true)
     fun deleteSession(
         @Body deleteSessionBody: DeleteSessionBody
-    ) : Single<Response<DeleteSessionResponse>>
+    ) : Single<DeleteSessionResponse>
 
 
     @GET(value = "search/movie")
     fun getMovies(
-        @Query("language") language: String,
+        @Query("language") language: String = ApiLanguageEnum.RU.value,
         @Query("query") query: String,
         @Query("page") page: Int
-    ): Single<Response<SearchMoviesResponse>>
+    ): Single<SearchMoviesResponse>
 
     @GET(value = "movie/{movie_id}")
     fun getMovieDetails(
         @Path("movie_id") movieId: Int,
-        @Query("language") language: String
-    ): Single<Response<MovieDetailsResponse>>
+        @Query("language") language: String  = ApiLanguageEnum.RU.value
+    ): Single<MovieDetailsResponse>
 }

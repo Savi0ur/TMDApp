@@ -25,7 +25,7 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
     }
 
     private fun initViews() {
-        setupArgsContent()
+        initContentFromArgs()
         setupBackButton()
     }
 
@@ -35,29 +35,40 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
         }
     }
 
-    private fun setupArgsContent() {
+    private fun initContentFromArgs() {
         with(args) {
-            moviePosterPath?.let {
-                Picasso.get()
-                    .load("$BASE_IMAGE_URL$it")
-                    .placeholder(R.drawable.drawable_search)
-                    .into(movie_details_image)
-            } ?: Picasso.get()
-                .load(R.drawable.drawable_search)
-                .placeholder(R.drawable.drawable_search)
-                .into(movie_details_image)
+
+            setupMovieImage(moviePosterPath)
+
             movie_details_title_text_view.text = movieTitle
+
             val originalTitleWithYear = resources.getString(
                 R.string.original_title_with_date,
                 movieOriginalTitle,
                 movieReleaseDate
             )
             movie_details_original_title_with_year_text.text = originalTitleWithYear
+
             movie_details_genres_text.text = movieGenres ?: ""
-            movie_details_duration_content_text.text = movieDuration ?: ""
+
+            movie_details_duration_content_text.text = movieDuration ?: "0"
+
             movie_details_rating_content_vote_average_text.text = movieVoteAverage.toString()
             movie_details_rating_content_vote_count_text.text = movieVoteCount.toString()
+
             movie_details_overview.text = movieOverview
         }
+    }
+
+    private fun setupMovieImage(moviePosterPath: String?) {
+        moviePosterPath?.let {
+            Picasso.get()
+                .load("$BASE_IMAGE_URL$it")
+                .placeholder(R.drawable.drawable_search)
+                .into(movie_details_image)
+        } ?: Picasso.get()
+            .load(R.drawable.drawable_search)
+            .placeholder(R.drawable.drawable_search)
+            .into(movie_details_image)
     }
 }
