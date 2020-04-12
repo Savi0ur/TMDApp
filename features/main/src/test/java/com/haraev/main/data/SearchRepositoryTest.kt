@@ -43,13 +43,8 @@ object SearchRepositoryTest : Spek({
                 totalResults = 1
             )
 
-            val getMoviesResponse: Response<SearchMoviesResponse> = Response.success(
-                HttpURLConnection.HTTP_OK,
-                searchMoviesResponse
-            )
-
             val mainService = mock<MainService> {
-                on { getMovies("ru", query, 1) } doReturn Single.just(getMoviesResponse)
+                on { getMovies("ru", query, 1) } doReturn Single.just(searchMoviesResponse)
             }
 
             lateinit var getSearchMoviesResponse: SearchMoviesResponse
@@ -89,13 +84,8 @@ object SearchRepositoryTest : Spek({
                 totalResults = 0
             )
 
-            val getMoviesResponse: Response<SearchMoviesResponse> = Response.success(
-                HttpURLConnection.HTTP_OK,
-                searchMoviesResponse
-            )
-
             val mainService = mock<MainService> {
-                on { getMovies("ru", query, 1) } doReturn Single.just(getMoviesResponse)
+                on { getMovies("ru", query, 1) } doReturn Single.just(searchMoviesResponse)
             }
 
             lateinit var getSearchMoviesResponse: SearchMoviesResponse

@@ -1,6 +1,7 @@
 package com.haraev.main.presentation.profile
 
 import com.haraev.core.ui.Event
+import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
 import com.haraev.main.data.model.response.AccountDetailsResponse
 import com.haraev.main.domain.usecase.ProfileUseCase
@@ -106,7 +107,7 @@ object ProfileViewModelTest : Spek({
                 val actualResult = profileViewModel.eventsQueue.value
 
                 val expectedResult =
-                    LinkedList<Event>().apply { add(ProfileEvents.ErrorMessage(R.string.unknown_error_message)) }
+                    LinkedList<Event>().apply { add(ShowErrorMessage(R.string.unknown_error_message)) }
 
                 assertThat(actualResult).isEqualTo(expectedResult)
             }
@@ -191,7 +192,7 @@ object ProfileViewModelTest : Spek({
                 val actualResult = profileViewModel.eventsQueue.value
 
                 val expectedResult =
-                    LinkedList<Event>().apply { add(ProfileEvents.ErrorMessage(R.string.unknown_error_message)) }
+                    LinkedList<Event>().apply { add(ShowErrorMessage(R.string.unknown_error_message)) }
 
                 assertThat(actualResult).isEqualTo(expectedResult)
 

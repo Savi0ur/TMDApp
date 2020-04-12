@@ -1,6 +1,7 @@
 package com.haraev.tmdapp.ui
 
 import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.ui.Event
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode
 import com.nhaarman.mockitokotlin2.doReturn
@@ -8,6 +9,7 @@ import com.nhaarman.mockitokotlin2.mock
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import org.assertj.core.api.Assertions.*
+import java.util.*
 
 object MainViewModelTest : Spek({
 
@@ -41,10 +43,10 @@ object MainViewModelTest : Spek({
                 mainViewModel = MainViewModel(sessionLocalDataSource)
             }
 
-            Then("ui command should be OpenLoginScreen") {
-                val uiCommand = mainViewModel.uiCommand.value
+            Then("ui event should be OpenLoginScreen") {
+                val uiCommand = mainViewModel.eventsQueue.value
 
-                val expectedState = MainViewCommand.OpenLoginScreen
+                val expectedState = LinkedList<Event>().apply { add(MainEvents.OpenLoginScreen) }
 
                 assertThat(uiCommand).isEqualTo(expectedState)
             }
@@ -70,10 +72,10 @@ object MainViewModelTest : Spek({
                 mainViewModel = MainViewModel(sessionLocalDataSource)
             }
 
-            Then("ui command should be OpenSearchScreen") {
-                val uiCommand = mainViewModel.uiCommand.value
+            Then("ui event should be OpenSearchScreen") {
+                val uiCommand = mainViewModel.eventsQueue.value
 
-                val expectedState = MainViewCommand.OpenSearchScreen
+                val expectedState = LinkedList<Event>().apply { add(MainEvents.OpenSearchScreen) }
 
                 assertThat(uiCommand).isEqualTo(expectedState)
             }

@@ -1,15 +1,12 @@
 package com.haraev.tmdapp.ui
 
-import androidx.lifecycle.ViewModel
-import com.haraev.core.aac.EventsQueue
 import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.ui.BaseViewModel
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val sessionLocalDataSource: SessionLocalDataSource
-) : ViewModel() {
-
-    val eventsQueue = EventsQueue()
+) : BaseViewModel() {
 
     init {
         if (isSessionIdExist()) {
