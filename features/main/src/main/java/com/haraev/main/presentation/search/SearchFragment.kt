@@ -3,7 +3,6 @@ package com.haraev.main.presentation.search
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -24,7 +23,6 @@ import com.haraev.main.di.component.SearchComponent
 import com.haraev.main.presentation.item.MovieGridItem
 import com.haraev.main.presentation.item.MovieItem
 import com.haraev.main.presentation.item.MovieLinearItem
-import com.jakewharton.rxbinding3.widget.textChanges
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
@@ -81,7 +79,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun onEvent(event: Event) {
         when (event) {
-            is ShowErrorMessage -> showErrorMessage(event.messageResId, R.id.search_root_coordinator)
+            is ShowErrorMessage -> showErrorMessage(
+                event.messageResId,
+                R.id.search_root_coordinator
+            )
         }
     }
 
@@ -98,20 +99,33 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun initViews() {
         setupMoviesRecycler()
-        setupSearchEditText()
-        setupSearchButton()
-        setupClearButton()
-        setupListTypeCheckBox()
+        setupRecyclerTypeCheckBox()
+        setupSearchView()
     }
 
-    private fun setupSearchButton() {
-        search_search_button.setOnClickListener {
-            viewModel.onSearchEditTextTextChanged(Observable.just(search_search_edit_text.text.toString()))
+    private fun setupSearchView() {
+        search_search_view.setOnSearchClickListener {
+            viewModel.onSearchEditTextTextChanged(Observable.just(search_search_view.text))
+            hideKeyboard()
+        }
+
+        search_search_view.setOnClearClickListener {
+            search_search_view.clear()
+            viewModel.onClearButtonClicked()
+        }
+
+        viewModel.onSearchEditTextTextChanged(
+            search_search_view.textChanges()
+                .map { it.toString() }
+        )
+
+        search_search_view.setOnEditorActionListener {
+            viewModel.onSearchEditTextTextChanged(Observable.just(search_search_view.text))
             hideKeyboard()
         }
     }
 
-    private fun setupListTypeCheckBox() {
+    private fun setupRecyclerTypeCheckBox() {
         search_list_type_check_box.setOnCheckedChangeListener { _, isChecked ->
             changeRecyclerViewLayoutManager(isChecked)
 
@@ -120,29 +134,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                     showMovies(it)
                 }
             }
-        }
-    }
-
-    private fun setupClearButton() {
-        search_clear_button.setOnClickListener {
-            search_search_edit_text.setText("")
-            viewModel.stopSearchProcess()
-            showDefaultScreen()
-            search_progress_bar.isVisible = false
-        }
-    }
-
-    private fun setupSearchEditText() {
-        viewModel.onSearchEditTextTextChanged(
-            search_search_edit_text.textChanges()
-                .map { it.toString() }
-        )
-        search_search_edit_text.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.onSearchEditTextTextChanged(Observable.just(search_search_edit_text.text.toString()))
-            }
-            hideKeyboard()
-            false
         }
     }
 
@@ -196,7 +187,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         search_no_movies_text.isVisible = true
     }
 
-    private fun navigateToMovieDetailsScreen(movie: MovieDetailsResponse, extras: FragmentNavigator.Extras) {
+    private fun navigateToMovieDetailsScreen(
+        movie: MovieDetailsResponse,
+        extras: FragmentNavigator.Extras
+    ) {
 
         val direction = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
             movieTitle = movie.title,

@@ -31,8 +31,8 @@ class SearchViewModel @Inject constructor(
             .filter { it.isNotBlank() }
             .scheduleIoToUi(threadScheduler)
             .subscribe({
-                changeProgressBarState(true)
                 stopSearchProcess()
+                changeProgressBarState(true)
                 searchMovies(it)
             }, {
                 Timber.tag(TAG).e(it)
@@ -41,8 +41,14 @@ class SearchViewModel @Inject constructor(
             .autoDispose()
     }
 
-    fun stopSearchProcess() {
+    fun onClearButtonClicked() {
+        stopSearchProcess()
+        showMovies(null)
+    }
+
+    private fun stopSearchProcess() {
         searchDisposables.clear()
+        changeProgressBarState(false)
     }
 
     private fun searchMovies(query: String) {
@@ -69,7 +75,7 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun showMovies(movies: List<MovieDetailsResponse>) {
+    private fun showMovies(movies: List<MovieDetailsResponse>?) {
         state = state.copy(movies = movies)
     }
 

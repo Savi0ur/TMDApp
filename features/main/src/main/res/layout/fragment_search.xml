@@ -34,57 +34,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/drawable_search"
-            tools:visibility="gone"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/search_search_layout"
+        <com.haraev.core.ui.views.SearchView
+            android:id="@+id/search_search_view"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="56dp"
-            android:background="@drawable/rounded_shape"
-            android:orientation="horizontal"
+            android:hint="@string/movie_search"
 
             app:layout_constraintEnd_toStartOf="@id/search_list_type_check_box"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/search_search_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:padding="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@drawable/drawable_icon_search"
-                tools:ignore="ContentDescription" />
-
-
-            <EditText
-                android:id="@+id/search_search_edit_text"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="@string/movie_search"
-                android:imeOptions="actionSearch"
-                tools:ignore="Autofill,TextFields" />
-
-            <ImageView
-                android:id="@+id/search_clear_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:padding="@dimen/spacing_medium"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@drawable/drawable_icon_clear_text"
-                tools:ignore="ContentDescription" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/search_list_type_check_box"
@@ -94,10 +57,10 @@
             android:button="@drawable/drawable_selector_list_type_check_box"
             android:buttonTint="@color/secondaryVariant"
 
-            app:layout_constraintBottom_toBottomOf="@id/search_search_layout"
+            app:layout_constraintBottom_toBottomOf="@id/search_search_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/search_search_layout"
-            app:layout_constraintTop_toTopOf="@id/search_search_layout" />
+            app:layout_constraintStart_toEndOf="@id/search_search_view"
+            app:layout_constraintTop_toTopOf="@id/search_search_view" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_recycler_view"
@@ -109,7 +72,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_search_layout"
+            app:layout_constraintTop_toBottomOf="@id/search_search_view"
 
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/item_movie_grid"
@@ -128,21 +91,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/search_no_movies_image"
             app:layout_constraintStart_toStartOf="@id/search_no_movies_image"
-            app:layout_constraintTop_toBottomOf="@id/search_search_layout"
+            app:layout_constraintTop_toBottomOf="@id/search_search_view"
             app:layout_constraintVertical_bias="0.1" />
 
         <ImageView
             android:id="@+id/search_no_movies_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/drawable_movies_not_found"
-
             android:visibility="gone"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_no_movies_text"
             app:layout_constraintVertical_bias="0.1"
+            app:srcCompat="@drawable/drawable_movies_not_found"
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
