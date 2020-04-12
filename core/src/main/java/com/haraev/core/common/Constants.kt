@@ -10,7 +10,8 @@ const val TMDB_API_KEY = BuildConfig.TMDB_API_KEY
 /**
  * Базовый URL для запросов
  */
-const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
+const val TMDB_BASE_URL = "api.themoviedb.org"
+const val EXTENDED_TMDB_BASE_URL = "https://$TMDB_BASE_URL/3/"
 
 
 /**

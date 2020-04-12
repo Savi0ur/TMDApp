@@ -1,6 +1,6 @@
 package com.haraev.main.di.module
 
-import com.haraev.core.common.TMDB_BASE_URL
+import com.haraev.core.common.EXTENDED_TMDB_BASE_URL
 import com.haraev.core.di.qualifier.HttpClientQualifier
 import com.haraev.main.data.api.MainService
 import dagger.Module
@@ -9,7 +9,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Named
 
 @Module
 class NetworkModule {
@@ -20,7 +19,7 @@ class NetworkModule {
         client: OkHttpClient
     ) : MainService =
         Retrofit.Builder()
-            .baseUrl(TMDB_BASE_URL)
+            .baseUrl(EXTENDED_TMDB_BASE_URL)
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
