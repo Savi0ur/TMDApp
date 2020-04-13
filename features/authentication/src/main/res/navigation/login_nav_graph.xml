@@ -7,7 +7,40 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.haraev.authentication.presentation.LoginFragment"
+        android:name="com.haraev.authentication.presentation.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login"/>
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_makePinFragment"
+            app:destination="@id/makePinFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/makePinFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/makePinFragment"
+        android:name="com.haraev.authentication.presentation.makePin.MakePinCodeFragment"
+        android:label="MakePinFragment"
+        tools:layout="@layout/fragment_make_pin">
+        <action
+            android:id="@+id/action_makePinFragment_to_repeatPinFragment"
+            app:destination="@id/repeatPinFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/makePinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/repeatPinFragment"
+        android:name="com.haraev.authentication.presentation.repeatPin.RepeatPinCodeFragment"
+        android:label="RepeatPinFragment"
+        tools:layout="@layout/fragment_repeat_pin">
+        <argument
+            android:name="pinCode"
+            app:argType="string" />
+    </fragment>
 </navigation>

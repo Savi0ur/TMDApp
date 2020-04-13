@@ -1,6 +1,6 @@
 package com.haraev.authentication.data
 
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.data.exception.InvalidLoginCredentialsException
 import com.haraev.core.data.model.response.SessionResponse
@@ -47,7 +47,7 @@ object LoginRepositoryTest : Spek({
                 on { getNewSession(any()) } doReturn Single.just(getNewSessionResponse)
             }
 
-            val sessionLocalDataSource = mock<SessionLocalDataSource> {
+            val sessionLocalDataSource = mock<LocalUserDataSource> {
                 on { sessionId } doReturn null
                 on { userLogin } doReturn null
                 on { userPassword } doReturn null
@@ -108,7 +108,7 @@ object LoginRepositoryTest : Spek({
                 on { validateWithLogin(any()) } doReturn Single.error(validateWithLoginResponse)
             }
 
-            val sessionLocalDataSource = mock<SessionLocalDataSource>()
+            val sessionLocalDataSource = mock<LocalUserDataSource>()
 
             var loginResult: Throwable? = null
             //endregion

@@ -1,6 +1,6 @@
 package com.haraev.core.data.api
 
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.model.request.SessionBody
 import com.haraev.core.data.model.request.ValidateWithLoginBody
 import okhttp3.Authenticator
@@ -9,7 +9,7 @@ import okhttp3.Response
 import okhttp3.Route
 
 class SessionAuthenticator(
-    private val sessionLocalDataSource: SessionLocalDataSource,
+    private val localUserDataSource: LocalUserDataSource,
     private val loginService: LoginService
 
 ) : Authenticator {
@@ -21,7 +21,7 @@ class SessionAuthenticator(
     @Synchronized
     override fun authenticate(route: Route?, response: Response): Request? {
 
-        val currentSessionToken: String = sessionLocalDataSource.sessionId ?: return null
+        val currentSessionToken: String = localUserDataSource.sessionId ?: return null
         val requestSessionId: String? =
             response.request.url.queryParameter(SESSION_ID_QUERY_PARAMETER_KEY)
 
@@ -51,8 +51,8 @@ class SessionAuthenticator(
     }
 
     private fun refreshToken(): String? {
-        val userLogin: String = sessionLocalDataSource.userLogin ?: return null
-        val userPassword: String = sessionLocalDataSource.userPassword ?: return null
+        val userLogin: String = localUserDataSource.userLogin ?: return null
+        val userPassword: String = localUserDataSource.userPassword ?: return null
 
         val newSessionId = loginService.getNewToken()
             .flatMap { response ->
@@ -70,7 +70,7 @@ class SessionAuthenticator(
             .blockingGet()
             .sessionId
 
-        sessionLocalDataSource.sessionId = newSessionId
+        localUserDataSource.sessionId = newSessionId
 
         return newSessionId
     }

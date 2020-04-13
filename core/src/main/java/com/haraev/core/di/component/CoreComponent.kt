@@ -3,7 +3,7 @@ package com.haraev.core.di.component
 import android.content.Context
 import android.content.SharedPreferences
 import com.haraev.core.common.ThreadScheduler
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.di.module.CoreDataModule
 import com.haraev.core.di.module.CoreNetworkModule
@@ -13,7 +13,6 @@ import com.squareup.moshi.Moshi
 import dagger.BindsInstance
 import dagger.Component
 import okhttp3.OkHttpClient
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
@@ -62,7 +61,7 @@ interface CoreComponent {
 
     fun provideMoshi(): Moshi
 
-    fun provideSessionLocalDataSource(): SessionLocalDataSource
+    fun provideSessionLocalDataSource(): LocalUserDataSource
 
     fun provideSharedPreferences(): SharedPreferences
 

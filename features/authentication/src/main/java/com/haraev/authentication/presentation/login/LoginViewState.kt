@@ -1,4 +1,4 @@
-package com.haraev.authentication.presentation
+package com.haraev.authentication.presentation.login
 
 data class LoginViewState(
     val progressBarVisibility : Boolean = false,

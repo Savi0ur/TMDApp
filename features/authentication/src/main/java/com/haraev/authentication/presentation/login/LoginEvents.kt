@@ -1,4 +1,4 @@
-package com.haraev.authentication.presentation
+package com.haraev.authentication.presentation.login
 
 import com.haraev.core.ui.Event
 

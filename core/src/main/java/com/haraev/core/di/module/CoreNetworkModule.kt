@@ -4,7 +4,7 @@ import android.util.Log
 import com.haraev.core.common.TMDB_API_KEY
 import com.haraev.core.common.EXTENDED_TMDB_BASE_URL
 import com.haraev.core.common.TMDB_BASE_URL
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.api.ErrorHandlingInterceptor
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.data.api.SessionAuthenticator
@@ -43,11 +43,11 @@ class CoreNetworkModule {
 
     @Provides
     fun provideSessionAuthenticator(
-        sessionLocalDataSource: SessionLocalDataSource,
+        localUserDataSource: LocalUserDataSource,
         loginService: LoginService
     ): SessionAuthenticator =
         SessionAuthenticator(
-            sessionLocalDataSource,
+            localUserDataSource,
             loginService
         )
 

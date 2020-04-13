@@ -6,4 +6,6 @@ interface NavigationActivity {
 
     fun navigateToLoginScreen()
 
+    fun navigateToUsePinCodeScreen()
+
 }

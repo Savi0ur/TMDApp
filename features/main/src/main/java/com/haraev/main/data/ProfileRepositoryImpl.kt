@@ -1,6 +1,6 @@
 package com.haraev.main.data
 
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.main.data.api.MainService
 import com.haraev.main.data.model.request.DeleteSessionBody
 import com.haraev.main.data.model.response.AccountDetailsResponse
@@ -10,19 +10,20 @@ import io.reactivex.Single
 
 class ProfileRepositoryImpl(
     private val mainService: MainService,
-    private val sessionLocalDataSource: SessionLocalDataSource
+    private val localUserDataSource: LocalUserDataSource
 ) : ProfileRepository {
 
     override fun getAccountDetails(): Single<AccountDetailsResponse> {
-        return mainService.getAccountDetails(sessionLocalDataSource.requireSessionId())
+        return mainService.getAccountDetails(localUserDataSource.requireSessionId())
     }
 
     override fun logout(): Completable {
-        return mainService.deleteSession(DeleteSessionBody(sessionLocalDataSource.requireSessionId()))
+        return mainService.deleteSession(DeleteSessionBody(localUserDataSource.requireSessionId()))
             .flatMapCompletable {
-                sessionLocalDataSource.sessionId = null
-                sessionLocalDataSource.userLogin = null
-                sessionLocalDataSource.userPassword = null
+                localUserDataSource.sessionId = null
+                localUserDataSource.userLogin = null
+                localUserDataSource.userPassword = null
+                localUserDataSource.userPin = null
                 Completable.complete()
             }
     }

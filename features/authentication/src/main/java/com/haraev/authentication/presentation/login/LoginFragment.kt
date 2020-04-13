@@ -1,4 +1,4 @@
-package com.haraev.authentication.presentation
+package com.haraev.authentication.presentation.login
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
 import com.haraev.core.ui.Event
@@ -26,8 +27,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
-        LoginComponent.Builder.build((requireActivity().application as CoreComponentProvider)
-                .getCoreComponent())
+        LoginComponent.Builder.build(
+            (requireActivity().application as CoreComponentProvider)
+                .getCoreComponent()
+        )
             .inject(this)
 
         super.onAttach(context)
@@ -93,9 +96,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     private fun onEvent(event: Event) {
         when (event) {
-            is LoginEvents.NavigateToNextScreen ->
-                (requireActivity() as NavigationActivity).navigateToMainScreen()
+            is LoginEvents.NavigateToNextScreen -> navigateToMakePinCodeScreen()
         }
+    }
+
+    private fun navigateToMakePinCodeScreen() {
+        val direction = LoginFragmentDirections.actionLoginFragmentToMakePinFragment()
+        findNavController().navigate(direction)
     }
 
     private fun renderState(viewState: LoginViewState) {

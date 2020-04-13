@@ -1,7 +1,7 @@
-package com.haraev.authentication.di.module
+package com.haraev.authentication.di.module.login
 
 import androidx.lifecycle.ViewModel
-import com.haraev.authentication.presentation.LoginViewModel
+import com.haraev.authentication.presentation.login.LoginViewModel
 import com.haraev.core.di.module.ViewModelModule
 import com.haraev.core.ui.ViewModelKey
 import dagger.Binds

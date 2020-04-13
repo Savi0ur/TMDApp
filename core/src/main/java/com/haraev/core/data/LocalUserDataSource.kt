@@ -3,7 +3,7 @@ package com.haraev.core.data
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
-class SessionLocalDataSource(private val prefs: SharedPreferences) {
+class LocalUserDataSource(private val prefs: SharedPreferences) {
 
     var sessionId: String? = prefs.getString(KEY_SESSION_ID, null)
         set(value) {
@@ -23,6 +23,12 @@ class SessionLocalDataSource(private val prefs: SharedPreferences) {
             field = value
         }
 
+    var userPin: String? = prefs.getString(KEY_USER_PIN, null)
+        set(value) {
+            prefs.edit { putString(KEY_USER_PIN, value) }
+            field = value
+        }
+
     fun requireSessionId() : String {
         return sessionId ?: throw NullPointerException("sessionId = null")
     }
@@ -31,5 +37,6 @@ class SessionLocalDataSource(private val prefs: SharedPreferences) {
         private const val KEY_SESSION_ID = "KEY_SESSION_ID"
         private const val KEY_USER_LOGIN = "KEY_USER_LOGIN"
         private const val KEY_USER_PASSWORD = "KEY_USER_PASSWORD"
+        private const val KEY_USER_PIN = "KEY_USER_PIN"
     }
 }

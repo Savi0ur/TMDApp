@@ -3,13 +3,13 @@ package com.haraev.authentication.data
 import com.haraev.core.data.model.request.SessionBody
 import com.haraev.core.data.model.request.ValidateWithLoginBody
 import com.haraev.authentication.domain.repository.LoginRepository
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.api.LoginService
 import io.reactivex.Completable
 
 class LoginRepositoryImpl(
     private val loginService: LoginService,
-    private val sessionLocalDataSource: SessionLocalDataSource
+    private val localUserDataSource: LocalUserDataSource
 ) : LoginRepository {
 
     override fun login(login: String, password: String): Completable {
@@ -27,9 +27,9 @@ class LoginRepositoryImpl(
                 loginService.getNewSession(SessionBody(response.requestToken))
             }
             .flatMapCompletable { response ->
-                sessionLocalDataSource.sessionId = response.sessionId
-                sessionLocalDataSource.userLogin = login
-                sessionLocalDataSource.userPassword = password
+                localUserDataSource.sessionId = response.sessionId
+                localUserDataSource.userLogin = login
+                localUserDataSource.userPassword = password
                 Completable.complete()
             }
     }

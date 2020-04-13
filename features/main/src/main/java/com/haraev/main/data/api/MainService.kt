@@ -22,7 +22,6 @@ interface MainService {
         @Body deleteSessionBody: DeleteSessionBody
     ) : Single<DeleteSessionResponse>
 
-
     @GET(value = "search/movie")
     fun getMovies(
         @Query("language") language: String = ApiLanguageEnum.RU.value,

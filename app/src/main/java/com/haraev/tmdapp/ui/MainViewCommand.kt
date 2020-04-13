@@ -6,4 +6,6 @@ sealed class MainEvents : Event {
     object OpenLoginScreen : MainEvents()
 
     object OpenSearchScreen : MainEvents()
+
+    object OpenUsePinCodeScreen : MainEvents()
 }

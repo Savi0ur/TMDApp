@@ -41,6 +41,11 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
             .setGraph(R.navigation.main_graph)
     }
 
+    override fun navigateToUsePinCodeScreen() {
+        Navigation.findNavController(this, R.id.nav_host_fragment)
+            .setGraph(R.navigation.use_pin_code_nav_graph)
+    }
+
     private fun observeViewModel() {
         observe(viewModel.eventsQueue, ::onEvent)
     }
@@ -48,12 +53,13 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
     private fun onEvent(event: Event) {
         when (event) {
             is MainEvents.OpenLoginScreen -> {
-                Navigation.findNavController(this, R.id.nav_host_fragment)
-                    .setGraph(R.navigation.login_nav_graph)
+                navigateToLoginScreen()
             }
             is MainEvents.OpenSearchScreen -> {
-                Navigation.findNavController(this, R.id.nav_host_fragment)
-                    .setGraph(R.navigation.main_graph)
+                navigateToMainScreen()
+            }
+            is MainEvents.OpenUsePinCodeScreen -> {
+                navigateToUsePinCodeScreen()
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.haraev.authentication.presentation
+package com.haraev.authentication.presentation.login
 
 import androidx.lifecycle.MutableLiveData
 import com.haraev.authentication.R
@@ -97,5 +97,6 @@ class LoginViewModel @Inject constructor(
         state = state.copy(enterButtonEnable = enabled)
     }
 
-    private fun createInitialState(): LoginViewState = LoginViewState()
+    private fun createInitialState(): LoginViewState =
+        LoginViewState()
 }

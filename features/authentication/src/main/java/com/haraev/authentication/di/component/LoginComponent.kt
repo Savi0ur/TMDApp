@@ -1,8 +1,8 @@
 package com.haraev.authentication.di.component
 
-import com.haraev.authentication.di.module.LoginModule
-import com.haraev.authentication.di.module.LoginViewModelModule
-import com.haraev.authentication.presentation.LoginFragment
+import com.haraev.authentication.di.module.login.LoginModule
+import com.haraev.authentication.di.module.login.LoginViewModelModule
+import com.haraev.authentication.presentation.login.LoginFragment
 import com.haraev.core.di.component.CoreComponent
 import com.haraev.core.di.scope.FeatureModuleScope
 import dagger.Component

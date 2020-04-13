@@ -1,6 +1,6 @@
 package com.haraev.tmdapp.ui
 
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.ui.Event
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode
@@ -30,17 +30,17 @@ object MainViewModelTest : Spek({
             //region Fields
             lateinit var mainViewModel: MainViewModel
 
-            lateinit var sessionLocalDataSource: SessionLocalDataSource
+            lateinit var localUserDataSource: LocalUserDataSource
             //endregion
 
             Given("session local data source with session id null") {
-                sessionLocalDataSource = mock {
+                localUserDataSource = mock {
                     on { sessionId } doReturn (null)
                 }
             }
 
             When("init MainViewModel") {
-                mainViewModel = MainViewModel(sessionLocalDataSource)
+                mainViewModel = MainViewModel(localUserDataSource)
             }
 
             Then("ui event should be OpenLoginScreen") {
@@ -58,18 +58,18 @@ object MainViewModelTest : Spek({
             //region Fields
             lateinit var mainViewModel: MainViewModel
 
-            lateinit var sessionLocalDataSource: SessionLocalDataSource
+            lateinit var localUserDataSource: LocalUserDataSource
             //endregion
 
             Given("session local data source with session id not null") {
                 val sId = "17d3a37a679d07ecf27ce31f6a1eab75fd638cf5"
-                sessionLocalDataSource = mock {
+                localUserDataSource = mock {
                     on { sessionId } doReturn (sId)
                 }
             }
 
             When("init MainViewModel") {
-                mainViewModel = MainViewModel(sessionLocalDataSource)
+                mainViewModel = MainViewModel(localUserDataSource)
             }
 
             Then("ui event should be OpenSearchScreen") {

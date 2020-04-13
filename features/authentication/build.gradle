@@ -1,6 +1,14 @@
 apply plugin: 'com.android.library'
 apply from: rootProject.file('base.gradle')
 
+android {
+
+    androidExtensions {
+        experimental = true
+    }
+
+}
+
 dependencies {
     implementation project(":core")
     testImplementation project(":test")
@@ -43,4 +51,11 @@ dependencies {
     implementation (deps.logging_interceptor) {
         exclude group: 'org.json', module: 'json'
     }
+
+    // Picasso
+    implementation deps.picasso
+
+    // Groupie
+    implementation deps.groupie
+    implementation deps.groupie_kotlin
 }
