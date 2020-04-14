@@ -1,7 +1,7 @@
 package com.haraev.main.data
 
 import com.haraev.main.data.api.MainService
-import com.haraev.main.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
 import com.haraev.test.retofit.getTestRetrofit
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock

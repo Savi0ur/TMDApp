@@ -2,12 +2,11 @@ package com.haraev.main.data.api
 
 import com.haraev.main.data.common.ApiLanguageEnum
 import com.haraev.main.data.model.request.DeleteSessionBody
-import com.haraev.main.data.model.response.AccountDetailsResponse
-import com.haraev.main.data.model.response.DeleteSessionResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.DeleteSessionResponse
 import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.data.model.response.SearchMoviesResponse
 import io.reactivex.Single
-import retrofit2.Response
 import retrofit2.http.*
 
 interface MainService {

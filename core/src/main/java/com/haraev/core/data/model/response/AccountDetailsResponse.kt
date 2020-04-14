@@ -1,4 +1,4 @@
-package com.haraev.main.data.model.response
+package com.haraev.core.data.model.response
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

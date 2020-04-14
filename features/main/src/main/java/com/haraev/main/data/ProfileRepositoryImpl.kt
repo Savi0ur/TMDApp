@@ -3,7 +3,7 @@ package com.haraev.main.data
 import com.haraev.core.data.LocalUserDataSource
 import com.haraev.main.data.api.MainService
 import com.haraev.main.data.model.request.DeleteSessionBody
-import com.haraev.main.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
 import com.haraev.main.domain.repository.ProfileRepository
 import io.reactivex.Completable
 import io.reactivex.Single

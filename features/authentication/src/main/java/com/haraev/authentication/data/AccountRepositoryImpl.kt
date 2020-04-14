@@ -4,7 +4,7 @@ import com.haraev.authentication.data.api.AccountService
 import com.haraev.authentication.domain.repository.AccountRepository
 import com.haraev.core.data.LocalUserDataSource
 import com.haraev.main.data.model.request.DeleteSessionBody
-import com.haraev.main.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
 import io.reactivex.Completable
 import io.reactivex.Single
 

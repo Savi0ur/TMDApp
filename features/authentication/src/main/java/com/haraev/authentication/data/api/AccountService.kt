@@ -1,8 +1,8 @@
 package com.haraev.authentication.data.api
 
 import com.haraev.main.data.model.request.DeleteSessionBody
-import com.haraev.main.data.model.response.AccountDetailsResponse
-import com.haraev.main.data.model.response.DeleteSessionResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.DeleteSessionResponse
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
