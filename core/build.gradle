@@ -65,4 +65,7 @@ dependencies {
     implementation (deps.logging_interceptor) {
         exclude group: 'org.json', module: 'json'
     }
+
+    // Tink
+    implementation deps.tink
 }

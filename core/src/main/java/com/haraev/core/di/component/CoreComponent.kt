@@ -7,6 +7,7 @@ import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.di.module.CoreDataModule
 import com.haraev.core.di.module.CoreNetworkModule
+import com.haraev.core.di.module.CoreSecurityModule
 import com.haraev.core.di.module.SharedPreferencesModule
 import com.haraev.core.di.qualifier.HttpClientQualifier
 import com.squareup.moshi.Moshi
@@ -21,7 +22,8 @@ import javax.inject.Singleton
     [
         CoreNetworkModule::class,
         SharedPreferencesModule::class,
-        CoreDataModule::class
+        CoreDataModule::class,
+        CoreSecurityModule::class
     ]
 )
 interface CoreComponent {
