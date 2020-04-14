@@ -2,17 +2,23 @@ package com.haraev.tmdapp.ui
 
 import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.ui.BaseViewModel
+import com.scottyab.rootbeer.RootBeer
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val localUserDataSource: LocalUserDataSource
+    private val localUserDataSource: LocalUserDataSource,
+    rootBeer: RootBeer
 ) : BaseViewModel() {
 
     init {
-        if (isSessionIdExist()) {
-            navigateToUsePinCodeScreen()
+        if (rootBeer.isRooted) {
+            throw IllegalStateException("rooted device")
         } else {
-            navigateToLoginScreen()
+            if (isSessionIdExist()) {
+                navigateToUsePinCodeScreen()
+            } else {
+                navigateToLoginScreen()
+            }
         }
     }
 

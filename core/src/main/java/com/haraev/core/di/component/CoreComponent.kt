@@ -68,4 +68,6 @@ interface CoreComponent {
     fun provideSharedPreferences(): SharedPreferences
 
     fun provideThreadScheduler(): ThreadScheduler
+
+    fun provideContext() : Context
 }

@@ -30,4 +30,7 @@ dependencies {
 
     // Timber
     implementation deps.timber
+
+    // RootBeer
+    implementation deps.rootbeer
 }
