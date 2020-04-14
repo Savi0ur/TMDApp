@@ -17,6 +17,17 @@ class PinCodeRepositoryImpl(
     }
 
     override fun getPinCode(): Single<String> {
-        return Single.just(localUserDataSource.userPin)
+        return Single.just(requireNotNull(localUserDataSource.userPin))
+    }
+
+    override fun saveBiometricAct(boolean: Boolean): Completable {
+        return Completable.create {
+            localUserDataSource.biometricAct = boolean
+            it.onComplete()
+        }
+    }
+
+    override fun getBiometricAct(): Single<Boolean> {
+        return Single.just(requireNotNull(localUserDataSource.biometricAct))
     }
 }

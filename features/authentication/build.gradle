@@ -58,4 +58,7 @@ dependencies {
     // Groupie
     implementation deps.groupie
     implementation deps.groupie_kotlin
+
+    // Biometric
+    implementation deps.biometric
 }

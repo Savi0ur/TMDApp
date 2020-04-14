@@ -33,6 +33,12 @@ class LocalUserDataSource(
             field = value
         }
 
+    var biometricAct: Boolean? = getFromSPref(KEY_BIOMETRIC_ACT)?.toBoolean()
+        set(value) {
+            saveToSPref(KEY_BIOMETRIC_ACT, value.toString())
+            field = value
+        }
+
     fun requireSessionId(): String {
         return sessionId ?: throw NullPointerException("sessionId = null")
     }
@@ -52,5 +58,6 @@ class LocalUserDataSource(
         private const val KEY_USER_LOGIN = "KEY_USER_LOGIN"
         private const val KEY_USER_PASSWORD = "KEY_USER_PASSWORD"
         private const val KEY_USER_PIN = "KEY_USER_PIN"
+        private const val KEY_BIOMETRIC_ACT = "KEY_BIOMETRIC_ACT"
     }
 }

@@ -26,7 +26,7 @@ class RepeatPinCodeViewModel @Inject constructor(
         updateUiPin()
         if (repeatPinCode.length == 4) {
             if (repeatPinCode == pinCode) {
-                saveNewPin()
+                tryUseFingerPrint()
             } else {
                 repeatPinCode = ""
                 updateUiPin()
@@ -46,8 +46,25 @@ class RepeatPinCodeViewModel @Inject constructor(
         this.pinCode = pinCode
     }
 
-    private fun saveNewPin() {
-        repeatPinCodeUseCase.savePinCode(pinCode)
+    fun biometricFailed() {
+        biometricDone(false)
+    }
+
+    fun biometricCancelled() {
+        biometricDone(false)
+    }
+
+    fun biometricSucceeded() {
+        biometricDone(true)
+    }
+
+    fun biometricUnavailable() {
+        biometricDone(false)
+    }
+
+    private fun biometricDone(isSuccess: Boolean) {
+        repeatPinCodeUseCase.saveBiometricAct(isSuccess)
+            .andThen(repeatPinCodeUseCase.savePinCode(pinCode))
             .scheduleIoToUi(scheduler)
             .subscribe({
                 navigateToNextScreen()
@@ -56,6 +73,10 @@ class RepeatPinCodeViewModel @Inject constructor(
                 showErrorMessage(R.string.pin_code_unknown_error_message)
             })
             .autoDispose()
+    }
+
+    private fun tryUseFingerPrint() {
+        eventsQueue.offer(RepeatPinCodeEvents.TryUseFingerPrint)
     }
 
     private fun navigateToNextScreen() {

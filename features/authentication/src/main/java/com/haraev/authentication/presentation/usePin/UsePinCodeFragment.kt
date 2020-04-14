@@ -3,6 +3,9 @@ package com.haraev.authentication.presentation.usePin
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.biometric.BiometricConstants
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -22,9 +25,10 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_use_pin.*
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
-class UsePinCodeFragment : BaseFragment(R.layout.fragment_use_pin){
+class UsePinCodeFragment : BaseFragment(R.layout.fragment_use_pin) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -60,6 +64,7 @@ class UsePinCodeFragment : BaseFragment(R.layout.fragment_use_pin){
             is UsePinCodeEvents.NavigateToMainFeature -> navigateNext()
             is UsePinCodeEvents.NavigateToLoginScreen -> navigateToLoginScreen()
             is UsePinCodeEvents.WrongPin -> use_pin_error_text.setText(event.messageResId)
+            is UsePinCodeEvents.TryUseFingerPrint -> tryUseFingerPrint()
             is ShowErrorMessage -> showErrorMessage(event.messageResId)
         }
     }
@@ -118,5 +123,56 @@ class UsePinCodeFragment : BaseFragment(R.layout.fragment_use_pin){
 
     private fun navigateNext() {
         (requireActivity() as NavigationActivity).navigateToMainScreen()
+    }
+
+    private fun tryUseFingerPrint() {
+        val biometricManager = BiometricManager.from(requireContext())
+
+        if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
+
+            val biometricExecutor = Executors.newSingleThreadExecutor()
+
+            val biometricPrompt = BiometricPrompt(
+                this,
+                biometricExecutor,
+                object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                        super.onAuthenticationError(errorCode, errString)
+
+                        if (errorCode == BiometricConstants.ERROR_CANCELED || errorCode == BiometricConstants.ERROR_USER_CANCELED) {
+                            requireActivity().runOnUiThread { viewModel.biometricCancelled() }
+                        } else {
+                            requireActivity().runOnUiThread { viewModel.biometricFailed() }
+                        }
+                    }
+
+                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                        super.onAuthenticationSucceeded(result)
+
+                        requireActivity().runOnUiThread { viewModel.biometricSucceeded() }
+                    }
+
+                    override fun onAuthenticationFailed() {
+                        super.onAuthenticationFailed()
+
+                        requireActivity().runOnUiThread { viewModel.biometricFailed() }
+                    }
+                }
+            )
+
+            val promptInfo = biometricPromptInfo()
+            biometricPrompt.authenticate(promptInfo)
+
+        } else {
+            viewModel.biometricUnavailable()
+        }
+    }
+
+    private fun biometricPromptInfo(): BiometricPrompt.PromptInfo {
+        return BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Отпечаток пальца")
+            .setDescription("Подтвердите отпечаток пальца, чтобы воспользоваться быстрой авторизацией")
+            .setNegativeButtonText(requireActivity().getString(android.R.string.cancel))
+            .build()
     }
 }

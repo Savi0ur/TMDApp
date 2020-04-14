@@ -10,4 +10,7 @@ class RepeatPinCodeUseCase @Inject constructor(
 
     fun savePinCode(pinCode: String): Completable =
         pinCodeRepository.savePinCode(pinCode)
+
+    fun saveBiometricAct(boolean: Boolean): Completable =
+        pinCodeRepository.saveBiometricAct(boolean)
 }

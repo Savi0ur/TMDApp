@@ -15,6 +15,9 @@ class UsePinCodeUseCase @Inject constructor(
     fun getPinCode() : Single<String> =
         pinCodeRepository.getPinCode()
 
+    fun getBiometricAct() : Single<Boolean> =
+        pinCodeRepository.getBiometricAct()
+
     fun logout() : Completable =
         accountRepository.logout()
 

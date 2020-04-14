@@ -8,4 +8,8 @@ interface PinCodeRepository {
     fun savePinCode(pinCode: String) : Completable
 
     fun getPinCode() : Single<String>
+
+    fun saveBiometricAct(boolean: Boolean) : Completable
+
+    fun getBiometricAct() : Single<Boolean>
 }

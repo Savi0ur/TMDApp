@@ -18,14 +18,38 @@ class UsePinCodeViewModel @Inject constructor(
 
     private var pinCode = ""
 
+    var biometricAct = false
+
     val uiState = MutableLiveData(createInitialState())
     private var state: UsePinCodeViewState by uiState.delegate()
+
+    init {
+        showProgressBar(true)
+        usePinCodeUseCase.getBiometricAct()
+            .scheduleIoToUi(scheduler)
+            .subscribe({ biometricAct ->
+                this.biometricAct = biometricAct
+                showProgressBar(false)
+                if (biometricAct) {
+                    tryUseFingerPrint()
+                }
+            }, { e ->
+                showProgressBar(false)
+                Timber.tag(TAG).e(e)
+                showErrorMessage(R.string.unknown_error_message)
+            })
+            .autoDispose()
+    }
 
     fun onKeyboardTextItemClicked(s: String) {
         pinCode += s
         updateUiPin()
         if (pinCode.length == 4) {
-            checkPinCode()
+            if (biometricAct) {
+                checkPinCode()
+            } else {
+
+            }
         }
     }
 
@@ -49,6 +73,32 @@ class UsePinCodeViewModel @Inject constructor(
                 showErrorMessage(R.string.unknown_error_message)
             })
             .autoDispose()
+    }
+
+    private fun tryUseFingerPrint() {
+        eventsQueue.offer(UsePinCodeEvents.TryUseFingerPrint)
+    }
+
+    fun biometricFailed() {
+        biometricDone(false)
+    }
+
+    fun biometricCancelled() {
+        biometricDone(false)
+    }
+
+    fun biometricSucceeded() {
+        biometricDone(true)
+    }
+
+    fun biometricUnavailable() {
+        biometricDone(false)
+    }
+
+    private fun biometricDone(isSuccess: Boolean) {
+        if (isSuccess) {
+            navigateToNextScreen()
+        }
     }
 
     private fun checkPinCode() {
