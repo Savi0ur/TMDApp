@@ -201,7 +201,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             movieVoteCount = movie.voteCount,
             movieVoteAverage = movie.voteAverage.toFloat(),
             movieGenres = movie.genres.joinToString(separator = ", ") { it.name },
-            movieDuration = movie.duration?.toString() ?: "0"
+            movieDuration = movie.duration?.toString() ?: "0",
+            movieServerId = movie.serverId
         )
 
         findNavController().navigate(direction, extras)

@@ -45,6 +45,8 @@ deps_versions.rootbeer = "0.0.8"
 
 deps_versions.biometric = "1.0.1"
 
+deps_versions.swipeRL = "1.0.0"
+
 ext.deps = [:]
 
 deps.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
@@ -125,3 +127,6 @@ deps.rootbeer = "com.scottyab:rootbeer-lib:${deps_versions.rootbeer}"
 
 // Biometric
 deps.biometric = "androidx.biometric:biometric:${deps_versions.biometric}"
+
+// SwipeRefreshLayout
+deps.swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${deps_versions.swipeRL}"

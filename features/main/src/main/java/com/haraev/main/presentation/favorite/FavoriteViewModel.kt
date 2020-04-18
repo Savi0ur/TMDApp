@@ -21,7 +21,7 @@ class FavoriteViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val uiState = MutableLiveData<FavoriteViewState>(createInitialState())
-    var state: FavoriteViewState by uiState.delegate()
+    private var state: FavoriteViewState by uiState.delegate()
 
     init {
         loadFavoriteMovies()
@@ -52,7 +52,7 @@ class FavoriteViewModel @Inject constructor(
         state = state.copy(searchViewVisibility = true)
     }
 
-    private fun loadFavoriteMovies() {
+    fun loadFavoriteMovies() {
         changeProgressBarState(true)
         favoriteUseCase.getFavoriteMovies()
             .flattenAsObservable { it.movies }

@@ -42,20 +42,18 @@ class ProfileViewModel @Inject constructor(
             .autoDispose()
     }
 
-    @Suppress("UnstableApiUsage")
-    private fun loadProfileInfo() {
+    fun loadProfileInfo() {
         changeProgressBarState(true)
         profileUseCase.getAccountDetails()
             .scheduleIoToUi(scheduler)
-            .doOnTerminate {
-                changeProgressBarState(false)
-            }
             .subscribe({ accountDetailsResponse ->
+                changeProgressBarState(false)
                 showProfileInfo(
                     accountDetailsResponse.name,
                     accountDetailsResponse.username
                 )
             }, { e ->
+                changeProgressBarState(false)
                 Timber.tag(TAG).e(e)
                 showErrorMessage(R.string.unknown_error_message)
             })

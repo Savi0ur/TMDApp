@@ -79,6 +79,9 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
 
     private fun renderState(viewState: FavoriteViewState) {
         favorite_progress_bar.isVisible = viewState.progressBarVisibility
+        if (!viewState.progressBarVisibility) {
+            favorite_swipe_refresh_layout.isRefreshing = false
+        }
 
         if (viewState.movies.isEmpty()) {
             showMovies(viewState.movies)
@@ -119,6 +122,13 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
         setupSearchNewMoviesTextView()
         setupCloseImage()
         setupSearchView()
+        setupSwipeRefreshLayout()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        favorite_swipe_refresh_layout.setOnRefreshListener {
+            viewModel.loadFavoriteMovies()
+        }
     }
 
     private fun setupSearchView() {
@@ -245,7 +255,8 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
             movieVoteCount = movie.voteCount,
             movieVoteAverage = movie.voteAverage.toFloat(),
             movieGenres = movie.genres.joinToString(separator = ", ") { it.name },
-            movieDuration = movie.duration?.toString() ?: "0"
+            movieDuration = movie.duration?.toString() ?: "0",
+            movieServerId = movie.serverId
         )
 
         findNavController().navigate(direction, extras)
