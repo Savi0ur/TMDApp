@@ -1,8 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:background="@color/background">
+    android:id="@+id/favorite_root_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/favorite_motion_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/favorite_scene">
+
+        <include
+            android:id="@+id/favorite_toolbar_layout"
+            layout="@layout/favorite_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.haraev.core.ui.views.SearchView
+            android:id="@+id/favorite_search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:hint="@string/movie_search"
+            android:paddingStart="@dimen/spacing_medium"
+
+            app:layout_constraintEnd_toStartOf="@id/favorite_close_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/favorite_close_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="@id/favorite_search_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/favorite_search_view"
+            app:srcCompat="@drawable/drawable_ic_close"
+            tools:ignore="ContentDescription"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/favorite_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="60dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/favorite_header_text"
+            style="@style/Widget.AppTheme.TextView.Header1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="90dp"
+            android:text="@string/favorite_header"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favorite_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/favorite_header_text"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_movie_grid"
+            tools:spanCount="2"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/favorite_no_movies_text"
+            style="@style/Widget.AppTheme.TextView.Header3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="40dp"
+            android:text="@string/favorite_no_movies"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/favorite_header_text"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/favorite_link_text"
+            style="@style/Widget.AppTheme.TextView.LinkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="@string/favorite_search_movies"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/favorite_no_movies_text"
+            tools:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/favorite_no_movies_added_image"
+            android:layout_width="248dp"
+            android:layout_height="193dp"
+            android:scaleX="1.3"
+            android:scaleY="1.3"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/favorite_link_text"
+            app:srcCompat="@drawable/drawable_no_movies_found"
+            tools:ignore="ContentDescription"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/favorite_no_movies_found_text"
+            style="@style/Widget.AppTheme.TextView.Header3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/movies_not_found"
+            android:visibility="gone"
+
+            app:layout_constraintEnd_toEndOf="@id/favorite_no_movies_found_image"
+            app:layout_constraintStart_toStartOf="@id/favorite_no_movies_found_image"
+            app:layout_constraintBottom_toTopOf="@id/favorite_no_movies_found_image"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <ImageView
+            android:id="@+id/favorite_no_movies_found_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/favorite_link_text"
+            app:srcCompat="@drawable/drawable_movies_not_found"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

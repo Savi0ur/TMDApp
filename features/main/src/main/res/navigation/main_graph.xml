@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.haraev.main.presentation.MainFeatureHostFragment"
+        android:name="com.haraev.main.presentation.main.MainFeatureHostFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main"/>
 </navigation>

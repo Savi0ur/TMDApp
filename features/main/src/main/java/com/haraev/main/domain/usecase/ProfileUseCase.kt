@@ -6,11 +6,13 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class ProfileUseCase @Inject constructor(private val profileRepository: ProfileRepository) {
+class ProfileUseCase @Inject constructor
+    (private val profileRepository: ProfileRepository
+) {
 
-    fun getAccountDetails() : Single<AccountDetailsResponse> =
+    fun getAccountDetails(): Single<AccountDetailsResponse> =
         profileRepository.getAccountDetails()
 
-    fun logout() : Completable =
+    fun logout(): Completable =
         profileRepository.logout()
 }

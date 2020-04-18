@@ -9,5 +9,52 @@
         android:id="@+id/favoriteFragment"
         android:name="com.haraev.main.presentation.favorite.FavoriteFragment"
         android:label="FavoriteFragment"
-        tools:layout="@layout/fragment_favorite"/>
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favoriteFragment_to_movieDetailsFragment2"
+            app:destination="@id/movieDetailsFragment2"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/searchFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailsFragment2"
+        android:name="com.haraev.main.presentation.moviedetails.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details">
+
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
+        <argument
+            android:name="moviePosterPath"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="movieOverview"
+            app:argType="string" />
+        <argument
+            android:name="movieReleaseDate"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="movieOriginalTitle"
+            app:argType="string" />
+        <argument
+            android:name="movieVoteCount"
+            app:argType="integer" />
+        <argument
+            android:name="movieVoteAverage"
+            app:argType="float" />
+        <argument
+            android:name="movieGenres"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="movieDuration"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
