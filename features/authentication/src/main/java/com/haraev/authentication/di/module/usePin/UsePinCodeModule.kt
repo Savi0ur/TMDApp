@@ -5,6 +5,7 @@ import com.haraev.authentication.data.PinCodeRepositoryImpl
 import com.haraev.authentication.data.api.AccountService
 import com.haraev.authentication.domain.repository.AccountRepository
 import com.haraev.authentication.domain.repository.PinCodeRepository
+import com.haraev.authentication.domain.usecase.AccountDetailsUseCase
 import com.haraev.authentication.domain.usecase.UsePinCodeUseCase
 import com.haraev.core.common.EXTENDED_TMDB_BASE_URL
 import com.haraev.core.data.LocalUserDataSource
@@ -49,9 +50,15 @@ class UsePinCodeModule {
 
     @Provides
     fun provideUsePinCodeUseCase(
-        pinCodeRepository: PinCodeRepository,
-        accountRepository: AccountRepository
+        pinCodeRepository: PinCodeRepository
     ): UsePinCodeUseCase {
-        return UsePinCodeUseCase(pinCodeRepository, accountRepository)
+        return UsePinCodeUseCase(pinCodeRepository)
+    }
+
+    @Provides
+    fun provideAccountDetailsUseCase(
+        accountRepository: AccountRepository
+    ): AccountDetailsUseCase {
+        return AccountDetailsUseCase(accountRepository)
     }
 }

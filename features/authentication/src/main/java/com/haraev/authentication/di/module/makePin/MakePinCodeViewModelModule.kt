@@ -1,7 +1,7 @@
 package com.haraev.authentication.di.module.makePin
 
 import androidx.lifecycle.ViewModel
-import com.haraev.authentication.presentation.makePin.MakePinCodeViewModel
+import com.haraev.authentication.presentation.pinCode.makePin.MakePinCodeViewModel
 import com.haraev.core.di.module.ViewModelModule
 import com.haraev.core.ui.ViewModelKey
 import dagger.Binds

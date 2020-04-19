@@ -2,7 +2,7 @@ package com.haraev.authentication.di.component
 
 import com.haraev.authentication.di.module.usePin.UsePinCodeModule
 import com.haraev.authentication.di.module.usePin.UsePinCodeViewModelModule
-import com.haraev.authentication.presentation.usePin.UsePinCodeFragment
+import com.haraev.authentication.presentation.pinCode.usePin.UsePinCodeFragment
 import com.haraev.core.di.component.CoreComponent
 import com.haraev.core.di.scope.FeatureModuleScope
 import dagger.Component

@@ -9,21 +9,19 @@ class PinCodeRepositoryImpl(
     private val localUserDataSource: LocalUserDataSource
 ) : PinCodeRepository {
 
-    override fun savePinCode(pinCode: String): Completable {
-        return Completable.create {
-            localUserDataSource.userPin = pinCode
-            it.onComplete()
+    override fun savePinCodeHash(pinCodeHash: String): Completable {
+        return Completable.fromAction {
+            localUserDataSource.userPinCodeHash = pinCodeHash
         }
     }
 
     override fun getPinCode(): Single<String> {
-        return Single.just(requireNotNull(localUserDataSource.userPin))
+        return Single.just(requireNotNull(localUserDataSource.userPinCodeHash))
     }
 
     override fun saveBiometricAct(boolean: Boolean): Completable {
-        return Completable.create {
+        return Completable.fromAction {
             localUserDataSource.biometricAct = boolean
-            it.onComplete()
         }
     }
 

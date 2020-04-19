@@ -1,4 +1,4 @@
-package com.haraev.authentication.presentation.repeatPin
+package com.haraev.authentication.presentation.pinCode.repeatPin
 
 import com.haraev.core.ui.Event
 

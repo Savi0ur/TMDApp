@@ -14,4 +14,9 @@
     <string name="pin_code_unknown_error_message">Ошибка. Попробуйте еще раз</string>
     <string name="wrong_pin_code">Неверный пин-код</string>
     <string name="exit">Выйти</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="suggest_fingerprint">Хотите использовать отпечаток пальца для авторизации?</string>
+    <string name="fingerprint_title">Отпечаток пальца</string>
+    <string name="finerprint_description">Подтвердите отпечаток пальца, чтобы использовать быструю авторизацию</string>
 </resources>

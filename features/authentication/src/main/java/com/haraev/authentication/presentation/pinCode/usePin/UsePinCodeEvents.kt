@@ -1,4 +1,4 @@
-package com.haraev.authentication.presentation.usePin
+package com.haraev.authentication.presentation.pinCode.usePin
 
 import com.haraev.core.ui.Event
 

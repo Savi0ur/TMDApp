@@ -1,8 +1,7 @@
 package com.haraev.authentication.di.module.usePin
 
 import androidx.lifecycle.ViewModel
-import com.haraev.authentication.presentation.repeatPin.RepeatPinCodeViewModel
-import com.haraev.authentication.presentation.usePin.UsePinCodeViewModel
+import com.haraev.authentication.presentation.pinCode.usePin.UsePinCodeViewModel
 import com.haraev.core.di.module.ViewModelModule
 import com.haraev.core.ui.ViewModelKey
 import dagger.Binds

@@ -29,22 +29,14 @@ class PinIndicatorView @JvmOverloads constructor(
         )
     }
 
-    fun turnOnNextIndicator() {
-        if (nextUncoloredIndicatorIndex == 0) {
-            turnOffAllIndicators()
-        }
-        if (nextUncoloredIndicatorIndex <= 3) {
-            indicatorsList[nextUncoloredIndicatorIndex].backgroundTintList =
-                ContextCompat.getColorStateList(context, R.color.onPrimary)
-            nextUncoloredIndicatorIndex++
-        }
-    }
+    fun turnOnNextIndicators(count: Int) {
+        turnOffAllIndicators()
 
-    fun turnOffLastIndicator() {
-        if (nextUncoloredIndicatorIndex >= 1) {
-            nextUncoloredIndicatorIndex--
-            indicatorsList[nextUncoloredIndicatorIndex].backgroundTintList =
-                ContextCompat.getColorStateList(context, R.color.darkBlue)
+        (0 until count).forEach { index ->
+            indicatorsList[index].backgroundTintList =
+                ContextCompat.getColorStateList(context, R.color.onPrimary)
+
+            nextUncoloredIndicatorIndex++
         }
     }
 

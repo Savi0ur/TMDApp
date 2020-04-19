@@ -1,8 +1,9 @@
-package com.haraev.authentication.presentation.repeatPin
+package com.haraev.authentication.presentation.pinCode.repeatPin
 
 import androidx.lifecycle.MutableLiveData
 import com.haraev.authentication.R
 import com.haraev.authentication.domain.usecase.RepeatPinCodeUseCase
+import com.haraev.authentication.presentation.pinCode.PinCodeViewModel
 import com.haraev.core.aac.delegate
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
@@ -13,32 +14,29 @@ import javax.inject.Inject
 class RepeatPinCodeViewModel @Inject constructor(
     private val repeatPinCodeUseCase: RepeatPinCodeUseCase,
     private val scheduler: ThreadScheduler
-) : BaseViewModel() {
+) : BaseViewModel(),
+    PinCodeViewModel {
 
-    private var repeatPinCode = ""
     lateinit var pinCode: String
 
     val uiState = MutableLiveData(createInitialState())
     private var state: RepeatPinCodeViewState by uiState.delegate()
 
-    fun onKeyboardTextItemClicked(s: String) {
-        repeatPinCode += s
-        updateUiPin()
-        if (repeatPinCode.length == 4) {
-            if (repeatPinCode == pinCode) {
+    override fun onKeyboardTextItemClicked(text: String) {
+        updateUiPin(state.repeatPinCode + text)
+        if (state.repeatPinCode.length == 4) {
+            if (state.repeatPinCode == pinCode) {
                 tryUseFingerPrint()
             } else {
-                repeatPinCode = ""
-                updateUiPin()
+                updateUiPin("")
                 showUiWrongPin()
             }
         }
     }
 
-    fun onKeyboardBackspaceClicked() {
-        if (repeatPinCode.isNotEmpty()) {
-            repeatPinCode = repeatPinCode.dropLast(1)
-            updateUiPin()
+    override fun onKeyboardBackspaceItemClicked() {
+        if (state.repeatPinCode.isNotEmpty()) {
+            updateUiPin(state.repeatPinCode.dropLast(1))
         }
     }
 
@@ -46,25 +44,25 @@ class RepeatPinCodeViewModel @Inject constructor(
         this.pinCode = pinCode
     }
 
-    fun biometricFailed() {
+    override fun onBiometricFailed() {
         biometricDone(false)
     }
 
-    fun biometricCancelled() {
+    override fun onBiometricCancelled() {
         biometricDone(false)
     }
 
-    fun biometricSucceeded() {
+    override fun onBiometricSucceed() {
         biometricDone(true)
     }
 
-    fun biometricUnavailable() {
+    override fun onBiometricUnavailable() {
         biometricDone(false)
     }
 
     private fun biometricDone(isSuccess: Boolean) {
         repeatPinCodeUseCase.saveBiometricAct(isSuccess)
-            .andThen(repeatPinCodeUseCase.savePinCode(pinCode))
+            .andThen(repeatPinCodeUseCase.savePinCodeHash(pinCode.hashCode()))
             .scheduleIoToUi(scheduler)
             .subscribe({
                 navigateToNextScreen()
@@ -83,15 +81,13 @@ class RepeatPinCodeViewModel @Inject constructor(
         eventsQueue.offer(RepeatPinCodeEvents.NavigateToMainFeature)
     }
 
-    private fun createInitialState() = RepeatPinCodeViewState(
-        repeatPinCode = repeatPinCode
-    )
+    private fun createInitialState() = RepeatPinCodeViewState()
 
     private fun showUiWrongPin() {
         eventsQueue.offer(RepeatPinCodeEvents.WrongPin)
     }
 
-    private fun updateUiPin() {
+    private fun updateUiPin(repeatPinCode: String) {
         state = state.copy(repeatPinCode = repeatPinCode)
     }
 

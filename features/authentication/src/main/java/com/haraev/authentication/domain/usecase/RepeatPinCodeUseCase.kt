@@ -8,8 +8,8 @@ class RepeatPinCodeUseCase @Inject constructor(
     private val pinCodeRepository: PinCodeRepository
 ) {
 
-    fun savePinCode(pinCode: String): Completable =
-        pinCodeRepository.savePinCode(pinCode)
+    fun savePinCodeHash(pinCodeHash: Int): Completable =
+        pinCodeRepository.savePinCodeHash(pinCodeHash.toString())
 
     fun saveBiometricAct(boolean: Boolean): Completable =
         pinCodeRepository.saveBiometricAct(boolean)

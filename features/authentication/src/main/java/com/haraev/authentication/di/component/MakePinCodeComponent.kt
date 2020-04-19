@@ -1,7 +1,7 @@
 package com.haraev.authentication.di.component
 
 import com.haraev.authentication.di.module.makePin.MakePinCodeViewModelModule
-import com.haraev.authentication.presentation.makePin.MakePinCodeFragment
+import com.haraev.authentication.presentation.pinCode.makePin.MakePinCodeFragment
 import com.haraev.core.di.component.CoreComponent
 import com.haraev.core.di.scope.FeatureModuleScope
 import dagger.Component

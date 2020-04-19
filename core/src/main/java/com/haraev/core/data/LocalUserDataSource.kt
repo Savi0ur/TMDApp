@@ -27,9 +27,9 @@ class LocalUserDataSource(
             field = value
         }
 
-    var userPin: String? = getFromSPref(KEY_USER_PIN)
+    var userPinCodeHash: String? = getFromSPref(KEY_USER_PIN_CODE_HASH)
         set(value) {
-            saveToSPref(KEY_USER_PIN, value)
+            saveToSPref(KEY_USER_PIN_CODE_HASH, value)
             field = value
         }
 
@@ -57,7 +57,7 @@ class LocalUserDataSource(
         private const val KEY_SESSION_ID = "KEY_SESSION_ID"
         private const val KEY_USER_LOGIN = "KEY_USER_LOGIN"
         private const val KEY_USER_PASSWORD = "KEY_USER_PASSWORD"
-        private const val KEY_USER_PIN = "KEY_USER_PIN"
+        private const val KEY_USER_PIN_CODE_HASH = "KEY_USER_PIN"
         private const val KEY_BIOMETRIC_ACT = "KEY_BIOMETRIC_ACT"
     }
 }

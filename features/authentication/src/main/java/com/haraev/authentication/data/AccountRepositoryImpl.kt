@@ -23,7 +23,7 @@ class AccountRepositoryImpl(
                 localUserDataSource.sessionId = null
                 localUserDataSource.userLogin = null
                 localUserDataSource.userPassword = null
-                localUserDataSource.userPin = null
+                localUserDataSource.userPinCodeHash = null
                 Completable.complete()
             }
     }

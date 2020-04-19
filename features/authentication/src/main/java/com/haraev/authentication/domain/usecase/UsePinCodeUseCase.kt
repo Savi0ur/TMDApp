@@ -1,26 +1,17 @@
 package com.haraev.authentication.domain.usecase
 
-import com.haraev.authentication.domain.repository.AccountRepository
 import com.haraev.authentication.domain.repository.PinCodeRepository
-import com.haraev.core.data.model.response.AccountDetailsResponse
-import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
 class UsePinCodeUseCase @Inject constructor(
-    private val pinCodeRepository: PinCodeRepository,
-    private val accountRepository: AccountRepository
+    private val pinCodeRepository: PinCodeRepository
 ) {
 
-    fun getPinCode() : Single<String> =
+    fun getPinCode() : Single<Int> =
         pinCodeRepository.getPinCode()
+            .map { it.toInt() }
 
     fun getBiometricAct() : Single<Boolean> =
         pinCodeRepository.getBiometricAct()
-
-    fun logout() : Completable =
-        accountRepository.logout()
-
-    fun getAccountDetails() : Single<AccountDetailsResponse> =
-        accountRepository.getAccountDetails()
 }

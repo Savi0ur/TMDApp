@@ -5,7 +5,7 @@ import io.reactivex.Single
 
 interface PinCodeRepository {
 
-    fun savePinCode(pinCode: String) : Completable
+    fun savePinCodeHash(pinCodeHash: String) : Completable
 
     fun getPinCode() : Single<String>
 

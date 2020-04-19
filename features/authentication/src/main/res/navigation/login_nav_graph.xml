@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/makePinFragment"
-        android:name="com.haraev.authentication.presentation.makePin.MakePinCodeFragment"
+        android:name="com.haraev.authentication.presentation.pinCode.makePin.MakePinCodeFragment"
         android:label="MakePinFragment"
         tools:layout="@layout/fragment_make_pin">
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/repeatPinFragment"
-        android:name="com.haraev.authentication.presentation.repeatPin.RepeatPinCodeFragment"
+        android:name="com.haraev.authentication.presentation.pinCode.repeatPin.RepeatPinCodeFragment"
         android:label="RepeatPinFragment"
         tools:layout="@layout/fragment_repeat_pin">
         <argument
