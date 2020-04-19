@@ -1,6 +1,7 @@
 package com.haraev.main.data
 
 import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.exception.NetworkException
 import com.haraev.main.data.api.MainService
 import com.haraev.main.data.model.request.DeleteSessionBody
 import com.haraev.main.data.model.response.AccountDetailsResponse
@@ -8,12 +9,10 @@ import com.haraev.main.data.model.response.DeleteSessionResponse
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Single
-import okhttp3.ResponseBody.Companion.toResponseBody
+import io.reactivex.observers.TestObserver
 import org.assertj.core.api.Assertions.*
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import retrofit2.Response
-import java.net.HttpURLConnection
 
 object ProfileRepositoryTest : Spek({
 
@@ -28,16 +27,15 @@ object ProfileRepositoryTest : Spek({
             val username = "vano123"
             val thisSessionId = "17d3a37a679d07ecf27ce31f6a1eab75fd638cf5"
 
-            val getAccountDetailsResponse: Response<AccountDetailsResponse> = Response.success(
-                HttpURLConnection.HTTP_OK,
-                AccountDetailsResponse(
-                    name = name,
-                    username = username
-                )
+            val getAccountDetailsResponse = AccountDetailsResponse(
+                name = name,
+                username = username
             )
 
             val mainService = mock<MainService> {
-                on { getAccountDetails(thisSessionId) } doReturn Single.just(getAccountDetailsResponse)
+                on { getAccountDetails(thisSessionId) } doReturn Single.just(
+                    getAccountDetailsResponse
+                )
             }
 
             val sessionLocalDataSource = mock<SessionLocalDataSource> {
@@ -81,18 +79,13 @@ object ProfileRepositoryTest : Spek({
             val networkExceptionCode = 7
             val networkExceptionMessage = "Invalid API key: You must be granted a valid key."
 
-            val getAccountDetailsResponse: Response<AccountDetailsResponse> = Response.error(
-                HttpURLConnection.HTTP_UNAUTHORIZED,
-                """
-                    {
-                        "status_code": $networkExceptionCode,
-                        "status_message": "$networkExceptionMessage"
-                    }
-                """.toResponseBody()
-            )
+            val networkException =
+                NetworkException(networkExceptionCode, networkExceptionMessage)
 
             val mainService = mock<MainService> {
-                on { getAccountDetails(thisSessionId) } doReturn Single.just(getAccountDetailsResponse)
+                on { getAccountDetails(thisSessionId) } doReturn Single.error(
+                    networkException
+                )
             }
 
             val sessionLocalDataSource = mock<SessionLocalDataSource> {
@@ -102,7 +95,7 @@ object ProfileRepositoryTest : Spek({
                 on { requireSessionId() } doReturn thisSessionId
             }
 
-            lateinit var getAccountDetailsResult: Single<AccountDetailsResponse>
+            lateinit var testobserver: TestObserver<AccountDetailsResponse>
             //endregion
 
             Given("profile repository") {
@@ -115,14 +108,11 @@ object ProfileRepositoryTest : Spek({
             }
 
             When("getAccountDetails") {
-                getAccountDetailsResult = profileRepositoryImpl.getAccountDetails()
+                testobserver = profileRepositoryImpl.getAccountDetails().test()
             }
 
-            Then("result should throw IllegalStateException with message") {
-
-                assertThatThrownBy { getAccountDetailsResult.blockingGet() }
-                    .isInstanceOf(IllegalStateException::class.java)
-                    .hasMessage("Пустое тело ответа")
+            Then("observer should throw networkException with message") {
+                testobserver.assertError(networkException)
             }
 
         }
@@ -132,15 +122,14 @@ object ProfileRepositoryTest : Spek({
             //region Fields
             val thisSessionId = "17d3a37a679d07ecf27ce31f6a1eab75fd638cf5"
 
-            val logoutResponse: Response<DeleteSessionResponse> = Response.success(
-                HttpURLConnection.HTTP_OK,
-                DeleteSessionResponse(
+            val logoutResponse = DeleteSessionResponse(
                     success = true
                 )
-            )
 
             val mainService = mock<MainService> {
-                on { deleteSession(DeleteSessionBody(thisSessionId)) } doReturn Single.just(logoutResponse)
+                on { deleteSession(DeleteSessionBody(thisSessionId)) } doReturn Single.just(
+                    logoutResponse
+                )
             }
 
             val sessionLocalDataSource = mock<SessionLocalDataSource> {
@@ -181,18 +170,12 @@ object ProfileRepositoryTest : Spek({
             val networkExceptionCode = 7
             val networkExceptionMessage = "Invalid API key: You must be granted a valid key."
 
-            val logoutResponse: Response<DeleteSessionResponse> = Response.error(
-                HttpURLConnection.HTTP_UNAUTHORIZED,
-                """
-                    {
-                        "status_code": $networkExceptionCode,
-                        "status_message": "$networkExceptionMessage"
-                    }
-                """.toResponseBody()
-            )
+            val logoutResponse = NetworkException(networkExceptionCode, networkExceptionMessage)
 
             val mainService = mock<MainService> {
-                on { deleteSession(DeleteSessionBody(thisSessionId)) } doReturn Single.just(logoutResponse)
+                on { deleteSession(DeleteSessionBody(thisSessionId)) } doReturn Single.error(
+                    logoutResponse
+                )
             }
 
             val sessionLocalDataSource = mock<SessionLocalDataSource> {
@@ -220,7 +203,7 @@ object ProfileRepositoryTest : Spek({
             Then("result should be exception") {
                 val actualResult = logoutResult
 
-                assertThat(actualResult).isInstanceOf(IllegalStateException::class.java)
+                assertThat(actualResult).isEqualTo(logoutResponse)
             }
 
         }

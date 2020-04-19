@@ -1,9 +1,11 @@
 package com.haraev.main.presentation.search
 
-import com.haraev.core.aac.Event
+import com.haraev.core.ui.Event
+import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
+import com.haraev.main.data.model.Genre
 import com.haraev.main.data.model.Movie
-import com.haraev.main.data.model.response.SearchMoviesResponse
+import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.domain.usecase.SearchUseCase
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode
@@ -38,32 +40,40 @@ object SearchViewModelTest : Spek({
 
             val query = "Your lie in april"
 
-            lateinit var movies : List<Movie>
+            lateinit var movieDetails: MovieDetailsResponse
             //endregion
 
             Given("mock searchUseCase.getMovies() with successful result") {
 
-                movies = listOf(
-                    Movie(
-                        null,
-                        "overview",
-                        "2014-10-10",
-                        1,
-                        "Shigatsu wa Kimi no Uso",
-                        "Your lie in april",
-                        101731,
-                        8.83
-                    )
+                val posterPath = null
+                val overview = "overview"
+                val releaseDate = "2014-10-10"
+                val serverId = 1
+                val originalTitle = "Shigatsu wa Kimi no Uso"
+                val title = "Your lie in april"
+                val voteCount = 101731
+                val voteAverage = 8.83
+                val genres = listOf(Genre("драма"))
+                val duration = 122
+
+                movieDetails = MovieDetailsResponse(
+                    posterPath = posterPath,
+                    overview = overview,
+                    releaseDate = releaseDate,
+                    serverId = serverId,
+                    originalTitle = originalTitle,
+                    title = title,
+                    voteCount = voteCount,
+                    voteAverage = voteAverage,
+                    genres = genres,
+                    duration = duration
                 )
 
 
                 searchUseCase = mock {
                     on { getMovies(query, 1) } doReturn (Single.just(
-                        SearchMoviesResponse(
-                            page = 1,
-                            movies = movies,
-                            totalPages = 1,
-                            totalResults = 1
+                        mutableListOf(
+                            movieDetails
                         )
                     ))
                 }
@@ -86,7 +96,7 @@ object SearchViewModelTest : Spek({
                 val actualState = searchViewModel.uiState.value
 
                 val expectedResult = SearchViewState(
-                    movies
+                    movies = listOf(movieDetails)
                 )
 
                 assertThat(actualState).isEqualTo(expectedResult)
@@ -102,20 +112,13 @@ object SearchViewModelTest : Spek({
             lateinit var searchUseCase: SearchUseCase
 
             val query = "qazwsx"
-
-            val movies = emptyList<Movie>()
             //endregion
 
             Given("mock searchUseCase.getMovies() with no movies found result") {
 
                 searchUseCase = mock {
                     on { getMovies(query, 1) } doReturn (Single.just(
-                        SearchMoviesResponse(
-                            page = 1,
-                            movies = movies,
-                            totalPages = 0,
-                            totalResults = 0
-                        )
+                        mutableListOf()
                     ))
                 }
 
@@ -137,7 +140,7 @@ object SearchViewModelTest : Spek({
                 val actualState = searchViewModel.uiState.value
 
                 val expectedResult = SearchViewState(
-                    movies
+                    movies = emptyList()
                 )
 
                 assertThat(actualState).isEqualTo(expectedResult)
@@ -160,7 +163,7 @@ object SearchViewModelTest : Spek({
 
                 searchUseCase = mock {
                     on { getMovies(query, 1) } doReturn (Single.error(
-                      IllegalStateException("server error")
+                        IllegalStateException("server error")
                     ))
                 }
 
@@ -182,7 +185,7 @@ object SearchViewModelTest : Spek({
                 val actualState = searchViewModel.uiState.value
 
                 val expectedResult = SearchViewState(
-                    null
+                    movies = null
                 )
 
                 assertThat(actualState).isEqualTo(expectedResult)
@@ -193,7 +196,7 @@ object SearchViewModelTest : Spek({
                 val actualResult = searchViewModel.eventsQueue.value
 
                 val expectedResult =
-                    LinkedList<Event>().apply { add(SearchEvents.ErrorMessage(R.string.unknown_error_message)) }
+                    LinkedList<Event>().apply { add(ShowErrorMessage(R.string.unknown_error_message)) }
 
                 assertThat(actualResult).isEqualTo(expectedResult)
             }

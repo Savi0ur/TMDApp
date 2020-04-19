@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_search_view"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@drawable/rounded_shape"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/search_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="12dp"
+        app:srcCompat="@drawable/drawable_icon_search"
+        tools:ignore="ContentDescription" />
+
+    <EditText
+        android:id="@+id/search_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        tools:ignore="Autofill, TextFields" />
+
+    <ImageView
+        android:id="@+id/search_clear_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/spacing_medium"
+        app:srcCompat="@drawable/drawable_icon_clear_text"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

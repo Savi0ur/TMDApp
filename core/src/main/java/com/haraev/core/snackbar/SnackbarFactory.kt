@@ -15,6 +15,7 @@ object SnackbarFactory {
         messageText: String,
         containerResId: Int,
         duration: Int,
+        @ColorRes backgroundColor: Int,
         @ColorRes textColor: Int
     ): Snackbar? {
 
@@ -23,14 +24,17 @@ object SnackbarFactory {
         return viewGroup?.let {
             Snackbar
                 .make(viewGroup, messageText, duration)
-                .decorate(textColor)
+                .decorate(backgroundColor, textColor)
         }
     }
 
-    private fun Snackbar.decorate(@ColorRes textColorId: Int): Snackbar {
+    private fun Snackbar.decorate(@ColorRes backgroundId: Int, @ColorRes textColorId: Int): Snackbar {
         val layout = view as? Snackbar.SnackbarLayout ?: return this
 
-        val textView = layout.findViewById<TextView>(R.id.snackbar_text)
+        val textView = with(layout) {
+            backgroundTintList = ContextCompat.getColorStateList(view.context, backgroundId)
+            findViewById<TextView>(R.id.snackbar_text)
+        }
 
         textView.setTextColor(ContextCompat.getColor(view.context, textColorId))
 

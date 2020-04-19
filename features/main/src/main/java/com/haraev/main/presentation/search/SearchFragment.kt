@@ -8,18 +8,25 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.haraev.core.aac.Event
+import com.haraev.core.ui.Event
 import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.ui.BaseFragment
+import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
-import com.haraev.main.data.model.Movie
+import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.di.component.SearchComponent
-import com.haraev.main.presentation.adapter.MoviesAdapter
-import com.jakewharton.rxbinding3.widget.textChanges
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.haraev.main.presentation.item.MovieGridItem
+import com.haraev.main.presentation.item.MovieItem
+import com.haraev.main.presentation.item.MovieLinearItem
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.OnItemClickListener
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
@@ -30,11 +37,23 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private val viewModel: SearchViewModel by viewModels { viewModelFactory }
 
-    private val moviesAdapter: MoviesAdapter = MoviesAdapter()
+    private val moviesAdapter = GroupAdapter<GroupieViewHolder>()
 
-    private val moviesItemClickListener = object : MoviesAdapter.ItemClickListener {
-        override fun onItemClick(movie: Movie, extras: FragmentNavigator.Extras) {
-            navigateToMovieDetailsScreen(movie, extras)
+    private val moviesItemClickListener = OnItemClickListener { item, _ ->
+        if (item is MovieItem) {
+            navigateToMovieDetailsScreen(
+                item.movie,
+                FragmentNavigatorExtras(
+                    item.movieTitleView to getString(R.string.transition_movie_title),
+                    item.movieImageView to getString(R.string.transition_movie_image),
+                    item.movieOriginalTitleView to getString(R.string.transition_movie_original_title_with_year),
+                    item.movieGenresView to getString(R.string.transition_movie_genres),
+                    item.movieDurationView to getString(R.string.transition_movie_duration),
+                    item.movieDurationDescriptionView to getString(R.string.transition_movie_duration_description),
+                    item.movieVoteAverageView to getString(R.string.transition_movie_vote_average),
+                    item.movieVoteCountView to getString(R.string.transition_movie_vote_count)
+                )
+            )
         }
     }
 
@@ -45,7 +64,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
         super.onAttach(context)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +79,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun onEvent(event: Event) {
         when (event) {
-            is SearchEvents.ErrorMessage -> showErrorMessage(event.messageResId, bottom_navigation)
+            is ShowErrorMessage -> showErrorMessage(
+                event.messageResId,
+                R.id.search_root_coordinator
+            )
         }
     }
 
@@ -72,34 +93,86 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 showNoMovies()
             }
         } ?: showDefaultScreen()
+
+        search_progress_bar.isVisible = viewState.progressBarVisibility
     }
 
     private fun initViews() {
         setupMoviesRecycler()
-        setupSearchEditText()
-        setupClearButton()
+        setupRecyclerTypeCheckBox()
+        setupSearchView()
     }
 
-    private fun setupClearButton() {
-        search_clear_button.setOnClickListener {
-            search_search_edit_text.text = null
+    private fun setupSearchView() {
+        search_search_view.setOnSearchClickListener {
+            viewModel.onSearchEditTextTextChanged(Observable.just(search_search_view.text))
+            hideKeyboard()
+        }
+
+        search_search_view.setOnClearClickListener {
+            search_search_view.clear()
+            viewModel.onClearButtonClicked()
+        }
+
+        viewModel.onSearchEditTextTextChanged(
+            search_search_view.textChanges()
+                .map { it.toString() }
+        )
+
+        search_search_view.setOnEditorActionListener {
+            viewModel.onSearchEditTextTextChanged(Observable.just(search_search_view.text))
+            hideKeyboard()
         }
     }
 
-    private fun setupSearchEditText() {
-        viewModel.onSearchEditTextTextChanged(
-            search_search_edit_text.textChanges()
-                .map { it.toString() }
-        )
+    private fun setupRecyclerTypeCheckBox() {
+        search_list_type_check_box.setOnCheckedChangeListener { _, isChecked ->
+            changeRecyclerViewLayoutManager(isChecked)
+
+            viewModel.uiState.value?.movies?.let {
+                if (it.isNotEmpty()) {
+                    showMovies(it)
+                }
+            }
+        }
     }
 
     private fun setupMoviesRecycler() {
+        moviesAdapter.setOnItemClickListener(moviesItemClickListener)
         with(search_recycler_view) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = moviesAdapter
         }
+    }
 
-        moviesAdapter.setOnItemClickListener(moviesItemClickListener)
+    private fun changeRecyclerViewLayoutManager(isGrid: Boolean) {
+        search_recycler_view.layoutManager = if (isGrid) {
+            val spanCount = 2
+            GridLayoutManager(requireContext(), spanCount)
+        } else {
+            LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun showMovies(movies: List<MovieDetailsResponse>) {
+        val movieItems = mutableListOf<MovieItem>()
+
+        movieItems.addAll(movies.map {
+
+            if (search_list_type_check_box.isChecked) {
+                MovieGridItem(it)
+            } else {
+                MovieLinearItem(it)
+            }
+
+        })
+
+        moviesAdapter.update(movieItems)
+
+        search_default_image.isInvisible = true
+        search_recycler_view.isVisible = true
+        search_no_movies_image.isInvisible = true
+        search_no_movies_text.isInvisible = true
     }
 
     private fun showDefaultScreen() {
@@ -116,19 +189,21 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         search_no_movies_text.isVisible = true
     }
 
-    private fun showMovies(movies: List<Movie>) {
-        moviesAdapter.updateMovies(movies)
-
-        search_default_image.isInvisible = true
-        search_recycler_view.isVisible = true
-        search_no_movies_image.isInvisible = true
-        search_no_movies_text.isInvisible = true
-    }
-
-    private fun navigateToMovieDetailsScreen(movie: Movie, extras: FragmentNavigator.Extras) {
+    private fun navigateToMovieDetailsScreen(
+        movie: MovieDetailsResponse,
+        extras: FragmentNavigator.Extras
+    ) {
 
         val direction = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
-            movieTitle = movie.title
+            movieTitle = movie.title,
+            moviePosterPath = movie.posterPath,
+            movieOverview = movie.overview,
+            movieReleaseDate = movie.releaseDate,
+            movieOriginalTitle = movie.originalTitle,
+            movieVoteCount = movie.voteCount,
+            movieVoteAverage = movie.voteAverage.toFloat(),
+            movieGenres = movie.genres.joinToString(separator = ", ") { it.name },
+            movieDuration = movie.duration?.toString() ?: "0"
         )
 
         findNavController().navigate(direction, extras)

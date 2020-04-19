@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.haraev.core.aac.Event
+import com.haraev.core.ui.Event
 import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.navigation.NavigationActivity
 import com.haraev.core.ui.BaseFragment
+import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
 import com.haraev.main.di.component.ProfileComponent
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
@@ -54,7 +54,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     private fun onEvent(event: Event) {
         when (event) {
             is ProfileEvents.Logout -> (requireActivity() as NavigationActivity).navigateToLoginScreen()
-            is ProfileEvents.ErrorMessage -> showErrorMessage(event.messageResId, bottom_navigation)
+            is ShowErrorMessage -> showErrorMessage(event.messageResId, R.id.profile_root_coordinator, profile_logout_button)
         }
     }
 

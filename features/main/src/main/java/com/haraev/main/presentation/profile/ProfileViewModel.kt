@@ -18,8 +18,6 @@ class ProfileViewModel @Inject constructor(
     val uiState = MutableLiveData<ProfileViewState>(createInitialState())
     private var state: ProfileViewState by uiState.delegate()
 
-    val eventsQueue = EventsQueue()
-
     init {
         loadProfileInfo()
     }
@@ -37,7 +35,7 @@ class ProfileViewModel @Inject constructor(
                 eventsQueue.offer(ProfileEvents.Logout)
             }, {
                 changeProgressBarState(false)
-                eventsQueue.offer(ProfileEvents.ErrorMessage(R.string.unknown_error_message))
+                showErrorMessage(R.string.unknown_error_message)
             })
             .autoDispose()
     }
@@ -56,7 +54,7 @@ class ProfileViewModel @Inject constructor(
                     accountDetailsResponse.username
                 )
             }, {
-                eventsQueue.offer(ProfileEvents.ErrorMessage(R.string.unknown_error_message))
+                showErrorMessage(R.string.unknown_error_message)
             })
             .autoDispose()
     }

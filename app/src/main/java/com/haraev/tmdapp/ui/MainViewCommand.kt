@@ -1,7 +1,9 @@
 package com.haraev.tmdapp.ui
 
-sealed class MainViewCommand {
-    object OpenLoginScreen : MainViewCommand()
+import com.haraev.core.ui.Event
 
-    object OpenSearchScreen : MainViewCommand()
+sealed class MainEvents : Event {
+    object OpenLoginScreen : MainEvents()
+
+    object OpenSearchScreen : MainEvents()
 }

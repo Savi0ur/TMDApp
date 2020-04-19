@@ -1,7 +1,8 @@
 package com.haraev.main.presentation.search
 
-import com.haraev.main.data.model.Movie
+import com.haraev.main.data.model.response.MovieDetailsResponse
 
 data class SearchViewState(
-    val movies : List<Movie>?
+    val progressBarVisibility : Boolean = false,
+    val movies : List<MovieDetailsResponse>?
 )

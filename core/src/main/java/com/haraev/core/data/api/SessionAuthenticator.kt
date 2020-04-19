@@ -54,29 +54,24 @@ class SessionAuthenticator(
         val userLogin: String = sessionLocalDataSource.userLogin ?: return null
         val userPassword: String = sessionLocalDataSource.userPassword ?: return null
 
-        return loginService.getNewToken()
+        val newSessionId = loginService.getNewToken()
             .flatMap { response ->
-                response.body()?.requestToken?.let {
-                    loginService.validateWithLogin(
-                        ValidateWithLoginBody(
-                            userLogin,
-                            userPassword,
-                            it
-                        )
+                loginService.validateWithLogin(
+                    ValidateWithLoginBody(
+                        userLogin,
+                        userPassword,
+                        response.requestToken
                     )
-                }
+                )
             }
             .flatMap { response ->
-                response.body()?.requestToken?.let {
-                    loginService.getNewSession(SessionBody(it))
-                }
+                loginService.getNewSession(SessionBody(response.requestToken))
             }
             .blockingGet()
-            .body()
-            ?.sessionId
-            ?.also { sessionId ->
-                sessionLocalDataSource.sessionId = sessionId
-                return sessionId
-            }
+            .sessionId
+
+        sessionLocalDataSource.sessionId = newSessionId
+
+        return newSessionId
     }
 }

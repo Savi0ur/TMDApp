@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.haraev.authentication.R
 import com.haraev.authentication.di.component.LoginComponent
-import com.haraev.core.aac.Event
+import com.haraev.core.ui.Event
 import com.haraev.core.aac.observe
 import com.haraev.core.di.provider.CoreComponentProvider
 import com.haraev.core.navigation.NavigationActivity
