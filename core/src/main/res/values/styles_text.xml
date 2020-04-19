@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.AppTheme.TextView.Header1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Header1</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Header2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Header2</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Header3" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Header3</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Content1</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content1.Primary" parent="Widget.AppTheme.TextView.Content1">
+        <item name="android:textAppearance">@style/Content1</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content1.Error" parent="Widget.AppTheme.TextView.Content1">
+        <item name="android:textAppearance">@style/Content1</item>
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Content2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Content2</item>
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Caption1" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Caption1</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Caption2" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Caption2</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextView.Caption2.SecondaryVariant" parent="Widget.AppTheme.TextView.Caption2">
+        <item name="android:textColor">@color/secondaryVariant</item>
+    </style>
+
+</resources>

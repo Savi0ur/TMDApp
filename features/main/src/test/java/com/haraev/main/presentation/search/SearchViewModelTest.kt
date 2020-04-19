@@ -6,7 +6,6 @@ import com.haraev.main.R
 import com.haraev.main.data.model.Genre
 import com.haraev.main.data.model.Movie
 import com.haraev.main.data.model.response.MovieDetailsResponse
-import com.haraev.main.data.model.response.SearchMoviesResponse
 import com.haraev.main.domain.usecase.SearchUseCase
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode
@@ -57,19 +56,6 @@ object SearchViewModelTest : Spek({
                 val genres = listOf(Genre("драма"))
                 val duration = 122
 
-                val movies = listOf(
-                    Movie(
-                        posterPath = posterPath,
-                        overview = overview,
-                        releaseDate = releaseDate,
-                        serverId = serverId,
-                        originalTitle = originalTitle,
-                        title = title,
-                        voteCount = voteCount,
-                        voteAverage = voteAverage
-                    )
-                )
-
                 movieDetails = MovieDetailsResponse(
                     posterPath = posterPath,
                     overview = overview,
@@ -86,15 +72,9 @@ object SearchViewModelTest : Spek({
 
                 searchUseCase = mock {
                     on { getMovies(query, 1) } doReturn (Single.just(
-                        SearchMoviesResponse(
-                            page = 1,
-                            movies = movies,
-                            totalPages = 1,
-                            totalResults = 1
+                        mutableListOf(
+                            movieDetails
                         )
-                    ))
-                    on { getMovieDetails(movies[0].serverId) } doReturn (Single.just(
-                        movieDetails
                     ))
                 }
 
@@ -132,20 +112,13 @@ object SearchViewModelTest : Spek({
             lateinit var searchUseCase: SearchUseCase
 
             val query = "qazwsx"
-
-            val movies = emptyList<Movie>()
             //endregion
 
             Given("mock searchUseCase.getMovies() with no movies found result") {
 
                 searchUseCase = mock {
                     on { getMovies(query, 1) } doReturn (Single.just(
-                        SearchMoviesResponse(
-                            page = 1,
-                            movies = movies,
-                            totalPages = 0,
-                            totalResults = 0
-                        )
+                        mutableListOf()
                     ))
                 }
 

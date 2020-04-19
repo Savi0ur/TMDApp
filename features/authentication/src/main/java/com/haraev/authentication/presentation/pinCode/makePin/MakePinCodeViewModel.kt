@@ -12,8 +12,8 @@ class MakePinCodeViewModel @Inject constructor() : BaseViewModel(),
     val uiState = MutableLiveData(createInitialState())
     private var state: MakePinCodeViewState by uiState.delegate()
 
-    override fun onKeyboardTextItemClicked(s: String) {
-        updateUiPin(state.pinCode + s)
+    override fun onKeyboardTextItemClicked(text: String) {
+        updateUiPin(state.pinCode + text)
         if (state.pinCode.length == 4) {
             navigateToNextScreen()
         }

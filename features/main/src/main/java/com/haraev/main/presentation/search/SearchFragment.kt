@@ -155,17 +155,19 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun showMovies(movies: List<MovieDetailsResponse>) {
-        moviesAdapter.update(
+        val movieItems = mutableListOf<MovieItem>()
+
+        movieItems.addAll(movies.map {
+
             if (search_list_type_check_box.isChecked) {
-                movies.map {
-                    MovieGridItem(it)
-                }
+                MovieGridItem(it)
             } else {
-                movies.map {
-                    MovieLinearItem(it)
-                }
+                MovieLinearItem(it)
             }
-        )
+
+        })
+
+        moviesAdapter.update(movieItems)
 
         search_default_image.isInvisible = true
         search_recycler_view.isVisible = true

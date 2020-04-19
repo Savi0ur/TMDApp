@@ -54,14 +54,6 @@ class SearchViewModel @Inject constructor(
     private fun searchMovies(query: String) {
         searchDisposables.add(
             searchUseCase.getMovies(query, 1)
-                .flattenAsObservable { it.movies }
-                .flatMap { movie ->
-                    searchUseCase.getMovieDetails(movie.serverId).toObservable()
-                }
-                .collect(
-                    { ArrayList<MovieDetailsResponse>() },
-                    { list, item -> list.add(item) }
-                )
                 .scheduleIoToUi(threadScheduler)
                 .subscribe({ list ->
                     changeProgressBarState(false)

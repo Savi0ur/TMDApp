@@ -1,6 +1,5 @@
 package com.haraev.core.snackbar
 
-import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -33,7 +32,7 @@ object SnackbarFactory {
         val layout = view as? Snackbar.SnackbarLayout ?: return this
 
         val textView = with(layout) {
-            backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, backgroundId))
+            backgroundTintList = ContextCompat.getColorStateList(view.context, backgroundId)
             findViewById<TextView>(R.id.snackbar_text)
         }
 

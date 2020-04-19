@@ -10,9 +10,14 @@ class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository
 ) {
 
-    fun getMovies(query: String, page: Int) : Single<SearchMoviesResponse> =
+    fun getMovies(query: String, page: Int): Single<MutableList<MovieDetailsResponse>> =
         searchRepository.getMovies(query, page)
-
-    fun getMovieDetails(movieId: Int) : Single<MovieDetailsResponse> =
-        searchRepository.getMovieDetails(movieId)
+            .flattenAsObservable { it.movies }
+            .flatMap { movie ->
+                searchRepository.getMovieDetails(movie.serverId).toObservable()
+            }
+            .collect(
+                { ArrayList<MovieDetailsResponse>().toMutableList() },
+                { list, item -> list.add(item) }
+            )
 }

@@ -21,6 +21,8 @@
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
 
+        <item name="colorControlHighlight">@color/onPrimary</item>
+
         <!--Component styles-->
         <item name="android:progressBarStyle">@style/Widget.AppTheme.ProgressBar</item>
         <item name="textInputStyle">@style/Widget.AppTheme.TextInputLayout</item>
