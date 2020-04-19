@@ -1,24 +1,21 @@
 package com.haraev.core.cryptography
 
-import android.content.Context
 import android.util.Base64
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeysetHandle
-import com.google.crypto.tink.aead.AeadKeyTemplates
 import com.google.crypto.tink.config.TinkConfig
-import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import okio.internal.commonAsUtf8ToByteArray
 import okio.internal.commonToUtf8String
 
 class Cryptographer(
-    private val context: Context
+    private val keysetHandle: KeysetHandle
 ) {
 
     private var aead: Aead? = null
 
     fun register() {
         TinkConfig.register()
-        aead = getOrGenerateNewKeysetHandle().getPrimitive(Aead::class.java)
+        aead = keysetHandle.getPrimitive(Aead::class.java)
     }
 
     fun encrypt(text: String): String {
@@ -36,24 +33,4 @@ class Cryptographer(
         val plainText = aead.decrypt(cipherText, byteArrayOf())
         return plainText.commonToUtf8String()
     }
-
-    private fun getOrGenerateNewKeysetHandle(): KeysetHandle {
-        return AndroidKeysetManager.Builder()
-            .withSharedPref(
-                context,
-                TINK_KEYSET_NAME,
-                PREF_FILE_NAME
-            )
-            .withKeyTemplate(AeadKeyTemplates.AES256_GCM)
-            .withMasterKeyUri(MASTER_KEY_URI)
-            .build()
-            .keysetHandle
-    }
-
-    companion object {
-        private const val PREF_FILE_NAME = "tmdb_pref"
-        private const val TINK_KEYSET_NAME = "tmdb_keyset"
-        private const val MASTER_KEY_URI = "android-keystore://tmdb_master_key"
-    }
-
 }
