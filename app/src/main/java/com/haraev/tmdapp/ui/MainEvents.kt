@@ -8,4 +8,6 @@ sealed class MainEvents : Event {
     object OpenSearchScreen : MainEvents()
 
     object OpenUsePinCodeScreen : MainEvents()
+
+    class ShowDialog(val dialogMessageId: Int, val onDismissAction: () -> Unit) : MainEvents()
 }

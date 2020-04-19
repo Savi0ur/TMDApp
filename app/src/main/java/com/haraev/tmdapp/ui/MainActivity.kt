@@ -3,6 +3,7 @@ package com.haraev.tmdapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.haraev.core.ui.Event
@@ -61,7 +62,22 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
             is MainEvents.OpenUsePinCodeScreen -> {
                 navigateToUsePinCodeScreen()
             }
+            is MainEvents.ShowDialog -> {
+                showSimpleDialog(event.dialogMessageId, event.onDismissAction)
+            }
         }
+    }
+
+    private fun showSimpleDialog(messageId: Int, onDismissAction: () -> Unit) {
+        val dialog = AlertDialog
+            .Builder(this)
+            .setMessage(messageId)
+            .setPositiveButton(R.string.ok, null)
+            .create()
+        dialog.setOnDismissListener {
+            onDismissAction()
+        }
+        dialog.show()
     }
 
     override fun onSupportNavigateUp() =

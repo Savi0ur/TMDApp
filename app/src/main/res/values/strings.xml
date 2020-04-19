@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TMD App</string>
+    <string name="ok">OK</string>
+    <string name="rooted_device_alert">На устройстве обнаружены root-права. Продолжая пользоваться приложением, вся ответственность остается на Вас.</string>
 </resources>
