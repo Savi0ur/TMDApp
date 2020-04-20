@@ -9,7 +9,7 @@ import com.haraev.database.entity.MovieDb
     entities = [
         MovieDb::class
     ],
-    version = 1
+    version = 2
 )
 abstract class Database : RoomDatabase() {
 

@@ -5,9 +5,18 @@ android {
     defaultConfig {
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation":"$projectDir/schemas".toString()]
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
+
+    packagingOptions{
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
     }
 }
 
@@ -24,4 +33,5 @@ dependencies {
     kapt deps.room_compiler
     implementation deps.room_ktx
     implementation deps.room_rx
+    androidTestImplementation  deps.room_testing
 }

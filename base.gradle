@@ -74,6 +74,7 @@ dependencies {
 
     // AssertJ
     testImplementation deps.assertJ
+    androidTestImplementation deps.assertJ
 
     // MockitoKotlin
     testImplementation deps.mockitoKotlin

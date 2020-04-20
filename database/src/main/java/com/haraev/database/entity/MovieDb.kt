@@ -23,5 +23,7 @@ data class MovieDb (
 
     val voteAverage: Double,
 
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+
+    val isWatched: Boolean = false
 )
