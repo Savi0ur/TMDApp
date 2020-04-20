@@ -203,7 +203,7 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
     }
 
     private fun showMovies(movies: List<MovieDetailsResponse>) {
-        moviesAdapter.updateAsync(
+        moviesAdapter.update(
             if (favorite_recycler.layoutManager is GridLayoutManager) {
                 movies.map {
                     MovieGridItem(it)

@@ -1,6 +1,7 @@
 package com.haraev.main.di.module.movieDetails
 
 import com.haraev.core.data.LocalUserDataSource
+import com.haraev.database.Database
 import com.haraev.main.data.MovieDetailsRepositoryImpl
 import com.haraev.main.data.api.MainService
 import com.haraev.main.domain.repository.MovieDetailsRepository
@@ -14,11 +15,13 @@ class MovieDetailsModule {
     @Provides
     fun provideMovieDetailsRepository(
         mainService: MainService,
-        localUserDataSource: LocalUserDataSource
+        localUserDataSource: LocalUserDataSource,
+        database: Database
     ) : MovieDetailsRepository {
         return MovieDetailsRepositoryImpl(
             mainService,
-            localUserDataSource
+            localUserDataSource,
+            database
         )
     }
 

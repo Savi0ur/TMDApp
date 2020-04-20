@@ -14,7 +14,6 @@ class Cryptographer(
     private var aead: Aead? = null
 
     fun register() {
-        TinkConfig.register()
         aead = keysetHandle.getPrimitive(Aead::class.java)
     }
 

@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+apply from: rootProject.file('base.gradle')
+
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":"$projectDir/schemas".toString()]
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation deps.stdlib
+    implementation deps.core_ktx
+
+    // RxJava 2
+    implementation deps.rxjava2_rxjava
+    implementation deps.rxjava2_rxandroid
+
+    // Room
+    implementation deps.room_runtime
+    kapt deps.room_compiler
+    implementation deps.room_ktx
+    implementation deps.room_rx
+}

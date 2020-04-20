@@ -55,18 +55,10 @@ class FavoriteViewModel @Inject constructor(
     fun loadFavoriteMovies() {
         changeProgressBarState(true)
         favoriteUseCase.getFavoriteMovies()
-            .flattenAsObservable { it.movies }
-            .flatMap { movie ->
-                favoriteUseCase.getMovieDetails(movie.serverId).toObservable()
-            }
-            .collect(
-                { ArrayList<MovieDetailsResponse>() },
-                { list, item -> list.add(item) }
-            )
             .scheduleIoToUi(threadScheduler)
             .subscribe({ list ->
                 changeProgressBarState(false)
-                showMovies(list)
+                showMovies(list.sortedByDescending { it.voteAverage })
             }, { e ->
                 changeProgressBarState(false)
                 Timber.tag(TAG).e(e)

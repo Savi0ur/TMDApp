@@ -1,6 +1,7 @@
 package com.haraev.main.di.module.favorite
 
 import com.haraev.core.data.LocalUserDataSource
+import com.haraev.database.Database
 import com.haraev.main.data.api.MainService
 import com.haraev.main.data.FavoriteRepositoryImpl
 import com.haraev.main.domain.repository.FavoriteRepository
@@ -14,18 +15,20 @@ class FavoriteModule {
     @Provides
     fun provideFavoriteRepository(
         mainService: MainService,
-        localUserDataSource: LocalUserDataSource
-    ) : FavoriteRepository {
+        localUserDataSource: LocalUserDataSource,
+        database: Database
+    ): FavoriteRepository {
         return FavoriteRepositoryImpl(
             mainService,
-            localUserDataSource
+            localUserDataSource,
+            database
         )
     }
 
     @Provides
     fun provideFavoriteUseCase(
         favoriteRepository: FavoriteRepository
-    ) : FavoriteUseCase {
+    ): FavoriteUseCase {
         return FavoriteUseCase(favoriteRepository)
     }
 }

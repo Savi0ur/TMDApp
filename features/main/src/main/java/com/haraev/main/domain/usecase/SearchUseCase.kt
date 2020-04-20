@@ -14,7 +14,9 @@ class SearchUseCase @Inject constructor(
         searchRepository.getMovies(query, page)
             .flattenAsObservable { it.movies }
             .flatMap { movie ->
-                searchRepository.getMovieDetails(movie.serverId).toObservable()
+                searchRepository
+                    .getMovieDetails(movie.serverId)
+                    .toObservable()
             }
             .collect(
                 { ArrayList<MovieDetailsResponse>().toMutableList() },

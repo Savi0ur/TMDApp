@@ -11,4 +11,6 @@ interface FavoriteRepository {
     fun getMovieDetails(
         movieId: Int
     ): Single<MovieDetailsResponse>
+
+    fun getOfflineFavoriteMovies(): Single<List<MovieDetailsResponse>>
 }

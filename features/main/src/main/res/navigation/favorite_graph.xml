@@ -59,5 +59,9 @@
         <argument
             android:name="movieServerId"
             app:argType="integer" />
+        <argument
+            android:name="movieIsFavorite"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
 </navigation>
