@@ -43,7 +43,7 @@ class MovieDaoInstrumentationTest {
             voteAverage = 9.0,
             voteCount = 9876,
             isFavorite = true,
-            isWatched = false
+            isWorthWatching = false
         )
 
         val insertResult = db.movieDao().insertMovies(movieDb)
@@ -65,7 +65,7 @@ class MovieDaoInstrumentationTest {
             voteAverage = 9.0,
             voteCount = 9876,
             isFavorite = true,
-            isWatched = false
+            isWorthWatching = false
         )
 
         db.movieDao().insertMovies(movieDb).blockingGet()
@@ -89,7 +89,7 @@ class MovieDaoInstrumentationTest {
             voteAverage = 9.0,
             voteCount = 9876,
             isFavorite = true,
-            isWatched = false
+            isWorthWatching = false
         )
 
         val notFavoriteMovieDb = MovieDb (
@@ -103,7 +103,7 @@ class MovieDaoInstrumentationTest {
             voteAverage = 9.0,
             voteCount = 9876,
             isFavorite = false,
-            isWatched = false
+            isWorthWatching = false
         )
 
         db.movieDao().insertMovies(favoriteMovieDb, notFavoriteMovieDb).blockingGet()

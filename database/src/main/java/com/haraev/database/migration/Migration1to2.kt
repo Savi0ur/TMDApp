@@ -9,6 +9,6 @@ class Migration1to2 : Migration(1, 2) {
         database.execSQL("""
             ALTER TABLE `MovieDb`
             ADD COLUMN `isWatched` INTEGER DEFAULT 0 NOT NULL
-        """.trimIndent())
+        """)
     }
 }

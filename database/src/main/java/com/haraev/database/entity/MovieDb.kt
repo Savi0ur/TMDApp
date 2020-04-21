@@ -25,5 +25,5 @@ data class MovieDb (
 
     val isFavorite: Boolean = false,
 
-    val isWatched: Boolean = false
+    val isWorthWatching: Boolean = false
 )
