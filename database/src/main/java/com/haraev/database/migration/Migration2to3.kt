@@ -51,7 +51,10 @@ class Migration2to3 : Migration(2, 3) {
                 `voteCount`,
                 `voteAverage`,
                 `isFavorite`,
-                `isWatched`
+            CASE
+                WHEN `voteAverage` > 7.0 THEN 1
+                ELSE 0
+            END
             FROM `MovieDb`
         """)
 
