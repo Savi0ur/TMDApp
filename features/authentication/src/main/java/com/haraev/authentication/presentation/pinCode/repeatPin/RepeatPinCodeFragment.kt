@@ -39,9 +39,9 @@ class RepeatPinCodeFragment : BasePinCodeFragment(R.layout.fragment_repeat_pin) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
         initView()
         initArgsContent()
+        observeViewModel()
     }
 
     private fun initArgsContent() {

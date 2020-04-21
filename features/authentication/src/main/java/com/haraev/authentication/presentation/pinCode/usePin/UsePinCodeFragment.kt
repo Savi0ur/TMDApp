@@ -35,8 +35,8 @@ class UsePinCodeFragment : BasePinCodeFragment(R.layout.fragment_use_pin) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
         initView()
+        observeViewModel()
     }
 
     private fun initView() {

@@ -68,8 +68,8 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModels()
         initViews()
+        observeViewModels()
     }
 
     private fun observeViewModels() {
@@ -88,9 +88,10 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
             showDefaultScreen()
         } else {
             if (viewState.searchQuery.isNotEmpty()) {
-                val filtredMovies = viewState.movies.filter { it.title.contains(viewState.searchQuery, true) }
-                if (filtredMovies.isNotEmpty()) {
-                    showMovies(filtredMovies)
+                val filteredMovies =
+                    viewState.movies.filter { it.title.contains(viewState.searchQuery, true) }
+                if (filteredMovies.isNotEmpty()) {
+                    showMovies(filteredMovies)
                 } else {
                     showNoMoviesFoundByQuery()
                 }
@@ -173,7 +174,13 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
                     }
 
                     changeRecyclerViewLayoutManager(isChecked)
-                    showMovies(viewModel.uiState.value?.movies ?: emptyList())
+
+                    viewModel.uiState.value?.movies?.let { list ->
+                        showMovies(list)
+                        if (list.isEmpty()) {
+                            showDefaultScreen()
+                        }
+                    }
 
                     item.isChecked = isChecked
                     true
@@ -203,7 +210,7 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite) {
     }
 
     private fun showMovies(movies: List<MovieDetailsResponse>) {
-        moviesAdapter.updateAsync(
+        moviesAdapter.update(
             if (favorite_recycler.layoutManager is GridLayoutManager) {
                 movies.map {
                     MovieGridItem(it)
