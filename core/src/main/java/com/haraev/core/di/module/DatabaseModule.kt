@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.haraev.database.Database
 import com.haraev.database.migration.Migration1to2
 import com.haraev.database.migration.Migration2to3
+import com.haraev.database.migration.Migration3to4
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -23,7 +24,8 @@ class DatabaseModule {
             )
             .addMigrations(
                 Migration1to2(),
-                Migration2to3()
+                Migration2to3(),
+                Migration3to4()
             )
             .build()
     }

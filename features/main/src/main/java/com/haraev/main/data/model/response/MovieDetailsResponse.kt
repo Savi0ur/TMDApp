@@ -50,7 +50,8 @@ data class MovieDetailsResponse(
             originalTitle = originalTitle,
             title = title,
             voteCount = voteCount,
-            voteAverage = voteAverage
+            voteAverage = voteAverage,
+            genres = genres.joinToString(",") { it.name }
         )
     }
 
@@ -70,7 +71,7 @@ data class MovieDetailsResponse(
 
 fun MovieDb.convertToDomain(): MovieDetailsResponse {
     return MovieDetailsResponse(
-        genres = emptyList(),
+        genres = genres.split(",").map { Genre(it) },
         duration = duration,
         posterPath = posterPath,
         overview = overview,
