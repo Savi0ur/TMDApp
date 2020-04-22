@@ -9,7 +9,7 @@ class FavoriteUseCase @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ) {
 
-    fun getFavoriteMovies() : Single<MutableList<MovieDetailsResponse>> =
+    fun getFavoriteMovies(): Single<List<MovieDetailsResponse>> =
         favoriteRepository.getFavoriteMovies()
             .flattenAsObservable { it.movies }
             .flatMap { movie ->
@@ -19,9 +19,9 @@ class FavoriteUseCase @Inject constructor(
                 { ArrayList<MovieDetailsResponse>().toMutableList() },
                 { list, item -> list.add(item) }
             )
+            .map { it.toList() }
             .onErrorResumeNext {
                 favoriteRepository
                     .getOfflineFavoriteMovies()
-                    .map { it.toMutableList() }
             }
 }

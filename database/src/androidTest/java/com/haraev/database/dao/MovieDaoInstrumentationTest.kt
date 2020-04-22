@@ -30,8 +30,9 @@ class MovieDaoInstrumentationTest {
     }
 
     @Test
-    fun writeMovieDb() {
+    fun insert_randomMovie_assertComplete() {
 
+        //region Given
         val movieDb = MovieDb (
             serverId = 123,
             duration = 50,
@@ -46,15 +47,21 @@ class MovieDaoInstrumentationTest {
             isWorthWatching = false,
             genres = ""
         )
+        //endregion
 
+        //region When
         val insertResult = db.movieDao().insertMovies(movieDb)
+        //endregion
 
+        //region Then
         insertResult.test().assertComplete()
+        //endregion
     }
 
     @Test
-    fun writeMovieDbAndGetById() {
+    fun getByServerId_RandomMovie_EqualsToInsertedMovie() {
 
+        //region Given
         val movieDb = MovieDb (
             serverId = 123,
             duration = 50,
@@ -71,15 +78,21 @@ class MovieDaoInstrumentationTest {
         )
 
         db.movieDao().insertMovies(movieDb).blockingGet()
+        //endregion
 
+        //region When
         val byId = db.movieDao().getByServerId(movieDb.serverId).blockingGet()
+        //endregion
 
+        //region Then
         assertThat(byId).isEqualTo(movieDb)
+        //endregion
     }
 
     @Test
-    fun writeMoviesDbAndGetAllFavorite() {
+    fun getAllFavorite_RandomMovies_EqualsToListOfInsertedMovies() {
 
+        //region Given
         val favoriteMovieDb = MovieDb (
             serverId = 1,
             duration = 50,
@@ -111,9 +124,14 @@ class MovieDaoInstrumentationTest {
         )
 
         db.movieDao().insertMovies(favoriteMovieDb, notFavoriteMovieDb).blockingGet()
+        //endregion
 
+        //region When
         val allFavorites = db.movieDao().getAllFavorite().blockingGet()
+        //endregion
 
+        //region Then
         assertThat(allFavorites).isEqualTo(listOf(favoriteMovieDb))
+        //endregion
     }
 }
