@@ -6,8 +6,8 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class ProfileUseCase @Inject constructor
-    (private val profileRepository: ProfileRepository
+class ProfileUseCase @Inject constructor(
+    private val profileRepository: ProfileRepository
 ) {
 
     fun getAccountDetails(): Single<AccountDetailsResponse> =

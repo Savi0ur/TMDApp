@@ -19,7 +19,7 @@ class SearchViewModel @Inject constructor(
     private val threadScheduler: ThreadScheduler
 ) : BaseViewModel() {
 
-    val uiState = MutableLiveData<SearchViewState>(createInitialState())
+    val uiState = MutableLiveData(createInitialState())
     private var state: SearchViewState by uiState.delegate()
 
     private var searchDisposables = CompositeDisposable()

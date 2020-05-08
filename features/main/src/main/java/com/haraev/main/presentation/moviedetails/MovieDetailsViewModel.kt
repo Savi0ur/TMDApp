@@ -6,20 +6,18 @@ import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
 import com.haraev.core.ui.BaseViewModel
 import com.haraev.main.R
-import com.haraev.main.data.model.response.MovieDetailsResponse
-import com.haraev.main.domain.usecase.MovieDetailsUseCase
-import com.haraev.main.presentation.favorite.FavoriteViewModel
+import com.haraev.main.domain.usecase.FavoriteUseCase
 import timber.log.Timber
 import javax.inject.Inject
 
 class MovieDetailsViewModel @Inject constructor(
-    private val movieDetailsUseCase: MovieDetailsUseCase,
+    private val favoriteUseCase: FavoriteUseCase,
     private val threadScheduler: ThreadScheduler
 ) : BaseViewModel() {
 
-    var movieServerId: Int? = null
+    private var movieServerId: Int? = null
 
-    val uiState = MutableLiveData<MovieDetailsViewState>(createInitialState())
+    val uiState = MutableLiveData(createInitialState())
     private var state by uiState.delegate()
 
     fun initMovieId(movieId: Int) {
@@ -30,7 +28,7 @@ class MovieDetailsViewModel @Inject constructor(
     fun markAsFavorite(isFavorite: Boolean) {
         movieServerId?.let { id ->
             showUiMarkIsFavoriteInProcess(true)
-            movieDetailsUseCase
+            favoriteUseCase
                 .markAsFavorite(
                     serverId = id,
                     isFavorite = isFavorite
@@ -50,7 +48,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun checkMovie(serverId: Int) {
         changeProgressBarState(true)
-        movieDetailsUseCase.getFavoriteMovies()
+        favoriteUseCase.getFavoriteMovies()
             .scheduleIoToUi(threadScheduler)
             .map { it.movies }
             .map { movies ->

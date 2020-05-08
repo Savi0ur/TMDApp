@@ -8,19 +8,20 @@ import com.haraev.core.ui.BaseViewModel
 import com.haraev.main.R
 import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.domain.usecase.FavoriteUseCase
+import com.haraev.main.domain.usecase.SearchUseCase
 import com.haraev.main.presentation.BottomNavigationRouter
-import com.haraev.main.presentation.search.SearchViewModel
 import io.reactivex.Observable
 import timber.log.Timber
 import javax.inject.Inject
 
 class FavoriteViewModel @Inject constructor(
     private val favoriteUseCase: FavoriteUseCase,
+    private val searchUseCase: SearchUseCase,
     private val threadScheduler: ThreadScheduler,
     private val bottomNavigationRouter: BottomNavigationRouter
 ) : BaseViewModel() {
 
-    val uiState = MutableLiveData<FavoriteViewState>(createInitialState())
+    val uiState = MutableLiveData(createInitialState())
     private var state: FavoriteViewState by uiState.delegate()
 
     init {
@@ -57,7 +58,7 @@ class FavoriteViewModel @Inject constructor(
         favoriteUseCase.getFavoriteMovies()
             .flattenAsObservable { it.movies }
             .flatMap { movie ->
-                favoriteUseCase.getMovieDetails(movie.serverId).toObservable()
+                searchUseCase.getMovieDetails(movie.serverId).toObservable()
             }
             .collect(
                 { ArrayList<MovieDetailsResponse>() },
