@@ -4,7 +4,7 @@ import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.data.model.response.SearchMoviesResponse
 import io.reactivex.Single
 
-interface SearchRepository {
+interface MovieRepository {
 
     fun getMovies(
         query: String,

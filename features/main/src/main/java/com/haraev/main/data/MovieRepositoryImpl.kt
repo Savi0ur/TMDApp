@@ -3,12 +3,12 @@ package com.haraev.main.data
 import com.haraev.main.data.api.MainService
 import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.data.model.response.SearchMoviesResponse
-import com.haraev.main.domain.repository.SearchRepository
+import com.haraev.main.domain.repository.MovieRepository
 import io.reactivex.Single
 
-class SearchRepositoryImpl(
+class MovieRepositoryImpl(
     private val mainService: MainService
-) : SearchRepository {
+) : MovieRepository {
 
     override fun getMovies(
         query: String,

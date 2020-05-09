@@ -34,11 +34,11 @@ class MainFeatureHostFragment : BaseFragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
-
         if (savedInstanceState == null) {
             setBottomNavigation()
         }
+
+        observeViewModel()
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {

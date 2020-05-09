@@ -1,7 +1,6 @@
 package com.haraev.main.presentation.profile
 
 import androidx.lifecycle.MutableLiveData
-import com.haraev.core.aac.EventsQueue
 import com.haraev.core.aac.delegate
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
@@ -16,7 +15,7 @@ class ProfileViewModel @Inject constructor(
     private val scheduler: ThreadScheduler
 ) : BaseViewModel() {
 
-    val uiState = MutableLiveData<ProfileViewState>(createInitialState())
+    val uiState = MutableLiveData(createInitialState())
     private var state: ProfileViewState by uiState.delegate()
 
     init {

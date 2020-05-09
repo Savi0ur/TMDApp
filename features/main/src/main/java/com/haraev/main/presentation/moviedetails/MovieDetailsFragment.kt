@@ -48,8 +48,8 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
         sharedElementEnterTransition = TransitionInflater.from(requireContext())
             .inflateTransition(android.R.transition.move)
 
-        observeViewModels()
         initViews()
+        observeViewModels()
 
         viewModel.initMovieId(args.movieServerId)
     }

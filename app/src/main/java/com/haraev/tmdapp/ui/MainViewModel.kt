@@ -13,33 +13,25 @@ class MainViewModel @Inject constructor(
 
     init {
         if (rootBeer.isRooted) {
-
-            if (isSessionIdExist()) {
-                showUiDialog(R.string.rooted_device_alert) {
-                    navigateToUsePinCodeScreen()
-                }
-            } else {
-                showUiDialog(R.string.rooted_device_alert) {
-                    navigateToLoginScreen()
-                }
-            }
-
+            showUiDialog(::navigateToNextScreen)
         } else {
+            navigateToNextScreen()
+        }
+    }
 
-            if (isSessionIdExist()) {
-                navigateToUsePinCodeScreen()
-            } else {
-                navigateToLoginScreen()
-            }
-
+    private fun navigateToNextScreen() {
+        if (isSessionIdExist()) {
+            navigateToUsePinCodeScreen()
+        } else {
+            navigateToLoginScreen()
         }
     }
 
     private fun isSessionIdExist(): Boolean =
         localUserDataSource.sessionId != null
 
-    private fun showUiDialog(dialogMessageId: Int, onDismissAction: () -> Unit) {
-        eventsQueue.offer(MainEvents.ShowDialog(dialogMessageId, onDismissAction))
+    private fun showUiDialog(onDismissAction: () -> Unit) {
+        eventsQueue.offer(MainEvents.ShowDialog(R.string.rooted_device_alert, onDismissAction))
     }
 
     private fun navigateToLoginScreen() {

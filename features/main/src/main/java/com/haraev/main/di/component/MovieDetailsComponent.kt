@@ -3,7 +3,7 @@ package com.haraev.main.di.component
 import com.haraev.core.di.component.CoreComponent
 import com.haraev.core.di.scope.FeatureModuleScope
 import com.haraev.main.di.module.NetworkModule
-import com.haraev.main.di.module.movieDetails.MovieDetailsModule
+import com.haraev.main.di.module.favorite.FavoriteModule
 import com.haraev.main.di.module.movieDetails.MovieDetailsViewModelModule
 import com.haraev.main.presentation.moviedetails.MovieDetailsFragment
 import dagger.Component
@@ -12,7 +12,7 @@ import dagger.Component
 @Component(
     modules =
     [
-        MovieDetailsModule::class,
+        FavoriteModule::class,
         MovieDetailsViewModelModule::class,
         NetworkModule::class
     ],

@@ -6,6 +6,7 @@ import com.haraev.main.di.module.DataModule
 import com.haraev.main.di.module.NetworkModule
 import com.haraev.main.di.module.favorite.FavoriteModule
 import com.haraev.main.di.module.favorite.FavoriteViewModelModule
+import com.haraev.main.di.module.search.SearchModule
 import com.haraev.main.presentation.favorite.FavoriteFragment
 import dagger.Component
 
@@ -15,6 +16,7 @@ import dagger.Component
     [
         FavoriteViewModelModule::class,
         FavoriteModule::class,
+        SearchModule::class,
         DataModule::class,
         NetworkModule::class
     ],
