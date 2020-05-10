@@ -23,8 +23,7 @@ class FavoriteUseCase @Inject constructor(
             )
             .map { it.toList() }
             .onErrorResumeNext {
-                favoriteRepository
-                    .getOfflineFavoriteMovies()
+                favoriteRepository.getOfflineFavoriteMovies()
             }
 
     fun markAsFavorite(serverId: Int, isFavorite: Boolean): Completable =

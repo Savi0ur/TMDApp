@@ -28,7 +28,7 @@ class FavoriteRepositoryImpl(
                 mediaId = serverId,
                 favorite = isFavorite
             )
-        )
+        ).andThen(database.movieDao().deleteById(serverId))
     }
 
     override fun getMovieDetails(movieId: Int): Single<MovieDetailsResponse> {

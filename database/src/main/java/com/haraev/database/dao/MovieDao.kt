@@ -1,9 +1,6 @@
 package com.haraev.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.haraev.database.entity.MovieDb
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -22,4 +19,10 @@ interface MovieDao {
 
     @Query("SELECT * FROM moviedb WHERE isFavorite = 1")
     fun getAllFavorite(): Single<List<MovieDb>>
+
+    @Delete
+    fun delete(vararg  movies: MovieDb): Completable
+
+    @Query("DELETE FROM moviedb WHERE serverId = :id")
+    fun deleteById(id: Int): Completable
 }
