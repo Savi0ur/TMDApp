@@ -2,6 +2,8 @@ package com.haraev.authentication.presentation
 
 import com.haraev.test.rxjava.TestThreadScheduler
 import com.haraev.authentication.domain.usecase.LoginUseCase
+import com.haraev.authentication.presentation.login.LoginViewModel
+import com.haraev.authentication.presentation.login.LoginViewState
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode
 import com.nhaarman.mockitokotlin2.any
@@ -61,7 +63,10 @@ object LoginViewModelTest : Spek({
             Then("ui state enter button should be true") {
                 val uiState = loginViewModel.uiState.value
 
-                val expectedState = LoginViewState(enterButtonEnable = true)
+                val expectedState =
+                    LoginViewState(
+                        enterButtonEnable = true
+                    )
 
                 assertThat(uiState).isEqualTo(expectedState)
             }
@@ -86,7 +91,10 @@ object LoginViewModelTest : Spek({
             Then("ui state enter button should be false") {
                 val uiState = loginViewModel.uiState.value
 
-                val expectedState = LoginViewState(enterButtonEnable = false)
+                val expectedState =
+                    LoginViewState(
+                        enterButtonEnable = false
+                    )
 
                 assertThat(uiState).isEqualTo(expectedState)
             }
@@ -111,7 +119,10 @@ object LoginViewModelTest : Spek({
             Then("ui state enter button should be false") {
                 val uiState = loginViewModel.uiState.value
 
-                val expectedState = LoginViewState(enterButtonEnable = false)
+                val expectedState =
+                    LoginViewState(
+                        enterButtonEnable = false
+                    )
 
                 assertThat(uiState).isEqualTo(expectedState)
             }
@@ -140,11 +151,12 @@ object LoginViewModelTest : Spek({
             Then("show progress bar, disable enter button, disable login and password fields") {
                 val uiState = loginViewModel.uiState.value
 
-                val expectedState = LoginViewState(
-                    progressBarVisibility = true,
-                    enterButtonEnable = false,
-                    loginAndPasswordFieldsEnable = false
-                )
+                val expectedState =
+                    LoginViewState(
+                        progressBarVisibility = true,
+                        enterButtonEnable = false,
+                        loginAndPasswordFieldsEnable = false
+                    )
 
                 assertThat(uiState).isEqualTo(expectedState)
             }

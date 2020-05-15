@@ -1,11 +1,9 @@
 package com.haraev.authentication.data
 
 import com.haraev.authentication.domain.repository.LoginRepository
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.api.LoginService
 import com.haraev.core.data.exception.InvalidLoginCredentialsException
-import com.haraev.core.data.exception.NetworkException
-import com.haraev.core.data.exception.NetworkExceptionType
 import com.haraev.test.retofit.getTestRetrofit
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -29,7 +27,7 @@ object LoginRepositoryIntegrationTest : Spek({
 
         lateinit var loginRepository: LoginRepository
 
-        val sessionLocalDataSource = mock<SessionLocalDataSource> {
+        val sessionLocalDataSource = mock<LocalUserDataSource> {
             on { sessionId } doReturn null
             on { userLogin } doReturn null
             on { userPassword } doReturn null

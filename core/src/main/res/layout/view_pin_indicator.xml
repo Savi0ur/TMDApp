@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="8dp"
+    android:gravity="center_horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/pin_indicator_1"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/drawable_shape_oval"
+        android:backgroundTint="@color/darkBlue"
+        android:layout_marginHorizontal="@dimen/spacing_small_extra"
+        tools:backgroundTint="@color/onPrimary"/>
+
+    <View
+        android:id="@+id/pin_indicator_2"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/drawable_shape_oval"
+        android:backgroundTint="@color/darkBlue"
+        android:layout_marginHorizontal="@dimen/spacing_small_extra" />
+
+    <View
+        android:id="@+id/pin_indicator_3"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/drawable_shape_oval"
+        android:backgroundTint="@color/darkBlue"
+        android:layout_marginHorizontal="@dimen/spacing_small_extra"/>
+
+    <View
+        android:id="@+id/pin_indicator_4"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/drawable_shape_oval"
+        android:backgroundTint="@color/darkBlue"
+        android:layout_marginHorizontal="@dimen/spacing_small_extra"/>
+
+</LinearLayout>

@@ -3,7 +3,7 @@ package com.haraev.main.presentation.profile
 import com.haraev.core.ui.Event
 import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
-import com.haraev.main.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
 import com.haraev.main.domain.usecase.ProfileUseCase
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode

@@ -3,6 +3,9 @@ package com.haraev.authentication.presentation
 import com.haraev.authentication.R
 import com.haraev.authentication.data.LoginRepositoryImpl
 import com.haraev.authentication.domain.usecase.LoginUseCase
+import com.haraev.authentication.presentation.login.LoginEvents
+import com.haraev.authentication.presentation.login.LoginViewModel
+import com.haraev.authentication.presentation.login.LoginViewState
 import com.haraev.core.data.api.LoginService
 import com.haraev.test.aac.disableTestMode
 import com.haraev.test.aac.enableTestMode
@@ -57,10 +60,11 @@ object LoginViewModelIntegrationTest : Spek({
 
             val loginUseCase = LoginUseCase(loginRepository)
 
-            loginViewModel = LoginViewModel(
-                loginUseCase,
-                TestThreadScheduler()
-            )
+            loginViewModel =
+                LoginViewModel(
+                    loginUseCase,
+                    TestThreadScheduler()
+                )
         }
 
         afterEachScenario {
@@ -124,12 +128,13 @@ object LoginViewModelIntegrationTest : Spek({
 
             Then("state should show error with wrong login data message") {
 
-                val expectedResult = LoginViewState(
-                    progressBarVisibility = false,
-                    enterButtonEnable = true,
-                    loginAndPasswordFieldsEnable = true,
-                    errorMessage = R.string.wrong_login_or_password
-                )
+                val expectedResult =
+                    LoginViewState(
+                        progressBarVisibility = false,
+                        enterButtonEnable = true,
+                        loginAndPasswordFieldsEnable = true,
+                        errorMessage = R.string.wrong_login_or_password
+                    )
 
                 val actualResult = loginViewModel.uiState.value
 
@@ -214,12 +219,13 @@ object LoginViewModelIntegrationTest : Spek({
 
             Then("state should not show error message") {
 
-                val expectedResult = LoginViewState(
-                    progressBarVisibility = false,
-                    enterButtonEnable = true,
-                    loginAndPasswordFieldsEnable = true,
-                    errorMessage = null
-                )
+                val expectedResult =
+                    LoginViewState(
+                        progressBarVisibility = false,
+                        enterButtonEnable = true,
+                        loginAndPasswordFieldsEnable = true,
+                        errorMessage = null
+                    )
 
                 val actualResult = loginViewModel.uiState.value
 
@@ -230,7 +236,8 @@ object LoginViewModelIntegrationTest : Spek({
             And("command should be NavigateToNextScreen") {
                 val actualResult = loginViewModel.eventsQueue.value
 
-                val expectedResult = LinkedList<LoginEvents>().apply { add(LoginEvents.NavigateToNextScreen) }
+                val expectedResult = LinkedList<LoginEvents>().apply { add(
+                    LoginEvents.NavigateToNextScreen) }
 
                 assertThat(actualResult).isEqualTo(expectedResult)
             }

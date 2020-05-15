@@ -2,7 +2,8 @@ package com.haraev.core.di.module
 
 import android.content.SharedPreferences
 import com.haraev.core.common.ThreadScheduler
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.cryptography.Cryptographer
+import com.haraev.core.data.LocalUserDataSource
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -15,8 +16,9 @@ class CoreDataModule {
 
     @Provides
     fun provideSessionLocalDataSource(
-        sharedPreferences: SharedPreferences
-    ): SessionLocalDataSource = SessionLocalDataSource(sharedPreferences)
+        sharedPreferences: SharedPreferences,
+        cryptographer: Cryptographer
+    ): LocalUserDataSource = LocalUserDataSource(sharedPreferences, cryptographer)
 
     @Provides
     fun provideThreadScheduler(): ThreadScheduler = ThreadScheduler()

@@ -68,8 +68,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
         initViews()
+        observeViewModel()
     }
 
     private fun observeViewModel() {
@@ -203,7 +203,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             movieVoteCount = movie.voteCount,
             movieVoteAverage = movie.voteAverage.toFloat(),
             movieGenres = movie.genres.joinToString(separator = ", ") { it.name },
-            movieDuration = movie.duration?.toString() ?: "0"
+            movieDuration = movie.duration?.toString() ?: "0",
+            movieServerId = movie.serverId
         )
 
         findNavController().navigate(direction, extras)

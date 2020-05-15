@@ -4,5 +4,5 @@ import com.haraev.main.data.model.response.MovieDetailsResponse
 
 data class SearchViewState(
     val progressBarVisibility : Boolean = false,
-    val movies : List<MovieDetailsResponse>?
+    val movies : List<MovieDetailsResponse>? = null
 )

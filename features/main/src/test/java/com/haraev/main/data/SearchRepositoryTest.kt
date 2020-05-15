@@ -9,14 +9,12 @@ import io.reactivex.Single
 import org.assertj.core.api.Assertions
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import retrofit2.Response
-import java.net.HttpURLConnection
 
 object SearchRepositoryTest : Spek({
 
     Feature("search repository") {
 
-        lateinit var searchRepositoryImpl: SearchRepositoryImpl
+        lateinit var movieRepositoryImpl: MovieRepositoryImpl
 
         Scenario("successful search") {
 
@@ -52,14 +50,14 @@ object SearchRepositoryTest : Spek({
 
             Given("search repository") {
 
-                searchRepositoryImpl = SearchRepositoryImpl(
+                movieRepositoryImpl = MovieRepositoryImpl(
                     mainService
                 )
 
             }
 
             When("getMovies") {
-                getSearchMoviesResponse = searchRepositoryImpl.getMovies(query, 1).blockingGet()
+                getSearchMoviesResponse = movieRepositoryImpl.getMovies(query, 1).blockingGet()
             }
 
             Then("result should return movies list with movie") {
@@ -93,14 +91,14 @@ object SearchRepositoryTest : Spek({
 
             Given("search repository") {
 
-                searchRepositoryImpl = SearchRepositoryImpl(
+                movieRepositoryImpl = MovieRepositoryImpl(
                     mainService
                 )
 
             }
 
             When("getMovies") {
-                getSearchMoviesResponse = searchRepositoryImpl.getMovies(query, 1).blockingGet()
+                getSearchMoviesResponse = movieRepositoryImpl.getMovies(query, 1).blockingGet()
             }
 
             Then("result should return empty movies list") {

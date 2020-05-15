@@ -63,4 +63,10 @@
         <item name="android:background">?attr/colorPrimarySurface</item>
     </style>
 
+    <style name="Widget.AppTheme.TextView.LinkText" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/LinkText</item>
+        <item name="android:textColor">@color/onPrimary</item>
+    </style>
+
+
 </resources>

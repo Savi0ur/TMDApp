@@ -1,13 +1,13 @@
 package com.haraev.main.presentation.profile
 
 import androidx.lifecycle.MutableLiveData
-import com.haraev.core.aac.EventsQueue
 import com.haraev.core.aac.delegate
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.common.scheduleIoToUi
 import com.haraev.core.ui.BaseViewModel
 import com.haraev.main.R
 import com.haraev.main.domain.usecase.ProfileUseCase
+import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
@@ -15,7 +15,7 @@ class ProfileViewModel @Inject constructor(
     private val scheduler: ThreadScheduler
 ) : BaseViewModel() {
 
-    val uiState = MutableLiveData<ProfileViewState>(createInitialState())
+    val uiState = MutableLiveData(createInitialState())
     private var state: ProfileViewState by uiState.delegate()
 
     init {
@@ -33,27 +33,27 @@ class ProfileViewModel @Inject constructor(
             .subscribe({
                 changeProgressBarState(false)
                 eventsQueue.offer(ProfileEvents.Logout)
-            }, {
+            }, { e ->
+                Timber.tag(TAG).e(e)
                 changeProgressBarState(false)
                 showErrorMessage(R.string.unknown_error_message)
             })
             .autoDispose()
     }
 
-    @Suppress("UnstableApiUsage")
-    private fun loadProfileInfo() {
+    fun loadProfileInfo() {
         changeProgressBarState(true)
         profileUseCase.getAccountDetails()
             .scheduleIoToUi(scheduler)
-            .doOnTerminate {
-                changeProgressBarState(false)
-            }
             .subscribe({ accountDetailsResponse ->
+                changeProgressBarState(false)
                 showProfileInfo(
                     accountDetailsResponse.name,
                     accountDetailsResponse.username
                 )
-            }, {
+            }, { e ->
+                changeProgressBarState(false)
+                Timber.tag(TAG).e(e)
                 showErrorMessage(R.string.unknown_error_message)
             })
             .autoDispose()
@@ -79,4 +79,8 @@ class ProfileViewModel @Inject constructor(
             name = null,
             userName = null
         )
+
+    companion object {
+        private const val TAG = "ProfileViewModel"
+    }
 }

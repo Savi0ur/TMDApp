@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/favorite_search_icon"
+        android:icon="@drawable/drawable_icon_search"
+        android:title="@string/menu_search_icon"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/favorite_list_type"
+        android:icon="@drawable/drawable_grid_check_box"
+        android:title="@string/menu_list_type"
+        android:checkable="true"
+        app:showAsAction="ifRoom"/>
+
+</menu>

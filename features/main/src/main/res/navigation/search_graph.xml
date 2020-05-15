@@ -55,5 +55,8 @@
             android:name="movieDuration"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="movieServerId"
+            app:argType="integer" />
     </fragment>
 </navigation>

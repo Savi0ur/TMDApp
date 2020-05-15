@@ -7,7 +7,7 @@ import timber.log.Timber
 
 class TmdAppApplication : Application(), CoreComponentProvider {
 
-    private lateinit var coreComponent : CoreComponent
+    private lateinit var coreComponent: CoreComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -23,6 +23,5 @@ class TmdAppApplication : Application(), CoreComponentProvider {
         coreComponent = CoreComponent.Builder.build(this, "DEFAULT_APP_PREF")
     }
 
-    override fun getCoreComponent() : CoreComponent = coreComponent
-
+    override fun getCoreComponent(): CoreComponent = coreComponent
 }

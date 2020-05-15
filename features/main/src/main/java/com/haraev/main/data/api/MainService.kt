@@ -2,12 +2,14 @@ package com.haraev.main.data.api
 
 import com.haraev.main.data.common.ApiLanguageEnum
 import com.haraev.main.data.model.request.DeleteSessionBody
-import com.haraev.main.data.model.response.AccountDetailsResponse
-import com.haraev.main.data.model.response.DeleteSessionResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.DeleteSessionResponse
+import com.haraev.main.data.model.request.MarkAsFavoriteBody
+import com.haraev.main.data.model.response.FavoriteMoviesResponse
 import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.data.model.response.SearchMoviesResponse
+import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.Response
 import retrofit2.http.*
 
 interface MainService {
@@ -20,8 +22,7 @@ interface MainService {
     @HTTP(method = "DELETE", path = "authentication/session", hasBody = true)
     fun deleteSession(
         @Body deleteSessionBody: DeleteSessionBody
-    ) : Single<DeleteSessionResponse>
-
+    ): Single<DeleteSessionResponse>
 
     @GET(value = "search/movie")
     fun getMovies(
@@ -33,6 +34,18 @@ interface MainService {
     @GET(value = "movie/{movie_id}")
     fun getMovieDetails(
         @Path("movie_id") movieId: Int,
-        @Query("language") language: String  = ApiLanguageEnum.RU.value
+        @Query("language") language: String = ApiLanguageEnum.RU.value
     ): Single<MovieDetailsResponse>
+
+    @GET(value = "account/{account_id}/favorite/movies")
+    fun getFavoriteMovies(
+        @Query("session_id") sessionId: String
+    ): Single<FavoriteMoviesResponse>
+
+    @Headers("Content-Type: application/json;charset=utf-8")
+    @POST(value = "account/{account_id}/favorite")
+    fun markAsFavorite(
+        @Query("session_id") sessionId: String,
+        @Body markAsFavoriteBody: MarkAsFavoriteBody
+    ): Completable
 }

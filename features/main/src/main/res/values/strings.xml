@@ -26,4 +26,9 @@
 
     <string name="menu_favorite">Добавить в избранное</string>
     <string name="back_button_description">Назад</string>
+    <string name="menu_search_icon">Поиск</string>
+    <string name="menu_list_type">Вид отображения</string>
+    <string name="favorite_header">Избранное</string>
+    <string name="favorite_no_movies">Вы не добавили ни одного фильма</string>
+    <string name="favorite_search_movies">Найти любимые фильмы</string>
 </resources>

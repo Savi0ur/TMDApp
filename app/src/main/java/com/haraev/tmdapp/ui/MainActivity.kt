@@ -3,6 +3,7 @@ package com.haraev.tmdapp.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.haraev.core.ui.Event
@@ -41,6 +42,11 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
             .setGraph(R.navigation.main_graph)
     }
 
+    override fun navigateToUsePinCodeScreen() {
+        Navigation.findNavController(this, R.id.nav_host_fragment)
+            .setGraph(R.navigation.use_pin_code_nav_graph)
+    }
+
     private fun observeViewModel() {
         observe(viewModel.eventsQueue, ::onEvent)
     }
@@ -48,14 +54,30 @@ class MainActivity : AppCompatActivity(), NavigationActivity {
     private fun onEvent(event: Event) {
         when (event) {
             is MainEvents.OpenLoginScreen -> {
-                Navigation.findNavController(this, R.id.nav_host_fragment)
-                    .setGraph(R.navigation.login_nav_graph)
+                navigateToLoginScreen()
             }
             is MainEvents.OpenSearchScreen -> {
-                Navigation.findNavController(this, R.id.nav_host_fragment)
-                    .setGraph(R.navigation.main_graph)
+                navigateToMainScreen()
+            }
+            is MainEvents.OpenUsePinCodeScreen -> {
+                navigateToUsePinCodeScreen()
+            }
+            is MainEvents.ShowDialog -> {
+                showSimpleDialog(event.dialogMessageId, event.onDismissAction)
             }
         }
+    }
+
+    private fun showSimpleDialog(messageId: Int, onDismissAction: () -> Unit) {
+        val dialog = AlertDialog
+            .Builder(this)
+            .setMessage(messageId)
+            .setPositiveButton(R.string.ok, null)
+            .create()
+        dialog.setOnDismissListener {
+            onDismissAction()
+        }
+        dialog.show()
     }
 
     override fun onSupportNavigateUp() =

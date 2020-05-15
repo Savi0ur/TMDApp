@@ -6,6 +6,17 @@
     <string name="hint_password">Пароль</string>
     <string name="button_login_enter">Войти</string>
 
+    <string name="unknown_error_message">Что-то пошло не так, попробуйте позже</string>
     <string name="login_unknown_error_message">Что-то пошло не так, попробуйте войти позже</string>
     <string name="wrong_login_or_password">Неверный логин или пароль</string>
+    <string name="make_new_pin">Придумайте пин-код для быстрого входа</string>
+    <string name="repeat_new_pin">Повторите ваш пин-код</string>
+    <string name="pin_code_unknown_error_message">Ошибка. Попробуйте еще раз</string>
+    <string name="wrong_pin_code">Неверный пин-код</string>
+    <string name="exit">Выйти</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="suggest_fingerprint">Хотите использовать отпечаток пальца для авторизации?</string>
+    <string name="fingerprint_title">Отпечаток пальца</string>
+    <string name="finerprint_description">Подтвердите отпечаток пальца, чтобы использовать быструю авторизацию</string>
 </resources>

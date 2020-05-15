@@ -3,6 +3,7 @@ package com.haraev.main.presentation.profile
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.haraev.core.ui.Event
@@ -34,12 +35,19 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
         initView()
+        observeViewModel()
     }
 
     private fun initView() {
         setupLogoutButton()
+        setupSwipeRefreshLayout()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        profile_swipe_refresh_layout.setOnRefreshListener {
+            viewModel.loadProfileInfo()
+        }
     }
 
     private fun setupLogoutButton() {
@@ -59,9 +67,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun renderState(viewState: ProfileViewState) {
-        when (viewState.progressBarVisibility) {
-            true -> profile_progress_bar.visibility = View.VISIBLE
-            false -> profile_progress_bar.visibility = View.INVISIBLE
+        profile_progress_bar.isVisible = viewState.progressBarVisibility
+
+        if (!viewState.progressBarVisibility) {
+            profile_swipe_refresh_layout.isRefreshing = false
         }
 
         viewState.name?.let {

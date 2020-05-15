@@ -1,6 +1,6 @@
 package com.haraev.main.di.module.profile
 
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.main.data.ProfileRepositoryImpl
 import com.haraev.main.data.api.MainService
 import com.haraev.main.domain.repository.ProfileRepository
@@ -14,11 +14,11 @@ class ProfileModule {
     @Provides
     fun provideProfileRepository(
         mainService: MainService,
-        sessionLocalDataSource: SessionLocalDataSource
+        localUserDataSource: LocalUserDataSource
     ) : ProfileRepository {
         return ProfileRepositoryImpl(
             mainService,
-            sessionLocalDataSource
+            localUserDataSource
         )
     }
 

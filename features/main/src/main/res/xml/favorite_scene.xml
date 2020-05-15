@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@+id/favorite_search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/movie_search"
+            android:visibility="gone"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favorite_close_image"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Constraint android:id="@+id/favorite_close_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:visibility="gone"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/favorite_search_view"
+            app:layout_constraintTop_toTopOf="@id/favorite_search_view"/>
+
+        <Constraint
+            android:id="@+id/favorite_toolbar_layout"
+            layout="@layout/favorite_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@+id/favorite_search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/movie_search"
+            android:visibility="visible"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favorite_close_image"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Constraint android:id="@+id/favorite_close_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:visibility="visible"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/favorite_search_view"
+            app:layout_constraintTop_toTopOf="@id/favorite_search_view"/>
+
+        <Constraint
+            android:id="@+id/favorite_toolbar_layout"
+            layout="@layout/favorite_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start"
+        app:duration="500"
+        app:motionInterpolator="linear">
+
+    </Transition>
+
+</MotionScene>

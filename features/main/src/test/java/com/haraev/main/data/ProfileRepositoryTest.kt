@@ -1,11 +1,11 @@
 package com.haraev.main.data
 
-import com.haraev.core.data.SessionLocalDataSource
+import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.exception.NetworkException
 import com.haraev.main.data.api.MainService
 import com.haraev.main.data.model.request.DeleteSessionBody
-import com.haraev.main.data.model.response.AccountDetailsResponse
-import com.haraev.main.data.model.response.DeleteSessionResponse
+import com.haraev.core.data.model.response.AccountDetailsResponse
+import com.haraev.core.data.model.response.DeleteSessionResponse
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Single
@@ -38,7 +38,7 @@ object ProfileRepositoryTest : Spek({
                 )
             }
 
-            val sessionLocalDataSource = mock<SessionLocalDataSource> {
+            val sessionLocalDataSource = mock<LocalUserDataSource> {
                 on { sessionId } doReturn thisSessionId
                 on { userLogin } doReturn "login"
                 on { userPassword } doReturn "password"
@@ -88,7 +88,7 @@ object ProfileRepositoryTest : Spek({
                 )
             }
 
-            val sessionLocalDataSource = mock<SessionLocalDataSource> {
+            val sessionLocalDataSource = mock<LocalUserDataSource> {
                 on { sessionId } doReturn thisSessionId
                 on { userLogin } doReturn "login"
                 on { userPassword } doReturn "password"
@@ -132,7 +132,7 @@ object ProfileRepositoryTest : Spek({
                 )
             }
 
-            val sessionLocalDataSource = mock<SessionLocalDataSource> {
+            val sessionLocalDataSource = mock<LocalUserDataSource> {
                 on { sessionId } doReturn thisSessionId
                 on { userLogin } doReturn "login"
                 on { userPassword } doReturn "password"
@@ -178,7 +178,7 @@ object ProfileRepositoryTest : Spek({
                 )
             }
 
-            val sessionLocalDataSource = mock<SessionLocalDataSource> {
+            val sessionLocalDataSource = mock<LocalUserDataSource> {
                 on { sessionId } doReturn thisSessionId
                 on { userLogin } doReturn "login"
                 on { userPassword } doReturn "password"
