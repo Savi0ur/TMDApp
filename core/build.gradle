@@ -21,8 +21,7 @@ android {
 }
 
 dependencies {
-    implementation deps.stdlib
-    implementation deps.core_ktx
+    implementation project(":database")
 
     implementation deps.stdlib
     implementation deps.core_ktx
@@ -68,4 +67,10 @@ dependencies {
 
     // Tink
     implementation deps.tink
+
+    // Room
+    implementation deps.room_runtime
+    kapt deps.room_compiler
+    implementation deps.room_ktx
+    implementation deps.room_rx
 }

@@ -3,6 +3,7 @@ package com.haraev.core.di.module
 import android.content.Context
 import com.google.crypto.tink.KeysetHandle
 import com.google.crypto.tink.aead.AeadKeyTemplates
+import com.google.crypto.tink.config.TinkConfig
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import com.haraev.core.cryptography.Cryptographer
 import dagger.Module
@@ -15,6 +16,7 @@ class CoreSecurityModule {
     @Provides
     @Singleton
     fun provideKeysetHandle(context: Context): KeysetHandle {
+        TinkConfig.register()
         return AndroidKeysetManager.Builder()
             .withSharedPref(
                 context,

@@ -50,7 +50,6 @@ class MovieDetailsViewModel @Inject constructor(
         changeProgressBarState(true)
         favoriteUseCase.getFavoriteMovies()
             .scheduleIoToUi(threadScheduler)
-            .map { it.movies }
             .map { movies ->
                 movies.map { it.serverId }
             }

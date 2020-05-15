@@ -2,8 +2,6 @@ package com.haraev.main.presentation.moviedetails
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
@@ -71,12 +69,7 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
         addToFavoriteMenuItem.isEnabled =
             !(viewState.progressBarVisibility || viewState.markAsFavoriteInProcess)
 
-        addToFavoriteMenuItem.isChecked = viewState.isFavoriteMovie
-        if (viewState.isFavoriteMovie) {
-            addToFavoriteMenuItem.setIcon(R.drawable.drawable_action_favorite_filled)
-        } else {
-            addToFavoriteMenuItem.setIcon(R.drawable.drawable_action_favorite_border_outlined)
-        }
+        changeAddToFavoriteIconCheckedState(viewState.isFavoriteMovie)
 
     }
 
@@ -104,13 +97,7 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
 
                     viewModel.markAsFavorite(isChecked)
 
-                    if (isChecked) {
-                        item.setIcon(R.drawable.drawable_action_favorite_filled)
-                    } else {
-                        item.setIcon(R.drawable.drawable_action_favorite_border_outlined)
-                    }
-
-                    item.isChecked = isChecked
+                    changeAddToFavoriteIconCheckedState(isChecked)
                     true
                 }
                 else -> false
@@ -153,5 +140,15 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
             .load(R.drawable.drawable_search)
             .placeholder(R.drawable.drawable_search)
             .into(movie_details_image)
+    }
+
+    private fun changeAddToFavoriteIconCheckedState(isChecked: Boolean) {
+        if (isChecked) {
+            addToFavoriteMenuItem.setIcon(R.drawable.drawable_action_favorite_filled)
+        } else {
+            addToFavoriteMenuItem.setIcon(R.drawable.drawable_action_favorite_border_outlined)
+        }
+
+        addToFavoriteMenuItem.isChecked = isChecked
     }
 }

@@ -4,7 +4,6 @@ import com.haraev.core.ui.Event
 import com.haraev.core.ui.ShowErrorMessage
 import com.haraev.main.R
 import com.haraev.main.data.model.Genre
-import com.haraev.main.data.model.Movie
 import com.haraev.main.data.model.response.MovieDetailsResponse
 import com.haraev.main.domain.usecase.SearchUseCase
 import com.haraev.test.aac.disableTestMode

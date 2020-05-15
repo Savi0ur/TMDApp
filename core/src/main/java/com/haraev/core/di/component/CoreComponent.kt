@@ -5,11 +5,9 @@ import android.content.SharedPreferences
 import com.haraev.core.common.ThreadScheduler
 import com.haraev.core.data.LocalUserDataSource
 import com.haraev.core.data.api.LoginService
-import com.haraev.core.di.module.CoreDataModule
-import com.haraev.core.di.module.CoreNetworkModule
-import com.haraev.core.di.module.CoreSecurityModule
-import com.haraev.core.di.module.SharedPreferencesModule
+import com.haraev.core.di.module.*
 import com.haraev.core.di.qualifier.HttpClientQualifier
+import com.haraev.database.Database
 import com.squareup.moshi.Moshi
 import dagger.BindsInstance
 import dagger.Component
@@ -23,7 +21,8 @@ import javax.inject.Singleton
         CoreNetworkModule::class,
         SharedPreferencesModule::class,
         CoreDataModule::class,
-        CoreSecurityModule::class
+        CoreSecurityModule::class,
+        DatabaseModule::class
     ]
 )
 interface CoreComponent {
@@ -69,5 +68,7 @@ interface CoreComponent {
 
     fun provideThreadScheduler(): ThreadScheduler
 
-    fun provideContext() : Context
+    fun provideContext(): Context
+
+    fun provideDatabase(): Database
 }

@@ -12,4 +12,8 @@ interface FavoriteRepository {
     fun markAsFavorite(
         serverId: Int, isFavorite: Boolean
     ): Completable
+
+    fun getOfflineFavoriteMovies(): Single<List<MovieDetailsResponse>>
+
+    fun getMovieDetails(movieId: Int): Single<MovieDetailsResponse>
 }
