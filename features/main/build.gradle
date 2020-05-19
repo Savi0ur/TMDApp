@@ -71,4 +71,8 @@ dependencies {
     kapt deps.room_compiler
     implementation deps.room_ktx
     implementation deps.room_rx
+
+    // Paging
+    implementation deps.paging
+    implementation deps.paging_rxjava2
 }

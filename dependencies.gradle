@@ -49,6 +49,8 @@ deps_versions.swipeRL = "1.0.0"
 
 deps_versions.room = "2.2.5"
 
+deps_versions.paging_library = "2.1.2"
+
 ext.deps = [:]
 
 deps.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
@@ -139,3 +141,7 @@ deps.room_compiler = "androidx.room:room-compiler:${deps_versions.room}"
 deps.room_ktx = "androidx.room:room-ktx:${deps_versions.room}"
 deps.room_rx = "androidx.room:room-rxjava2:${deps_versions.room}"
 deps.room_testing = "androidx.room:room-testing:${deps_versions.room}"
+
+// Paging library
+deps.paging = "androidx.paging:paging-runtime:${deps_versions.paging_library}"
+deps.paging_rxjava2 = "androidx.paging:paging-rxjava2:${deps_versions.paging_library}"
