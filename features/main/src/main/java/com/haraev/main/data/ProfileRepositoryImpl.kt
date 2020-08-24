@@ -24,6 +24,7 @@ class ProfileRepositoryImpl(
                 localUserDataSource.userLogin = null
                 localUserDataSource.userPassword = null
                 localUserDataSource.userPinCodeHash = null
+                localUserDataSource.biometricAct = null
                 Completable.complete()
             }
     }
