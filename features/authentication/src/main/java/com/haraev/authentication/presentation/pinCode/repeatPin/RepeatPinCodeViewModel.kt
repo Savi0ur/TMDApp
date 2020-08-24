@@ -26,7 +26,10 @@ class RepeatPinCodeViewModel @Inject constructor(
         updateUiPin(state.repeatPinCode + text)
         if (state.repeatPinCode.length == 4) {
             if (state.repeatPinCode == pinCode) {
-                tryUseFingerPrint()
+                updateUiPin("")
+                savePinCode {
+                    tryUseFingerPrint()
+                }
             } else {
                 updateUiPin("")
                 showUiWrongPin()
@@ -60,9 +63,20 @@ class RepeatPinCodeViewModel @Inject constructor(
         biometricDone(false)
     }
 
+    private fun savePinCode(afterSaveAction: () -> Unit) {
+        repeatPinCodeUseCase.savePinCodeHash(pinCode.hashCode())
+            .scheduleIoToUi(scheduler)
+            .subscribe({
+                afterSaveAction()
+            }, { e ->
+                Timber.tag(TAG).e(e)
+                showErrorMessage(R.string.pin_code_unknown_error_message)
+            })
+            .autoDispose()
+    }
+
     private fun biometricDone(isSuccess: Boolean) {
         repeatPinCodeUseCase.saveBiometricAct(isSuccess)
-            .andThen(repeatPinCodeUseCase.savePinCodeHash(pinCode.hashCode()))
             .scheduleIoToUi(scheduler)
             .subscribe({
                 navigateToNextScreen()
